@@ -1,0 +1,45 @@
+{
+  "name": "weblet-theme-template",
+  "type": "module",
+  "version": "1.0.2",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "node": ">=18.14.1"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/alpinejs": "^0.4.8",
+    "@astrojs/mdx": "^4.3.1",
+    "@astrojs/node": "^9.3.0",
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/vercel": "^8.2.3",
+    "@atelier-disko/payload-lexical-react-renderer": "^1.2.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/alpinejs": "^3.13.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "alpinejs": "^3.14.9",
+    "astro": "^5.12.2",
+    "classnames": "^2.5.1",
+    "node-fetch": "^3.3.2",
+    "prismjs": "^1.30.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "reading-time": "^1.5.0",
+    "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11"
+  }
+}

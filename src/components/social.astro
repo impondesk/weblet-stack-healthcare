@@ -1,0 +1,41 @@
+---
+import LinkButton from "./LinkButton.astro";
+import socialIcons from "../assets/socialIcons";
+
+export interface Props {
+  centered?: boolean;
+  links?: {
+    name: string;
+    href: string;
+    linkTitle: string;
+    active?: boolean;
+  }[];
+}
+
+const { centered = true } = Astro.props;
+
+const { links = [] } = Astro.props;
+
+// const socialCount = SOCIALS.filter((social) => social.active).length;
+---
+
+<div class={`social-icons flex-wrap justify-center gap-1`}>
+  {
+    links
+      .filter((social) => social.active)
+      .map((social) => (
+        <LinkButton
+          href={social.href}
+          className="link-button p-2 hover:rotate-6 sm:p-1 h-full w-8"
+          title={social.linkTitle}
+          target={"_blank"}
+        >
+          <Fragment
+            set:html={socialIcons[social.name]}
+            class=" fill-current text-xs h-6 w-6"
+          />
+          <span class="sr-only">{social.linkTitle}</span>
+        </LinkButton>
+      ))
+  }
+</div>

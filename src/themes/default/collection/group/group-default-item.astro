@@ -1,0 +1,14 @@
+---
+const { title, slug, url, blockType, contentType, labels } = Astro.props;
+const { singular, plural } = labels;
+console.log("Collection Default Item Props:", Astro.props);
+console.log("Singular:", singular, "Plural:", plural);
+---
+
+<a
+  href={`/${singular?.toLowerCase()}/${slug}`}
+  aria-label={url}
+  class="no-underline"
+>
+  {title}
+</a>

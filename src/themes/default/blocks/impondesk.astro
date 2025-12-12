@@ -1,0 +1,185 @@
+---
+import { getPostsByDomain } from "../../../api/post";
+import LinkButton from "../../../components/LinkButton.astro";
+import Social from "../../../components/social.astro";
+import { socialLinks } from "../../../config/impondesk-config";
+
+const { url } = Astro.request; // Current URL
+const searchParams = new URL(url).searchParams; // Search parameters
+
+const proxyDomain = searchParams.get("proxy-domain"); // Proxy Domain for Dev
+
+const _base = Astro.locals.base; // Base URL
+const _tenant = Astro.locals.tenant; // Tenant information
+const _host = Astro.locals.host; // Origin Host
+
+console.warn(Astro.props);
+console.warn(Astro.params);
+console.warn(searchParams);
+
+const posts = await getPostsByDomain(proxyDomain || _host, 5);
+// console.log("posts", posts);
+
+const recentPosts = (await posts.docs) || [];
+// console.log("recentPosts", recentPosts);
+
+// const latestPosts = posts.filter((post) => post.status === "published");
+// const latestPostsSorted = latestPosts.sort(
+//   (a, b) => new Date(b.date) - new Date(a.date)
+// );
+// const latestPostsLimited = latestPostsSorted.slice(0, 5);
+
+const socialCount = socialLinks.filter((social) => social.active).length;
+---
+
+<article class="max-w-7xl mx-auto">
+  <section class="h-screen-xyz min-h-screen max-w-7xl mx-auto pt-0 pb-10">
+    <div
+      class="grid max-w-full grid-cols-1 mx-auto lg:grid-cols-12 gap-x-6 gap-y-8 lg:max-w-none"
+    >
+      <div class="self-center lg:col-span-4">
+        <h1
+          class="text-xl pb-0 mb-0 sm:text-2xl xl:text-3xl xl:leading-tight tracking-tight sm:tracking-tight
+						font-semibold transition-all duration-200 bg-indigo-600 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 bg-gradient-to-r bg-clip-text text-transparent from-pink-500 mt-1 to-yellow-500 via-red-500 hover:bg-gray-700"
+        >
+          impondesk
+        </h1>
+        <small
+          class="text-sm text-gray-500-xyz pt-0 clear-both bg-gradient-to-r bg-clip-text text-transparent from-pink-500 mt-1 to-yellow-500 via-red-500"
+        >
+          // Just another tech nerd
+        </small>
+
+        <blockquote class="text-xs font-semibold text-zinc-500 pt-2">
+          Driving Digital Transformation, Architecting Web Mobile & Cloud
+          Technology and Pre-Sales Consultant, Empowering Strategic Accounts,
+          Healthcare & Insurance Consultant, Strategic Accounts, Certified
+          Associate AWS & Azure Solution Expert Architect, Passionate Tech
+          Innovator, AI Enthusiast
+        </blockquote>
+
+        <p class="mt-5 text-sm font-normal">
+          Murli Israni, with 19+ years in software design and development,
+          specializes in technology consulting and architecture in insurance,
+          public health, and ICT solutions. As a Sr. Solution Architect (Grade
+          II) at CitiusTech Inc. committed to making a significant impact in the
+          business and lives, dedicated to crafting cherished and dependable
+          products that guide individuals through their careers and ambitions.
+        </p>
+
+        <p class="mt-5 text-sm font-normal">
+          I thrive in dynamic, collaborative environments and am committed to
+          fostering cross-functional teams that drive successful project
+          outcomes. I strongly believe in continuous learning and staying
+          updated with the ever-evolving tech landscape, enabling me to make
+          informed decisions that impact both short-term project goals and
+          long-term strategic vision.
+          <!-- I am a passionate technologist with a strong focus on web and mobile
+          technologies, cloud computing, and digital transformation. My
+          expertise lies in architecting scalable solutions that drive business
+          growth and enhance user experiences. I thrive on challenges and enjoy
+          collaborating with cross-functional teams to deliver innovative
+          solutions that meet the evolving needs of clients. -->
+        </p>
+
+        <p class="mt-5 text-xs font-normal">
+          <b>Got a gig for me? Got a question or an idea?</b>
+          <br />
+          If you're looking for a creative partner, have a tech-related question,
+          or want to brainstorm ideas, feel free to reach out. I'm always open to
+          new opportunities and conversations. Just drop me an <a
+            class="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+            href="mailto:murli.p.israni@gmail.com">Email</a
+          >—and please, no spamming! or Ask me on
+          <LinkButton
+            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+            href="https://twitter.com/impondesk"
+            target="_blank"
+          >
+            Twitter
+          </LinkButton>.
+        </p>
+
+        <p>
+          {
+            // only display if at least one social link is enabled
+            socialCount > 0 && (
+              <div class="social-wrapper pt-5">
+                <div class="social-links">Social Handle (@impondesk):</div>
+                <Social links={socialLinks} />
+              </div>
+            )
+          }
+        </p>
+      </div>
+
+      <div class="self-end lg:order-last lg:pb-20 lg:col-span-3">
+        <p class="text-xs font-bold tracking-widest text-gray-500 uppercase">
+          ⚡️ Latest Picks
+        </p>
+
+        <!-- {JSON.stringify(recentPosts)} -->
+
+        <div class="mt-2 space-y-0 lg:space-y-2">
+          {
+            posts && recentPosts && recentPosts?.length > 0 && (
+              <section id="recent-posts">
+                <ul>
+                  {recentPosts.map((post) => (
+                    <div class="relative overflow-hidden py-1">
+                      <div class="flex items-start lg:items-center">
+                        <p class="ml-0 text-sm font-normal leading-6 py-0 mt-0 mb-2">
+                          <a
+                            href={`/post/${post?.slug}`}
+                            title=""
+                            class="no-underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+                          >
+                            {post?.title}
+                            <span class="absolute inset-0" aria-hidden="true" />
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div class="pt-5">
+                    <a
+                      href="/posts"
+                      title=""
+                      class="inline-flex items-center text-xs font-bold tracking-widest  uppercase group underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+                    >
+                      Discover More
+                      <svg
+                        class="w-4 h-4 ml-2 transition-all duration-200 transform group-hover:translate-x-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </ul>
+              </section>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Middle Image -->
+      <div class="self-end lg:col-span-5">
+        <img
+          class="w-sm mx-auto mt-10 content-center items-center"
+          src="/avtar.png"
+          alt=""
+        />
+      </div>
+    </div>
+  </section>
+</article>

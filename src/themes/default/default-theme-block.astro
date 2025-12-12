@@ -1,0 +1,55 @@
+---
+import ContentBlock from "../content-block.astro";
+import CollectionBlock from "./collection/collection-block.astro";
+import CtaBlock from "./cta/cta-block.astro";
+import HeroBlock from "./hero/hero-block.astro";
+import SubscribeBlock from "./subscribe/subscribe-block.astro";
+import BlockHook from "./blocks/block-hook.astro";
+import VideoBlock from "./video-block.astro";
+import AudioBlock from "./audio-block.astro";
+import ContributorBlock from "./contributor/contributor-block.astro";
+import StatsBlock from "./stats/stats-block.astro";
+import RefsBlock from "./refs/refs-block.astro";
+import ItemsBlock from "./items/items-block.astro";
+
+export const DefaultThemeBlocks = {
+  hero: HeroBlock,
+  collection: CollectionBlock,
+
+  content: ContentBlock,
+  "text-block": ContentBlock,
+
+  refs: RefsBlock,
+
+  cta: CtaBlock,
+  subscribe: SubscribeBlock,
+  disclaimer: ContentBlock,
+
+  "items-block": ItemsBlock,
+
+  // Media Blocks
+  // "image-block": ContentBlock,
+  "video-block": VideoBlock,
+  video: VideoBlock,
+  "audio-block": AudioBlock,
+
+  // Custom Blocks
+  "block-hook": BlockHook,
+  contributor: ContributorBlock,
+
+  stats: StatsBlock,
+
+  // "logo-cloud": LogoCloudBlock,
+  // testimonials: TestimonialsDefault,
+  // imageGallery: ImageGalleryBlock,
+  // location: LocationBlock,
+  // eventAgenda: EventAgenda,
+  // "navigation-block": NavigationBlock,
+  // html: HtmlBlock,
+  // contact: Contact,
+  // faqs: FaqsDefault,
+
+  // teams: Teams,
+  // profiles: Profiles,
+};
+---

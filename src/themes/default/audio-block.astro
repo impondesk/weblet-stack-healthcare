@@ -1,0 +1,25 @@
+---
+const { link, caption } = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto py-10">
+    { link &&
+              <div class="mx-auto max-w-5xl py-10">
+                <center>
+                  <figure class="text-center w-full">
+                    <audio
+                      controls
+                      class="w-full mx-auto max-w-3xl"
+                      slot="media"
+                      src={link}
+                    >
+                      <source src="horse.ogg" type="audio/ogg" />
+                      <source src="horse.mp3" type="audio/mpeg" />
+                      Your browser does not support the audio element.</audio
+                    >
+                    {caption && <figcaption class="text-sm">{caption}</figcaption>}
+                    <!-- <a href="/media/cc0-audio/t-rex-roar.mp3"> Download audio </a> -->
+                  </figure>
+                </center>
+              </div>}
+</section>

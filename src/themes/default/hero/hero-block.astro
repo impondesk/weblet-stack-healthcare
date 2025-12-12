@@ -1,0 +1,41 @@
+---
+import HeroDefault from "./hero-default.astro";
+
+const { variant } = Astro.props;
+
+const collectionMap = {
+  default: HeroDefault,
+  list: HeroDefault,
+  grid: HeroDefault,
+  carousel: HeroDefault,
+  accordion: HeroDefault,
+  minimal: HeroDefault,
+  featured: HeroDefault,
+  features: HeroDefault,
+  left: HeroDefault,
+  right: HeroDefault,
+  badge: HeroDefault,
+  grouped: HeroDefault,
+  vertical: HeroDefault,
+  app: HeroDefault,
+  gallery: HeroDefault,
+  audience: HeroDefault,
+  slides: HeroDefault,
+  video: HeroDefault, // FIXME
+  audio: HeroDefault, //FIXME
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || HeroDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

@@ -1,0 +1,30 @@
+---
+import SectionTitle from "../section-title.astro";
+import RefsDefaultItem from "./refs-default-item.astro";
+
+const { title, subTitle, excerpt, heroImage, refs, variant } = Astro.props;
+
+console.log("RefsBlock props:", Astro.props);
+---
+
+<!-- {variant} --><!-- {JSON.stringify(Astro.props)} --><!-- {JSON.stringify(refs)} -->
+<section class="relative">
+  <SectionTitle {...Astro.props} />
+
+  <div>
+    <div
+      class="relative items-center w-full py-10 mx-auto max-w-7xl lg:pb-5 lg:pt-2 theme-section"
+    >
+      <div class="max-w-7xl mx-auto">
+        <div class="py-0">
+          <ol
+            class="grid grid-cols-3 gap-4 lg:grid-cols-4 sm:grid-cols-2"
+            role="list"
+          >
+            {refs && refs?.slice().map((ref) => <RefsDefaultItem {...ref} />)}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import ContributorDefault from "./contributor-default.astro";
+
+const { variant } = Astro.props;
+
+const collectionMap = {
+  default: ContributorDefault,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || ContributorDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

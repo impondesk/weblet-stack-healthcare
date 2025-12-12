@@ -1,0 +1,23 @@
+---
+import ContentRender from "./content-render.astro";
+import SectionTitle from "./default/section-title.astro";
+
+const { title, variant } = Astro.props;
+let className = variant === "center" ? " text-center lg:text-center " : "";
+
+const { sectionTitle = true } = Astro.props;
+---
+
+<div class="px-6-xyz sm:px-6-xyz lg:px-8-xyz py-24-xyz sm:py-32-xyz">
+  <section class="content-wrapper max-w-7xl mx-auto">
+    {
+      sectionTitle && (
+        <div class={` max-w-5xl mx-auto ${className}`}>
+          <SectionTitle {...Astro.props} />
+        </div>
+      )
+    }
+
+    <ContentRender {...Astro.props} className={""} />
+  </section>
+</div>

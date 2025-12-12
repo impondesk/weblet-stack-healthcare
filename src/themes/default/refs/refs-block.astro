@@ -1,0 +1,27 @@
+---
+import RefsDefault from "./refs-default.astro";
+
+const { variant } = Astro.props;
+
+// Map variant to components
+const collectionMap = {
+  default: RefsDefault, //FIXME
+  //   list: RefsList,
+  //   grid: RefsGrid,
+  //   masorny: RefsMasorny,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || null;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

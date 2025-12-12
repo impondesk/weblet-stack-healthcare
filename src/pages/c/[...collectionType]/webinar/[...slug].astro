@@ -1,0 +1,42 @@
+---
+import { getWebinarByDomain } from "../../../../api/webinar";
+import { defaultTheme } from "../../../../consts";
+import WebinarLayout from "../../../../layouts/webinar-layout.astro";
+
+const _host = Astro.locals.host;
+
+const { slug } = Astro.params;
+const { collectionType = "webinar" } = Astro.params;
+
+const data = await getWebinarByDomain(_host, slug);
+
+if (!data || !data.docs || data.docs.length === 0) {
+  throw new Error(`Webinar with slug "${slug}" not found.`);
+}
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  slug,
+  className: "webinar-page",
+  title: data.docs[0].title || "Webinar",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+};
+
+// console.log("Webinar instance data:", instance);
+---
+
+<WebinarLayout {...instance}>
+  <!-- <div class="max-w-7xl mx-auto">
+    <h1>Webinar Slug: {slug}</h1>
+    <p>Collection Type: {collectionType}</p>
+  </div> -->
+</WebinarLayout>

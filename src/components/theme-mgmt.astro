@@ -1,0 +1,182 @@
+---
+
+---
+
+<button id="theme-toggle" type="button" aria-label="Toggle theme">
+  <span class="light-mode" aria-hidden="true">⚫</span>
+  <span class="dark-mode" aria-hidden="true">⚪</span>
+
+  <!-- <span class="light-mode" aria-hidden="true">🌙</span>
+  <span class="dark-mode" aria-hidden="true">☀️</span> -->
+</button>
+
+<script is:inline>
+  // Inline: not bundled. It will execute as soon as possible
+  const STORAGE_THEME_KEY = "theme";
+  const DARK_THEME_CLASS = "dark";
+  const DARK = "dark";
+  const LIGHT = "light";
+  const root = document.documentElement;
+  let isDark = false; // Initialize as false to prevent assumption
+
+  const getUserPreferences = (localStorageKey) => {
+    try {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem(localStorageKey)
+      ) {
+        return localStorage.getItem(localStorageKey);
+      }
+      if (
+        typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        return DARK;
+      }
+      return LIGHT;
+    } catch (error) {
+      console.warn("Error accessing preferences:", error);
+      return LIGHT;
+    }
+  };
+
+  function updateButtonState() {
+    const button = document.getElementById("theme-toggle");
+    const lightIcon = button?.querySelector(".light-mode");
+    const darkIcon = button?.querySelector(".dark-mode");
+
+    if (lightIcon && darkIcon) {
+      if (isDark) {
+        lightIcon.style.display = "none";
+        darkIcon.style.display = "flex";
+        button.setAttribute("aria-label", "Switch to light mode");
+      } else {
+        lightIcon.style.display = "flex";
+        darkIcon.style.display = "none";
+        button.setAttribute("aria-label", "Switch to dark mode");
+      }
+    }
+  }
+
+  function initTheme() {
+    try {
+      const theme = getUserPreferences(STORAGE_THEME_KEY);
+      isDark = theme === DARK;
+      root.classList.toggle(DARK_THEME_CLASS, isDark);
+
+      // Update button state after DOM is ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", updateButtonState);
+      } else {
+        updateButtonState();
+      }
+    } catch (error) {
+      console.warn("Error initializing theme:", error);
+      // Fallback to light theme
+      isDark = false;
+      root.classList.remove(DARK_THEME_CLASS);
+    }
+  }
+
+  function handleClick() {
+    try {
+      isDark = !isDark;
+
+      // Update DOM immediately
+      root.classList.toggle(DARK_THEME_CLASS, isDark);
+
+      // Update localStorage
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem(STORAGE_THEME_KEY, isDark ? DARK : LIGHT);
+      }
+
+      // Update button visual state
+      updateButtonState();
+
+      // Dispatch custom event for other components that might need to know
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("themechange", {
+            detail: { theme: isDark ? DARK : LIGHT },
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Error handling theme toggle:", error);
+    }
+  }
+
+  function setButtonHandler() {
+    const button = document.getElementById("theme-toggle");
+    if (button) {
+      // Remove any existing listeners to prevent duplicates
+      button.removeEventListener("click", handleClick);
+      button.addEventListener("click", handleClick);
+    } else {
+      // If button not found, try again after DOM loads
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setButtonHandler);
+      }
+    }
+  }
+
+  // Initialize theme immediately to prevent flash
+  initTheme();
+
+  // Set up button handler
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setButtonHandler);
+  } else {
+    setButtonHandler();
+  }
+</script>
+
+<style is:global>
+  #theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* padding: 0.5rem; */
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #theme-toggle:hover {
+    /* background-color: rgba(0, 0, 0, 0.1); */
+  }
+
+  .dark #theme-toggle:hover {
+    /* background-color: rgba(255, 255, 255, 0.1); */
+  }
+
+  .light-mode,
+  .dark-mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* font-size: 1.25rem; */
+    transition: opacity 0.2s ease;
+  }
+
+  /* Default state - show light mode icon (switch to dark) */
+  .light-mode {
+    display: flex;
+  }
+
+  .dark-mode {
+    display: none;
+  }
+
+  /* Dark theme - show dark mode icon (switch to light) */
+  .dark .light-mode {
+    display: none;
+  }
+
+  .dark .dark-mode {
+    display: flex;
+  }
+</style>

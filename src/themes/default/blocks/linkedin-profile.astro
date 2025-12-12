@@ -1,0 +1,334 @@
+---
+import Skills from "../portfolio/skills.astro";
+
+const skillsData = [
+  {
+    category: "Frontend",
+    items: [
+      "HTML",
+      "CSS",
+      "Bootstrap",
+      "Tailwind CSS",
+      "JavaScript",
+      "Typescript",
+      "Angular",
+      "React",
+      "Next.js",
+      "Astro JS",
+    ],
+  },
+  {
+    category: "Backend",
+    items: ["Java/J2EE", "Node.js", "Java / Spring Boot", "MySQL", "MongoDB"],
+  },
+  {
+    category: "Databases",
+    items: ["MySQL", "MongoDB", "NocoDB", "PostgreSQL", "Redis"],
+  },
+  {
+    category: "Cloud",
+    items: ["AWS", "Azure", "Kubernetes", "Docker"],
+    color: "bg-green-100 text-green-800",
+  },
+  {
+    category: "AI / Data",
+    items: [
+      "Machine Learning",
+      "Deep Learning",
+      "NLP",
+      "Computer Vision",
+      "Generative AI",
+    ],
+    color: "bg-green-100 text-green-800",
+  },
+  {
+    category: "Project Management",
+    items: [
+      "Agile / Scrum",
+      "Jira",
+      "Confluence",
+      "Stakeholder Management",
+      "Team Leadership",
+    ],
+    color: "bg-purple-100 text-purple-800",
+  },
+  {
+    category: "Architecture & Design",
+    items: [
+      "Enterprise Architecture",
+      "Microservices",
+      "Solution Design",
+      "Integration Patterns",
+    ],
+    color: "bg-yellow-100 text-yellow-800",
+  },
+  {
+    category: "DevOps & CI/CD",
+    items: [
+      "CI/CD Pipelines",
+      "GitHub Actions",
+      "Jenkins",
+      "Terraform / IaC",
+      "Monitoring (ELK, Prometheus, Grafana)",
+    ],
+  },
+  {
+    category: "Databases & Storage",
+    items: ["PostgreSQL", "Oracle", "Snowflake", "Redis", "DynamoDB"],
+  },
+  {
+    category: "Integration & APIs",
+    items: [
+      "REST API",
+      "GraphQL",
+      "API Gateway",
+      "Event-Driven (Kafka, RabbitMQ)",
+    ],
+  },
+  {
+    category: "Security",
+    items: [
+      "IAM",
+      "OAuth2 / SAML",
+      "Cloud Security",
+      "OWASP",
+      "Compliance (GDPR, HIPAA)",
+    ],
+  },
+  {
+    category: "Data & Analytics",
+    items: ["ETL Pipelines", "Spark", "PowerBI", "Looker", "Data Modeling"],
+  },
+  {
+    category: "Leadership & Strategy",
+    items: [
+      "Technology Roadmapping",
+      "Mentoring",
+      //   "Vendor Management",
+      "Cross-functional Leadership",
+    ],
+  },
+  {
+    category: "Product & Business",
+    items: [
+      "Product Management",
+      "Business Process Reengineering",
+      "RFP/RFI Responses",
+      "Budgeting",
+    ],
+  },
+  {
+    category: "Tools & Platforms",
+    items: [
+      "Jira",
+      "Confluence",
+      "Git",
+      "Slack",
+      "VS Code",
+      "Postman",
+      //   "Figma",
+      //   "Lucidchart",
+      //   "Trello",
+      "Miro",
+      "Notion",
+      "Asana",
+      "ClickUp",
+      "Microsoft Teams",
+      "Google Workspace",
+      "Zoom",
+    ],
+  },
+  {
+    category: "Soft Skills",
+    items: [
+      "Communication",
+      "Problem Solving",
+      "Critical Thinking",
+      "Negotiation",
+      "Adaptability",
+    ],
+  },
+];
+---
+
+<!-- Banner / Background Photo --><!-- <section class="relative h-40 bg-gray-300 rounded-lg overflow-hidden">
+  <img
+    class="absolute inset-0 w-full h-full object-cover"
+    src="https://via.placeholder.com/1584x396"
+    alt="Banner"
+  />
+</section> --><!-- Profile Intro / Header --><!-- <section
+  class="bg-white shadow rounded-lg p-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6"
+>
+  <img
+    class="w-32 h-32 rounded-full border-4 border-white shadow"
+    src="https://via.placeholder.com/150"
+    alt="Profile Photo"
+  />
+  <div class="flex-1">
+    <h1 class="text-3xl font-bold">Your Name</h1>
+    <p class="text-xl text-gray-600">Current Title • Company</p>
+    <p class="text-sm text-gray-500">Location • Industry</p>
+  </div>
+  <div>
+    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg mb-2"
+      >Connect</button
+    >
+    <button class="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg"
+      >Message</button
+    >
+  </div>
+</section> --><!-- About / Summary --><!-- <section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-2">About</h2>
+  <p class="text-gray-700 leading-relaxed">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+    euismod, nisi vel consectetur euismod, nisl nunc consectetur nisi, euismod
+    consectetur nisi nunc euismod nisl.
+  </p>
+</section> --><!-- Featured / Media / Links --><!-- <section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Featured</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Example featured items -- >
+<div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
+  Project Link / Media
+</div>
+<div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
+  Article / Document
+</div>
+<div class="bg-gray-200 h-32 rounded-lg flex items-center justify-center">
+  Other Media
+</div>
+
+--><!-- Experience -->
+<section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Experience</h2>
+  <div class="space-y-6">
+    <!-- job item -->
+    <div class="space-y-1">
+      <h3 class="text-xl font-bold">Job Title • Company</h3>
+      <p class="text-gray-600">Start Date – End Date • Location</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-1 mt-2">
+        <li>Responsibility or achievement one</li>
+        <li>Responsibility or achievement two</li>
+        <li>Responsibility or achievement three</li>
+      </ul>
+    </div>
+    <!-- more job items... -->
+  </div>
+</section>
+
+<!-- Education -->
+<section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Education</h2>
+  <div class="space-y-4">
+    <div>
+      <h3 class="text-lg font-bold">Degree • Institution</h3>
+      <p class="text-gray-600">Years Attended • Location</p>
+      <p class="text-gray-700 mt-1">Relevant activities, societies, etc.</p>
+    </div>
+    <!-- more education items -->
+  </div>
+</section>
+
+<!-- Licenses & Certifications -->
+<section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Licenses & Certifications</h2>
+  <ul class="list-disc list-inside text-gray-700 space-y-2">
+    <li>Certification Name • Issuer • Date</li>
+    <li>Another Certification • Issuer • Date</li>
+  </ul>
+</section>
+
+<!-- Volunteer / Causes -->
+<section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Volunteer Experience</h2>
+  <div class="space-y-4">
+    <div>
+      <h3 class="text-lg font-bold">Role • Organization</h3>
+      <p class="text-gray-600">Start Date – End Date • Location</p>
+      <p class="text-gray-700 mt-1">What you did / impact / outcome.</p>
+    </div>
+    <!-- more volunteer items -->
+  </div>
+</section>
+
+<!-- Skills & Endorsements -->
+<Skills skills={skillsData} />
+
+<!-- Accomplishments -->
+<section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Accomplishments</h2>
+  <div class="space-y-4">
+    <!-- Publications -->
+    <div>
+      <h3 class="text-lg font-bold">Publications</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Publication Title • Publisher • Year</li>
+      </ul>
+    </div>
+
+    <!-- Projects -->
+    <div>
+      <h3 class="text-lg font-bold">Projects</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Project Title • Description • Date</li>
+      </ul>
+    </div>
+
+    <!-- Honors & Awards -->
+    <div>
+      <h3 class="text-lg font-bold">Honors & Awards</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Award Name • Issuer • Year</li>
+      </ul>
+    </div>
+
+    <!-- Languages -->
+    <div>
+      <h3 class="text-lg font-bold">Languages</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Language – Proficiency Level</li>
+      </ul>
+    </div>
+
+    <!-- Organizations / Memberships -->
+    <div>
+      <h3 class="text-lg font-bold">Organizations</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Organization Name • Role • Date</li>
+      </ul>
+    </div>
+
+    <!-- Patents / Courses / Tests / Etc. -->
+    <div>
+      <h3 class="text-lg font-bold">Other Certifications & Courses</h3>
+      <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <li>Course Name • Institution • Date</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Recommendations -->
+<section class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-2xl font-semibold mb-4">Recommendations</h2>
+  <div class="space-y-4">
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <p class="text-gray-700">
+        “Quote from someone recommending you, speaking about your skills,
+        professionalism, collaboration, etc.”
+      </p>
+      <p class="mt-2 text-gray-600 font-semibold">- Name, Title at Company</p>
+    </div>
+    <!-- more recommendations -->
+  </div>
+</section>
+
+<!-- Contact Info / Additional Info -->
+<section class="bg-white shadow rounded-lg p-6 mb-6">
+  <h2 class="text-2xl font-semibold mb-2">Contact Information</h2>
+  <p class="text-gray-700">📧 murli.p.israni@gmail.com</p>
+  <p class="text-gray-700">🔗 www.impondesk.com</p>
+  <p class="text-gray-700">📍 Mumbai, India</p>
+  <!-- <p class="text-gray-700">Social Links (GitHub, Twitter, etc.)</p> -->
+</section>

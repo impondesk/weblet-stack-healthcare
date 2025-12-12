@@ -1,0 +1,28 @@
+---
+import ItemsDefault from "./items-default.astro";
+import ItemsGrid from "./items-grid.astro";
+import ItemsList from "./items-list.astro";
+
+const { variant } = Astro.props;
+
+// Map variant to components
+const collectionMap = {
+  default: ItemsDefault,
+  list: ItemsList,
+  grid: ItemsGrid,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || null;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

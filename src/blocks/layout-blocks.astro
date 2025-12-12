@@ -1,0 +1,39 @@
+---
+import { DefaultThemeBlocks } from "../themes/default/default-theme-block.astro";
+
+const { layout } = Astro.props;
+---
+
+<section>
+  {
+    layout && layout.length > 0 ? (
+      layout.map((block, index) => {
+        // console.log("Processing block:", block);
+        // console.log("Block type:", block.blockType);
+        // console.log("Available components:", Object.keys(DefaultThemeBlocks));
+
+        const BlockComponent = DefaultThemeBlocks[block.blockType];
+
+        if (!BlockComponent) {
+          console.warn(`No component found for blockType: ${block.blockType}`);
+          return (
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <strong>Missing Component:</strong> No component found for
+              blockType "{block.blockType}"
+              <br />
+              <small>
+                Available components:{" "}
+                {Object.keys(DefaultThemeBlocks).join(", ")}
+              </small>
+            </div>
+          );
+        }
+
+        // console.log("Rendering component:", BlockComponent);
+        return <BlockComponent key={index} {...block} />;
+      })
+    ) : (
+      <br />
+    )
+  }
+</section>

@@ -1,0 +1,7 @@
+---
+const { minutesRead, clazz } = Astro.props;
+---
+
+<span class={`font-medium ${clazz}`}>
+  {minutesRead?.text || "0 min read"}
+</span>

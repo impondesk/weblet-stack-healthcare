@@ -1,0 +1,65 @@
+---
+import PublishTimestamp from "../../../../blocks/publish-timestamp.astro";
+import { formatDate } from "../../../../scripts/formatDate";
+
+const {
+  title,
+  slug,
+  labels,
+  featuredImage,
+  excerpt,
+  description,
+  createdAt,
+  updatedAt,
+} = Astro.props;
+
+const pubDatetime = updatedAt || createdAt || new Date().toISOString();
+
+const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
+const url = `/c/${collectionName}/${slug}`;
+
+const {} = Astro.props.authors || {};
+const { name } = Astro.props.authors?.[0] || {};
+const author = Astro.props.authors?.[0] ? name : "Anonymous";
+---
+
+<div
+  style="opacity: 1;"
+  class="relative flex aspect-9/16 w-72 shrink-0 snap-start scroll-ml-(--scroll-padding) flex-col justify-end overflow-hidden rounded-3xl sm:aspect-3/4 sm:w-96"
+>
+  <img
+    alt=""
+    loading="lazy"
+    src={featuredImage?.url || featuredImage?.ref}
+    alt={featuredImage?.alt || title}
+    class="absolute inset-x-0 top-0 aspect-square w-full object-cover"
+  />
+
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 rounded-3xl bg-linear-to-t from-black from-[calc(7/16*100%)] ring-1 ring-gray-950/10 ring-inset sm:from-25%"
+  >
+  </div>
+
+  <figure class="relative p-10">
+    <blockquote>
+      <a href={`/post/${slug}`} class="relative text-xl/7 text-white">
+        {title}
+      </a>
+    </blockquote>
+
+    <figcaption class="mt-6 border-t border-white/20 pt-6">
+      <p class="text-sm/6 font-medium text-white">{author}</p><p
+        class="text-sm/6 font-medium"
+      >
+        <span class="text-white">
+          <PublishTimestamp
+            pubDatetime={pubDatetime}
+            url={url}
+            clazz="inline"
+          />
+        </span>
+      </p>
+    </figcaption>
+  </figure>
+</div>

@@ -1,0 +1,32 @@
+---
+const { subTitle, title, excerpt } = Astro.props;
+
+const { video } = Astro.props;
+---
+
+<section class="py-12">
+  <p class="mt-2 text-sm uppercase font-semibold text-center">{subTitle}</p>
+  <p class="mt-4 text-balance text-center font-normal text-3xl sm:text-5xl">
+    {title}
+  </p>
+  <p class="max-w-5xl mt-4 text-base text-gray-500 text-center mx-auto">
+    {excerpt}
+  </p>
+</section>
+
+{JSON.stringify(video)}
+
+<!-- <section>
+  {
+    video && video?.link && (
+      <div class="mx-auto max-w-5xl">
+        <center>
+          <video class="h-full w-full l rounded-lg" controls autoplay muted>
+            <source src={video?.link} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </center>
+      </div>
+    )
+  }
+</section> -->

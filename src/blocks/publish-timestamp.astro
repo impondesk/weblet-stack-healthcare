@@ -1,0 +1,9 @@
+---
+import { formatDate } from "../scripts/formatDate";
+
+const { pubDatetime, url, clazz } = Astro.props;
+---
+
+<time transition:name={`${url}-date`} class={clazz}
+  >{formatDate(pubDatetime)}</time
+>

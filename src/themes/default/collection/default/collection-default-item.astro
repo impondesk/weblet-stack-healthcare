@@ -1,0 +1,13 @@
+---
+const { title, slug, url, blockType, contentType } = Astro.props;
+console.log("Collection Default Item Props:", Astro.props);
+---
+
+<a
+  href={`/${contentType}/${slug}`}
+  title={title}
+  aria-label={url}
+  class="no-underline"
+>
+  {title}
+</a>

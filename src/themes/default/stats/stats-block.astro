@@ -1,0 +1,23 @@
+---
+import StatsDefault from "./stats-default.astro";
+
+const { variant } = Astro.props;
+
+const collectionMap = {
+  default: StatsDefault,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || StatsDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

@@ -1,0 +1,134 @@
+---
+import { defaultTheme } from "../consts";
+import { formatDate } from "../scripts/formatDate";
+import AudioBlock from "../themes/default/audio-block.astro";
+import DefaultThemeBlock from "../themes/default/default-theme-block.astro";
+import VideoBlock from "../themes/default/video-block.astro";
+import Layout from "./layout.astro";
+
+const {
+  title,
+  layout,
+  audioLink,
+  video,
+  className,
+  excerpt,
+  category,
+  featured,
+  authors,
+  updatedAt,
+  tags,
+} = Astro.props;
+
+const author = authors && authors[0];
+---
+
+<Layout>
+  <article class="">
+    <section class=`relative overflow-x-hidden mx-auto max-w-7xl ${className}`>
+      <div class="max-w-7xl relative mx-auto py-0">
+        <div class="">
+          <div class="items-center inline-flex space-x-1 w-full">
+            {
+              author && author?.profiles && (
+                <div>
+                  <a
+                    href={`/profile/${author?.profiles?.slug}`}
+                    class="font-medium text-sm pr-2"
+                  >
+                    {author?.profiles?.name}
+                  </a>
+                </div>
+              )
+            }
+            {author && !author?.profiles && <> {author?.name} </>}
+
+            <span class="px-1">&nbsp</span>
+
+            {
+              updatedAt && (
+                <time
+                  class="flex text-gray-400 text-sm pr-2"
+                  datetime={updatedAt}
+                >
+                  {formatDate(updatedAt)}
+                </time>
+              )
+            }
+
+            {
+              category && category?.title && (
+                <a
+                  href={`/category/${category.slug}`}
+                  class="font-medium text-sm pr-2 uppercase"
+                >
+                  {category?.title}
+                </a>
+              )
+            }
+
+            {
+              featured && (
+                <div>
+                  <p class="font-bold text-sm pr-2 text-indigo-800">
+                    {" "}
+                    ✨ Featured
+                  </p>
+                </div>
+              )
+            }
+          </div>
+
+          <p class="text-4xl mt-4 font-normal tracking-tighter">
+            {title}
+          </p>
+          <p class="mt-2 text-base max-w-5xl text-gray-500">{excerpt}</p>
+          <ul class="flex flex-wrap gap-2 mt-2" role="list">
+            {
+              tags &&
+                tags?.map((tag) => (
+                  <a href={`/tags/${tag?.slug}`} class="no-underline">
+                    {" "}
+                    <li class=" flex items-center justify-center h-8 text-xs px-4 py-2 font-semibold  no-underline transition-all border rounded-lg bg-vulcan-900 hover:text-indigo-400 border-vulcan-700">
+                      {tag?.title}
+                    </li>
+                  </a>
+                ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {video && <VideoBlock video={video} className="mx-auto max-w-5xl" />}
+
+    {
+      audioLink && (
+        <AudioBlock
+          audioLink={audioLink}
+          className="mx-auto max-w-5xl"
+          title={title}
+          excerpt={excerpt}
+        />
+      )
+    }
+  </article>
+
+  <div>
+    {
+      layout &&
+        layout?.map((block, index) => {
+          // console.log("Block:", block);
+
+          const BlockComponent = DefaultThemeBlock[block.blockType];
+          if (!BlockComponent) return null;
+          // block["video"] = video; // FIXME: This is a workaround to pass video to the block component
+          return <BlockComponent key={index} {...block} />;
+        })
+    }
+  </div>
+</Layout>
+
+<section>
+  <slot />
+</section>

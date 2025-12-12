@@ -1,0 +1,42 @@
+---
+import { getPodcastByDomain } from "../../../../api/podcast";
+import { defaultTheme } from "../../../../consts";
+import PodcastLayout from "../../../../layouts/podcast-layout.astro";
+
+const _host = Astro.locals.host;
+
+const { slug } = Astro.params;
+const { collectionType = "podcast" } = Astro.params;
+
+const data = await getPodcastByDomain(_host, slug);
+
+if (!data || !data.docs || data.docs.length === 0) {
+  throw new Error(`Podcast with slug "${slug}" not found.`);
+}
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  slug,
+  className: "podcast-page",
+  title: data.docs[0].title || "Podcast",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+};
+
+// console.log("Podcast instance data:", instance);
+---
+
+<PodcastLayout {...instance}>
+  <!-- <div class="max-w-7xl mx-auto">
+    <h1>Webinar Slug: {slug}</h1>
+    <p>Collection Type: {collectionType}</p>
+  </div> -->
+</PodcastLayout>

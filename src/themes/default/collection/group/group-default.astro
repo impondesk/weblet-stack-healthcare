@@ -1,0 +1,70 @@
+---
+import SectionTitle from "../../section-title.astro";
+import GroupDefaultItem from "./group-default-item.astro";
+
+const { records, groupCriteria } = Astro.props;
+const { referringItems } = groupCriteria || [];
+
+console.log("Group Default Props");
+// console.log("Group Default Props:", Astro.props);
+// console.log("records", records);
+// console.log("groupCriteria", groupCriteria);
+console.log("referringItems", referringItems);
+
+// 2. Group the flattened items by the 'contentType' property.
+const groupedItems =
+  referringItems &&
+  referringItems?.reduce((acc, item) => {
+    // Use a fallback key if contentType is not present.
+    const key = (item as any)?.contentType || "related";
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(item);
+    return acc;
+  }, {});
+console.log("Grouped Items by contentType:", groupedItems);
+---
+
+<!-- {JSON.stringify(records, null, 2)} -->
+<section class="relative w-full max-w-7xl mx-auto lg:pb-24">
+  <SectionTitle {...Astro.props} />
+
+  <div class="py-0">
+    <ol
+      class="grid grid-cols-3 gap-4 lg:grid-cols-4 sm:grid-cols-2"
+      role="list"
+    >
+      {records?.map((post) => <GroupDefaultItem {...post} />)}
+    </ol>
+  </div>
+
+  <div class="py-2">
+    {
+      referringItems &&
+        referringItems.length > 0 &&
+        Object.keys(groupedItems).length > 0 && (
+          <div class="mt-12">
+            {Object.entries(groupedItems).map(([contentType, items]) => (
+              <div class="mb-12">
+                {/* Group Title */}
+                {Object.keys(groupedItems).length > 1 && (
+                  <h2 class="text-3xl font-bold mb-6 border-b-0 pb-0 capitalize">
+                    {contentType}
+                  </h2>
+                )}
+                {/* Group Items */}
+                <ol
+                  class="grid grid-cols-3 gap-4 lg:grid-cols-4 sm:grid-cols-2"
+                  role="list"
+                >
+                  {Array.isArray(items) &&
+                    items.map((post) => <GroupDefaultItem {...post} />)}
+                </ol>{" "}
+              </div>
+            ))}
+          </div>
+        )
+    }
+  </div>
+</section>
