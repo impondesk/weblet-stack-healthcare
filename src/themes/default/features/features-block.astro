@@ -1,0 +1,26 @@
+---
+import FeaturesDefault from "./features-default.astro";
+
+const { variant } = Astro.props;
+
+// Map variant to components
+const collectionMap = {
+  default: FeaturesDefault,
+  //   list: FeaturesDefault,
+  //   grid: FeaturesDefault,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || FeaturesDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

@@ -11,15 +11,20 @@ import ContributorBlock from "./contributor/contributor-block.astro";
 import StatsBlock from "./stats/stats-block.astro";
 import RefsBlock from "./refs/refs-block.astro";
 import ItemsBlock from "./items/items-block.astro";
+import FeaturesBlock from "./features/features-block.astro";
 
 export const DefaultThemeBlocks = {
   hero: HeroBlock,
+
   collection: CollectionBlock,
+  features: FeaturesBlock,
 
   content: ContentBlock,
   "text-block": ContentBlock,
 
   refs: RefsBlock,
+
+  // testimonials: TestimonialsDefault,
 
   cta: CtaBlock,
   subscribe: SubscribeBlock,
@@ -40,7 +45,7 @@ export const DefaultThemeBlocks = {
   stats: StatsBlock,
 
   // "logo-cloud": LogoCloudBlock,
-  // testimonials: TestimonialsDefault,
+
   // imageGallery: ImageGalleryBlock,
   // location: LocationBlock,
   // eventAgenda: EventAgenda,
