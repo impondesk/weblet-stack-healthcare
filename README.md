@@ -13,3 +13,10 @@ git push origin main
 Default - yarn dev --port 9091
 Menu - yarn dev --port 9092
 
+
+
+https://menova.weblethq.com/
+https://gunchiiis.menova.weblethq.com/
+https://menova.weblethq.com/barber-menu
+https://menova.weblethq.com/bakery-menu
+https://menova.weblethq.com/cafe-menu
