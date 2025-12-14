@@ -14,7 +14,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://weblethq.com",
 
   // Default base URL
   base: "/",
