@@ -6,6 +6,8 @@ import PodcastsDefault from "./podcast/podcasts-default.astro";
 import PostsGrid from "./post/posts-grid.astro";
 import PostsList from "./post/posts-list.astro";
 import PostsSlider from "./post/posts-slider.astro";
+import ProductDefault from "./product/product-default.astro";
+import ProductGrouped from "./product/product-grouped.astro";
 import RoadmapsGrid from "./roadmaps/roadmaps-grid.astro";
 import WebinarsDefault from "./webinars/webinars-default.astro";
 
@@ -24,6 +26,20 @@ const collectionMap = {
 
   groups: {
     default: GroupDefault,
+  },
+
+  products: {
+    default: ProductDefault,
+    grouped: ProductGrouped,
+    categorized: ProductDefault,
+
+    // list: ProductsList,
+    // grid: ProductsGrid,
+    // carousel: ProductsCarousel,
+    // accordion: ProductsAccordion,
+    // minimal: ProductsMinimal,
+    // featured: ProductsFeatured,
+    // badged: ProductsBadged,
   },
 
   guides: {
