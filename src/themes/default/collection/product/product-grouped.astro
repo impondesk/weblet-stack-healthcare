@@ -67,7 +67,7 @@ const groupedEntries = Object.values(groupedRecords) as {
                   const isOutOfStock = Boolean(record?.outOfStock);
                   const priceLabel =
                     typeof record?.price === "number"
-                      ? `$${record.price}`
+                      ? `₹ ${record.price}`
                       : null;
 
                   return (
