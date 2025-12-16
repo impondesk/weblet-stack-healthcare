@@ -24,10 +24,25 @@ const groupedRecords = (records || []).reduce(
   {} as Record<string, { group: any; items: any[] }>
 );
 
-const groupedEntries = Object.values(groupedRecords) as {
-  group: any;
-  items: any[];
-}[];
+const groupedEntries = (
+  Object.values(groupedRecords) as {
+    group: any;
+    items: any[];
+  }[]
+)
+  .sort((a, b) => {
+    const titleA = (a.group?.title || "Other").toLowerCase();
+    const titleB = (b.group?.title || "Other").toLowerCase();
+    return titleA.localeCompare(titleB);
+  })
+  .map((entry) => ({
+    ...entry,
+    items: entry.items.sort((a, b) => {
+      const nameA = (a?.title || "").toLowerCase();
+      const nameB = (b?.title || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    }),
+  }));
 ---
 
 <!-- {JSON.stringify(records, null, 2)} -->
