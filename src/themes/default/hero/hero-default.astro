@@ -1,5 +1,5 @@
 ---
-const { subTitle, title, excerpt } = Astro.props;
+const { subTitle, title, excerpt, links, bgMood } = Astro.props;
 ---
 
 <section class="py-12">
@@ -10,6 +10,67 @@ const { subTitle, title, excerpt } = Astro.props;
   <p class="max-w-5xl mt-4 text-gray-500 text-center mx-auto text-xl/8">
     {excerpt}
   </p>
+
+  {
+    links && links.length > 0 && (
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
+        {links.map((link, index) => {
+          // Skip empty links
+          if (!link || Object.keys(link).length === 0) return null;
+
+          const isPrimary = index === 0;
+
+          // Determine the URL based on link type
+          let href = "#";
+          let isExternal = false;
+
+          if (link.type === "internal" && link.internalLink?.value?.slug) {
+            // Internal link - use slug
+            href = `/${link.internalLink.value.slug}`;
+          } else if (link.type === "external" && link.externalLink) {
+            // External link
+            href = link.externalLink;
+            isExternal = true;
+          } else if (link.url) {
+            // Fallback to direct URL property
+            href = link.url;
+            isExternal = link.url.startsWith("http");
+          }
+
+          const linkProps = isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {};
+
+          return (
+            <a
+              href={href}
+              {...linkProps}
+              class={
+                isPrimary
+                  ? `inline-flex items-center justify-center rounded-lg ${
+                      bgMood === "dark"
+                        ? "bg-white text-gray-900 hover:bg-gray-100"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    } px-5 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600`
+                  : `inline-flex items-center justify-center text-sm font-semibold ${
+                      bgMood === "dark"
+                        ? "text-white hover:text-gray-200"
+                        : "text-gray-900 hover:text-gray-700"
+                    } transition-colors`
+              }
+            >
+              {link?.label || link?.text || "Learn more"}
+              {!isPrimary && (
+                <span class="ml-1" aria-hidden="true">
+                  →
+                </span>
+              )}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
 </section>
 
 <!-- {JSON.stringify(video)} -->
