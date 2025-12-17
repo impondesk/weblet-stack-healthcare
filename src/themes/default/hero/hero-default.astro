@@ -1,13 +1,38 @@
 ---
-const { subTitle, title, excerpt, links, bgMood } = Astro.props;
+const { subTitle, title, excerpt, links, bgMood, heroImage } = Astro.props;
+
+// Build the full image URL
+const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename 
+  ? `https://${heroImage.prefix}/${heroImage.filename}` 
+  : null);
 ---
 
-<section class="py-12">
-  <p class="mt-2 text-base uppercase font-semibold text-center">{subTitle}</p>
-  <p class="mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl">
+<section class="relative py-12 min-h-[500px] flex items-center">
+  {imageUrl && (
+    <>
+      <!-- Background Image -->
+      <div 
+        class="absolute inset-0 bg-cover bg-center z-0"
+        style={`background-image: url('${imageUrl}'); background-position: ${heroImage?.focalX || 50}% ${heroImage?.focalY || 50}%;`}
+      ></div>
+      
+      <!-- Elegant Overlay with gradient -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60 z-0"></div>
+      
+      <!-- Optional blur backdrop for better text readability -->
+      <div class="absolute inset-0 backdrop-blur-[2px] z-0"></div>
+    </>
+  )}
+  
+  <!-- Content Container - positioned above background -->
+  <div class="relative z-10 w-full">
+  <p class={`mt-2 text-base uppercase font-semibold text-center ${imageUrl ? 'text-white drop-shadow-lg' : ''}`}>
+    {subTitle}
+  </p>
+  <p class={`mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl ${imageUrl ? 'text-white drop-shadow-2xl' : ''}`}>
     {title}
   </p>
-  <p class="max-w-5xl mt-4 text-gray-500 text-center mx-auto text-xl/8">
+  <p class={`max-w-5xl mt-4 text-center mx-auto text-xl/8 ${imageUrl ? 'text-gray-100 drop-shadow-lg' : 'text-gray-500'}`}>
     {excerpt}
   </p>
 
@@ -71,6 +96,7 @@ const { subTitle, title, excerpt, links, bgMood } = Astro.props;
       </div>
     )
   }
+  </div>
 </section>
 
 <!-- {JSON.stringify(video)} -->
