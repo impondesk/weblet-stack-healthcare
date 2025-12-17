@@ -31,12 +31,12 @@ console.log(
 
 const product = await data?.docs[0];
 
-// if (product?.tenant) {
-//   (Astro.locals as { tenant?: any; theme?: any }).tenant = product.tenant;
-//   (Astro.locals as { tenant?: any; theme?: any }).theme = product.tenant.theme;
-// }
+if (product?.tenant) {
+  (Astro.locals as { tenant?: any; theme?: any }).tenant = product.tenant;
+  (Astro.locals as { tenant?: any; theme?: any }).theme = product.tenant.theme;
+}
 
-// // Use referringItems to populate the records for the layout
+// Use referringItems to populate the records for the layout
 const referringItems = product?.referringItems || [];
 // // Tenant Dynamic Collections
 let dynamicCollectionData: any[] = [];
