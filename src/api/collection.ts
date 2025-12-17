@@ -36,7 +36,7 @@ export const fetchDynamicCollection = async (type, id, tenantId) => {
     }
 
     const data = await response.json();
-    // console.log("Fetched data:", data);
+    console.log("Fetched data:", data);
 
     return data;
   } catch (error) {

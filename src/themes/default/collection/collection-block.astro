@@ -10,11 +10,18 @@ import ProductAccorion from "./product/product-accorion.astro";
 import ProductDefault from "./product/product-default.astro";
 import ProductGrouped from "./product/product-grouped.astro";
 import RoadmapsGrid from "./roadmaps/roadmaps-grid.astro";
+import StoresDefault from "./store/stores-default.astro";
 import WebinarsDefault from "./webinars/webinars-default.astro";
 
 const { variant, collectionType } = Astro.props;
 
 const collectionMap = {
+  stores: {
+    default: StoresDefault,
+    list: StoresDefault,
+    grid: StoresDefault,
+  },
+
   faq: {
     default: CollectionDefault,
     // featured: CollectionDefault,
@@ -160,7 +167,10 @@ const getComponent = (collectionType, variant) => {
 const RenderComponent = getComponent(collectionType, variant);
 ---
 
-<!-- {JSON.stringify(Astro.props, null, 2)} -->{
+<!-- {JSON.stringify(Astro.props, null, 2)} -->
+<div class=""></div>
+
+{
   RenderComponent ? (
     <RenderComponent {...Astro.props} />
   ) : (
