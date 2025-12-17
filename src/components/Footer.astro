@@ -147,7 +147,9 @@ const { tenant } = Astro.locals?.tenant || {};
         <div class="text-sm space-y-1">
           <div class="block">
             © Copyright {currentYear}, All Rights Reserved by
-            <b>{Astro.locals?.tenant?.name}</b>
+            <a href="/" class="no-underline hover:no-underline">
+              <b>{Astro.locals?.tenant?.name}</b>
+            </a>
 
             <!-- {
               tenant && (
@@ -159,9 +161,11 @@ const { tenant } = Astro.locals?.tenant || {};
             } -->
           </div>
           <div class="block">
-            Expertly powered and managed by <b
-              >Weblet Platforms, Default Theme Template</b
-            >
+            Expertly powered and managed by <a
+              href="https://weblethq.com"
+              target="_blank"
+              class="no-underline hover:no-underline"><b>Weblet Platforms</b></a
+            >, Default Theme Template
           </div>
         </div>
       </div>
