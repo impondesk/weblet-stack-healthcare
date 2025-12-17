@@ -1,27 +1,79 @@
 ---
 import SectionTitle from "../section-title.astro";
 
-const { title, variant } = Astro.props;
+const { title, variant, links, bgMood } = Astro.props;
 
 let className = variant === "center" ? " text-center lg:text-center " : "";
+
+// Determine background styling based on bgMood
+const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "";
 ---
 
-<div class="">
+<div class={bgClass}>
   <div class="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
     <section class={`max-w-7xl mx-auto py-5 pt-10 ${className} text-center`}>
       <SectionTitle {...Astro.props} />
     </section>
 
-    <!-- FIXME -->
-    <!-- <div class="mt-10 flex items-center justify-center gap-x-6">
-      <a
-        href="#"
-        class="rounded-none bg-blue-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-        >Get started</a
-      >
-      <a href="#" class="text-sm/6 font-semibold text-gray-900"
-        >Learn more <span aria-hidden="true">→</span></a
-      >
-    </div> -->
+    {
+      links && links.length > 0 && (
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
+          {links.map((link, index) => {
+            // Skip empty links
+            if (!link || Object.keys(link).length === 0) return null;
+
+            const isPrimary = index === 0;
+
+            // Determine the URL based on link type
+            let href = "#";
+            let isExternal = false;
+
+            if (link.type === "internal" && link.internalLink?.value?.slug) {
+              // Internal link - use slug
+              href = `/${link.internalLink.value.slug}`;
+            } else if (link.type === "external" && link.externalLink) {
+              // External link
+              href = link.externalLink;
+              isExternal = true;
+            } else if (link.url) {
+              // Fallback to direct URL property
+              href = link.url;
+              isExternal = link.url.startsWith("http");
+            }
+
+            const linkProps = isExternal
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {};
+
+            return (
+              <a
+                href={href}
+                {...linkProps}
+                class={
+                  isPrimary
+                    ? `inline-flex items-center justify-center rounded-lg ${
+                        bgMood === "dark"
+                          ? "bg-white text-gray-900 hover:bg-gray-100"
+                          : "bg-blue-600 text-white hover:bg-blue-700"
+                      } px-5 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600`
+                    : `inline-flex items-center justify-center text-sm font-semibold ${
+                        bgMood === "dark"
+                          ? "text-white hover:text-gray-200"
+                          : "text-gray-900 hover:text-gray-700"
+                      } transition-colors`
+                }
+              >
+                {link?.label || link?.text || "Learn more"}
+                {!isPrimary && (
+                  <span class="ml-1" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </a>
+            );
+          })}
+        </div>
+      )
+    }
   </div>
 </div>
