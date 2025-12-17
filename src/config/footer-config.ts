@@ -30,6 +30,7 @@ export interface FooterConfig {
   copyrightText?: string; // Custom copyright text (optional)
   poweredByText?: string; // Custom "powered by" text (optional)
   showPoweredBy: boolean;
+  themeName?: string; // Theme name to display in footer (optional)
 }
 
 // CUSTOMIZE YOUR FOOTER HERE
@@ -63,4 +64,7 @@ export const footerConfig: FooterConfig = {
 
   // Show/hide the "powered by" section
   showPoweredBy: true,
+
+  // Theme name displayed in footer
+  themeName: "Default Theme Template",
 };

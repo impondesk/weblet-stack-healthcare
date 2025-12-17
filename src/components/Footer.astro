@@ -176,7 +176,7 @@ const { tenant } = Astro.locals?.tenant || {};
                     >
                       <b>Weblet Platforms</b>
                     </a>
-                    , Default Theme Template
+                    {footerConfig.themeName && `, ${footerConfig.themeName}`}
                   </>
                 ) : (
                   footerConfig.poweredByText
