@@ -128,11 +128,34 @@ const groupedEntries = (
                           </p>
                         )}
 
-                        {isOutOfStock && (
-                          <span class="inline-block text-xs font-medium bg-gray-200 text-gray-700 px-2 py-0.5 rounded mt-2">
-                            Not Available
-                          </span>
-                        )}
+                        <div class="flex flex-wrap gap-1.5 mt-2">
+                          {isOutOfStock && (
+                            <span class="inline-block text-xs font-medium bg-red-400 text-gray-700 px-2 py-0.5 rounded">
+                              Not Available
+                            </span>
+                          )}
+
+                          {Array.isArray(record?.tags) &&
+                            record.tags.length > 0 &&
+                            record.tags.map((tag) => {
+                              const bgColorClass = tag?.color
+                                ? `bg-${tag.color}-100`
+                                : "bg-gray-100";
+                              const textColorClass = tag?.color
+                                ? `text-${tag.color}-700`
+                                : "text-gray-700";
+
+                              return (
+                                <span
+                                  class={`inline-flex items-center gap-1 text-xs font-medium ${bgColorClass} ${textColorClass} px-2 py-0.5 rounded`}
+                                  title={tag?.category || tag?.tag}
+                                >
+                                  {tag?.icon && <span>{tag.icon}</span>}
+                                  <span>{tag?.tag}</span>
+                                </span>
+                              );
+                            })}
+                        </div>
                       </a>
                     </li>
                   );
