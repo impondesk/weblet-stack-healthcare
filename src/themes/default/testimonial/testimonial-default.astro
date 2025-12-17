@@ -3,7 +3,7 @@ import SectionTitle from "../section-title.astro";
 
 const { title, testimonials, bgMood, links } = Astro.props;
 
-const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-white";
+const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
 ---
 
 <section class={`py-16 sm:py-24 ${bgClass}`}>
@@ -17,7 +17,9 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-white";
             const author = testimonial?.author || testimonial?.title || "";
             const role = testimonial?.role || "";
             const organization =
-              testimonial?.organization || testimonial?.excerpt?.split(", ")[0] || "";
+              testimonial?.organization ||
+              testimonial?.excerpt?.split(", ")[0] ||
+              "";
             const comment = testimonial?.comment || "";
 
             return (
