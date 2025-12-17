@@ -31,13 +31,25 @@ const { features } = Astro.props;
             <div>
               <h3 class="text-base leading-normal sm:text-lg md:text-xl text-base-900 font-medium">
                 {feature.title}
+
+                {feature.summary && feature.description && (
+                  <span class="mt-2 text-sm text-accent-600 font-semibold">
+                    — {feature.summary}
+                  </span>
+                )}
               </h3>
-              <p class="text-base leading-normal mt-4 text-base-500 font-medium">
-                {feature.summary}
-              </p>
-              <p class="text-base leading-normal mt-4 text-base-500 font-medium">
-                {feature.description}
-              </p>
+
+              {/* {feature.summary && !feature.description && (
+                <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+                  {feature.summary}
+                </p>
+              )} */}
+
+              {feature.description && (
+                <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+                  {feature.description}
+                </p>
+              )}
             </div>
           </div>
         ))
