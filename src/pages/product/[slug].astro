@@ -1,0 +1,72 @@
+---
+import { getProductByDomain } from "../../api/products";
+import { defaultTheme } from "../../consts";
+import GroupLayout from "../../layouts/group-layout.astro";
+
+let { collectionType = "products", slug } = Astro.params;
+
+// Use optional chaining and fallback to empty string if host is undefined
+// @ts-ignore: Assume host is present in locals at runtime
+const host = (Astro.locals as { host?: string })?.host || "";
+const data = await getProductByDomain(host, slug);
+
+console.log("Products found:", data?.docs[0]?.id);
+console.log("Products Found:", data?.docs[0]);
+
+console.log("Products items:", data?.docs[0]?.items?.length || 0);
+
+console.log(
+  "Products referringItems:",
+  data?.docs[0]?.referringItems?.length || 0
+);
+
+// const { content = undefined } = series;
+
+// if (!content) {
+//   throw new Error(`Content not found for post with slug: ${slug}`);
+// }
+
+// const minutesRead = readingTime(JSON.stringify(content || ""));
+// console.log(minutesRead);
+
+const product = await data?.docs[0];
+
+// if (product?.tenant) {
+//   (Astro.locals as { tenant?: any; theme?: any }).tenant = product.tenant;
+//   (Astro.locals as { tenant?: any; theme?: any }).theme = product.tenant.theme;
+// }
+
+// // Use referringItems to populate the records for the layout
+const referringItems = product?.referringItems || [];
+// // Tenant Dynamic Collections
+let dynamicCollectionData: any[] = [];
+
+const instance = {
+  ...data?.docs[0],
+  collectionType,
+  slug,
+  className: "products-page",
+  title: data?.docs[0]?.title || "products",
+  excerpt: data?.docs[0]?.excerpt || "",
+  authors: data?.docs[0]?.authors || [],
+  updatedAt: data?.docs[0]?.updatedAt || new Date().toISOString(),
+  tags: data?.docs[0]?.tags || [],
+  category: data?.docs[0]?.category || "",
+  featured: data?.docs[0]?.featured || false,
+  theme: data?.docs[0]?.tenant?.theme || defaultTheme,
+  video: data?.docs[0]?.video || null,
+  audioLink: data?.docs[0]?.audioLink || null,
+  // minutesRead: minutesRead,
+  items: data?.docs[0]?.items || null,
+  records: dynamicCollectionData || [], // FIXME
+  referringItems: referringItems, //FIXME
+};
+
+// console.log(instance);
+
+// const author = authors && authors[0];
+// const product = products && products[0];
+---
+
+<!-- {JSON.stringify(referringItems, null, 2)} -->
+<GroupLayout {...instance} />
