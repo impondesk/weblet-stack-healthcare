@@ -50,6 +50,28 @@ const { features } = Astro.props;
                   {feature.description}
                 </p>
               )}
+
+              {feature.ref && feature.refURL && (
+                <a
+                  href={feature.refURL}
+                  class="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  {feature.ref}
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
         ))
