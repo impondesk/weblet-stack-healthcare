@@ -54,6 +54,9 @@ const { features } = Astro.props;
               {feature.ref && feature.refURL && (
                 <a
                   href={feature.refURL}
+                  {...(feature.refURL.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   class="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
                 >
                   {feature.ref}
