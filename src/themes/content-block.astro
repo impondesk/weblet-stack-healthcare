@@ -12,12 +12,12 @@ const { sectionTitle = true } = Astro.props;
   <section class="content-wrapper max-w-7xl mx-auto">
     {
       sectionTitle && (
-        <div class={` max-w-5xl mx-auto ${className}`}>
+        <div class={` max-w-7xl mx-auto py-4 ${className}`}>
           <SectionTitle {...Astro.props} />
         </div>
       )
     }
 
-    <ContentRender {...Astro.props} className={""} />
+    <ContentRender {...Astro.props} className={"py-6"} />
   </section>
 </div>
