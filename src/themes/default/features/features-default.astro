@@ -75,6 +75,64 @@ const { features } = Astro.props;
                   </svg>
                 </a>
               )}
+
+              {feature.links && feature.links.length > 0 && (
+                <div class="mt-3 flex flex-col gap-2">
+                  {feature.links.map((link) => {
+                    if (!link || Object.keys(link).length === 0) return null;
+
+                    // Determine the URL based on link type
+                    let href = "#";
+                    let isExternal = false;
+
+                    if (
+                      link.type === "internal" &&
+                      link.internalLink?.value?.slug
+                    ) {
+                      href = `/${link.internalLink.value.slug}`;
+                    } else if (link.type === "external" && link.externalLink) {
+                      href = link.externalLink;
+                      isExternal = true;
+                    } else if (link.url) {
+                      href = link.url;
+                      isExternal = link.url.startsWith("http");
+                    }
+
+                    // Determine if link should open in new tab
+                    const shouldOpenNewTab = link.openInNewTab || isExternal;
+                    const linkProps = shouldOpenNewTab
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {};
+
+                    // Determine link styling based on variant
+                    const isPrimary = link.variant === "primary";
+                    const linkClass = isPrimary
+                      ? "inline-flex items-center justify-center gap-1 rounded-lg bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 text-sm font-semibold shadow-sm transition-colors"
+                      : "inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors";
+
+                    return (
+                      <a href={href} {...linkProps} class={linkClass}>
+                        {link?.label || link?.text || "Learn more"}
+                        {!isPrimary && (
+                          <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        )}
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         ))
