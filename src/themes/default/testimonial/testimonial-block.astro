@@ -1,0 +1,19 @@
+---
+import TestimonialDefault from "./testimonial-default.astro";
+
+const { variant } = Astro.props;
+
+const testimonialMap = {
+  default: TestimonialDefault,
+  grid: TestimonialDefault,
+  // Add more variants here as needed
+  // carousel: TestimonialCarousel,
+  // slider: TestimonialSlider,
+  // featured: TestimonialFeatured,
+};
+
+const TestimonialComponent =
+  testimonialMap[variant] || testimonialMap["default"];
+---
+
+<TestimonialComponent {...Astro.props} />
