@@ -10,7 +10,9 @@ import ProductAccorion from "./product/product-accorion.astro";
 import ProductDefault from "./product/product-default.astro";
 import ProductGrouped from "./product/product-grouped.astro";
 import RoadmapsGrid from "./roadmaps/roadmaps-grid.astro";
+import StoresAccordion from "./store/stores-accordion.astro";
 import StoresDefault from "./store/stores-default.astro";
+import StoresList from "./store/stores-list.astro";
 import WebinarsDefault from "./webinars/webinars-default.astro";
 
 const { variant, collectionType } = Astro.props;
@@ -18,8 +20,9 @@ const { variant, collectionType } = Astro.props;
 const collectionMap = {
   stores: {
     default: StoresDefault,
-    list: StoresDefault,
+    list: StoresList,
     grid: StoresDefault,
+    accordion: StoresAccordion,
   },
 
   faq: {
