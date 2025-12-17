@@ -77,7 +77,7 @@ const groupedEntries = (
                 {items.map((record) => {
                   const basePath =
                     record?.contentType ||
-                    record?.labels?.plural?.toLowerCase() ||
+                    record?.labels?.singular?.toLowerCase() ||
                     "products";
                   const isOutOfStock = Boolean(record?.outOfStock);
                   const priceLabel =
