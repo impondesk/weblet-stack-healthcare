@@ -1,54 +1,13 @@
 ---
-import { themeConfig } from '../theme-config';
-
 const { subTitle, title, excerpt, links, bgMood, heroImage } = Astro.props;
 
 // Build the full image URL
 const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename 
   ? `https://${heroImage.prefix}/${heroImage.filename}` 
   : null);
-
-// Determine theme mode based on image presence and bgMood
-const hasImage = Boolean(imageUrl);
-const isDarkMode = bgMood === 'dark';
-
-// Get hero theme configuration
-const heroTheme = themeConfig.components.hero.default;
-
-// Get shared button styles
-const buttonTheme = themeConfig.buttonStyles;
-
-// Helper function to get color based on mode
-const getColor = (colorConfig: any) => {
-  if (hasImage) return colorConfig.withImage;
-  if (isDarkMode) return colorConfig.dark;
-  return colorConfig.light;
-};
-
-// Generate style strings from theme config
-const subtitleColor = getColor(heroTheme.subtitle.color);
-const titleColor = getColor(heroTheme.title.color);
-const excerptColor = getColor(heroTheme.excerpt.color);
-
-// Button colors and styles from shared config
-const primaryButtonConfig = getColor(buttonTheme.primary);
-const primaryButtonBg = primaryButtonConfig.background;
-const primaryButtonBgHover = primaryButtonConfig.backgroundHover;
-const primaryButtonText = primaryButtonConfig.text;
-const primaryButtonShadow = primaryButtonConfig.shadow;
-
-const secondaryButtonConfig = getColor(buttonTheme.secondary);
-const secondaryButtonText = secondaryButtonConfig.text;
-const secondaryButtonTextHover = secondaryButtonConfig.textHover;
-
-// Focus outline color from theme
-const focusOutlineColor = themeConfig.colors.border[isDarkMode ? 'dark' : 'light'].focus;
 ---
 
-<section 
-  class="relative flex items-center"
-  style={`min-height: ${heroTheme.minHeight}; padding-top: ${heroTheme.padding.y}; padding-bottom: ${heroTheme.padding.y};`}
->
+<section class="relative py-12 min-h-[500px] flex items-center">
   {imageUrl && (
     <>
       <!-- Background Image -->
@@ -57,79 +16,29 @@ const focusOutlineColor = themeConfig.colors.border[isDarkMode ? 'dark' : 'light
         style={`background-image: url('${imageUrl}'); background-position: ${heroImage?.focalX || 50}% ${heroImage?.focalY || 50}%;`}
       ></div>
       
-      <!-- Elegant Overlay with gradient -->
-      <div 
-        class="absolute inset-0 z-0"
-        style={`background: ${heroTheme.overlay.gradient};`}
-      ></div>
+      <!-- Elegant Overlay with gradient - increased opacity for better text readability -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/70 z-0"></div>
       
       <!-- Optional blur backdrop for better text readability -->
-      <div 
-        class="absolute inset-0 z-0"
-        style={`backdrop-filter: blur(${heroTheme.overlay.backdropBlur});`}
-      ></div>
+      <div class="absolute inset-0 backdrop-blur-[4px] z-0"></div>
     </>
   )}
   
   <!-- Content Container - positioned above background -->
-  <div 
-    class={`relative z-10 w-full mx-auto ${imageUrl ? 'px-4 py-8' : ''}`}
-    style={`max-width: ${imageUrl ? heroTheme.container.maxWidth : 'none'};`}
-  >
-    <!-- Subtitle -->
-    <p 
-      class="text-center"
-      style={`
-        margin-top: ${heroTheme.subtitle.marginTop};
-        font-size: ${heroTheme.subtitle.fontSize};
-        font-weight: ${heroTheme.subtitle.fontWeight};
-        text-transform: ${heroTheme.subtitle.textTransform};
-        color: ${subtitleColor};
-        ${hasImage ? 'text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);' : ''}
-      `}
-    >
-      {subTitle}
-    </p>
-
-    <!-- Title -->
-    <p 
-      class="text-balance text-center"
-      style={`
-        margin-top: ${heroTheme.title.marginTop};
-        font-size: ${heroTheme.title.fontSize.sm};
-        font-weight: ${heroTheme.title.fontWeight};
-        line-height: ${heroTheme.title.lineHeight};
-        color: ${titleColor};
-        ${hasImage ? 'text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);' : ''}
-      `}
-    >
-      {title}
-    </p>
-
-    <!-- Excerpt -->
-    <p 
-      class="mx-auto text-center"
-      style={`
-        max-width: ${heroTheme.excerpt.maxWidth};
-        margin-top: ${heroTheme.excerpt.marginTop};
-        font-size: ${heroTheme.excerpt.fontSize};
-        line-height: ${heroTheme.excerpt.lineHeight};
-        color: ${excerptColor};
-        ${hasImage ? 'text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);' : ''}
-      `}
-    >
-      {excerpt}
-    </p>
+  <div class={`relative z-10 w-full ${imageUrl ? 'max-w-7xl mx-auto px-4 py-8' : ''}`}>
+  <p class={`mt-2 text-base uppercase font-semibold text-center ${imageUrl ? 'text-white drop-shadow-lg' : ''}`}>
+    {subTitle}
+  </p>
+  <p class={`mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl ${imageUrl ? 'text-white drop-shadow-2xl' : ''}`}>
+    {title}
+  </p>
+  <p class={`max-w-5xl mt-4 text-center mx-auto text-xl/8 ${imageUrl ? 'text-gray-100 drop-shadow-lg' : 'text-gray-500'}`}>
+    {excerpt}
+  </p>
 
   {
     links && links.length > 0 && (
-      <div 
-        class="flex flex-wrap items-center justify-center"
-        style={`
-          margin-top: ${buttonTheme.marginTop};
-          gap: ${buttonTheme.gap};
-        `}
-      >
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
         {links.map((link, index) => {
           // Skip empty links
           if (!link || Object.keys(link).length === 0) return null;
@@ -161,33 +70,18 @@ const focusOutlineColor = themeConfig.colors.border[isDarkMode ? 'dark' : 'light
             <a
               href={href}
               {...linkProps}
-              class="inline-flex items-center justify-center hero-cta-button"
-              data-variant={isPrimary ? 'primary' : 'secondary'}
-              style={
+              class={
                 isPrimary
-                  ? `
-                    background-color: ${primaryButtonBg};
-                    color: ${primaryButtonText};
-                    padding: ${buttonTheme.padding.y} ${buttonTheme.padding.x};
-                    font-size: ${buttonTheme.fontSize};
-                    font-weight: ${buttonTheme.fontWeight};
-                    border-radius: ${buttonTheme.borderRadius};
-                    box-shadow: ${primaryButtonShadow};
-                    transition: ${buttonTheme.transition};
-                    border: none;
-                    cursor: pointer;
-                    text-decoration: none;
-                  `
-                  : `
-                    color: ${secondaryButtonText};
-                    font-size: ${buttonTheme.fontSize};
-                    font-weight: ${buttonTheme.fontWeight};
-                    transition: ${buttonTheme.transition};
-                    background: transparent;
-                    border: none;
-                    cursor: pointer;
-                    text-decoration: none;
-                  `
+                  ? `inline-flex items-center justify-center rounded-lg ${
+                      bgMood === "dark"
+                        ? "bg-white text-gray-900 hover:bg-gray-100"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    } px-5 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600`
+                  : `inline-flex items-center justify-center text-sm font-semibold ${
+                      bgMood === "dark"
+                        ? "text-white hover:text-gray-200"
+                        : "text-gray-900 hover:text-gray-700"
+                    } transition-colors`
               }
             >
               {link?.label || link?.text || "Learn more"}
@@ -204,70 +98,6 @@ const focusOutlineColor = themeConfig.colors.border[isDarkMode ? 'dark' : 'light
   }
   </div>
 </section>
-
-<style define:vars={{
-  primaryButtonBgHover,
-  secondaryButtonTextHover,
-  focusOutlineColor
-}}>
-  .hero-cta-button {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  /* Primary button styles */
-  .hero-cta-button[data-variant="primary"]:hover {
-    background-color: var(--primaryButtonBgHover);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
-  }
-  
-  .hero-cta-button[data-variant="primary"]:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
-  }
-  
-  .hero-cta-button[data-variant="primary"]:focus-visible {
-    outline: 2px solid var(--focusOutlineColor);
-    outline-offset: 2px;
-  }
-  
-  /* Secondary button styles */
-  .hero-cta-button[data-variant="secondary"]:hover {
-    color: var(--secondaryButtonTextHover);
-  }
-  
-  .hero-cta-button[data-variant="secondary"]:hover span {
-    transform: translateX(4px);
-    display: inline-block;
-    transition: transform 150ms ease-out;
-  }
-  
-  .hero-cta-button[data-variant="secondary"]:focus-visible {
-    outline: 2px solid var(--focusOutlineColor);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-  
-  /* Ripple effect for primary button (optional) */
-  .hero-cta-button[data-variant="primary"]::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-  
-  .hero-cta-button[data-variant="primary"]:active::before {
-    width: 300px;
-    height: 300px;
-  }
-</style>
 
 <!-- {JSON.stringify(video)} -->
 
