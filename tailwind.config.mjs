@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import typography from "@tailwindcss/typography";
-import { defineConfig } from "@tailwindcss/vite";
 
-export default defineConfig({
+export default {
   darkMode: "class", // Enable dark mode support
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   safelist: [
@@ -15,6 +14,9 @@ export default defineConfig({
     },
     {
       pattern: /^border-primary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    {
+      pattern: /^hover:bg-primary-(50|100|200|300|400|500|600|700|800|900)$/,
     },
     // Safelist all secondary color classes
     {
@@ -99,4 +101,4 @@ export default defineConfig({
     },
   },
   plugins: [typography],
-});
+};
