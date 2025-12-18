@@ -12,6 +12,7 @@ declare namespace App {
     base: string;
     tenant: any;
     theme: string;
+    themeCSSVars: Record<string, string>;
     welcomeTitle: () => string;
     orders: Map<string, object>;
   }

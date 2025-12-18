@@ -1,0 +1,41 @@
+---
+/**
+ * Tenant Theme Injector
+ *
+ * This component injects tenant-specific CSS variables into the page.
+ * It should be included in the <head> section of your layout.
+ *
+ * The CSS variables are set by the tenant middleware based on the hostname.
+ */
+
+const themeCSSVars = Astro.locals.themeCSSVars || {};
+
+console.log("=== TenantTheme Component ===");
+console.log("CSS Vars Count:", Object.keys(themeCSSVars).length);
+console.log("Primary 500:", themeCSSVars["--color-primary-500"]);
+console.log("Primary 600:", themeCSSVars["--color-primary-600"]);
+
+// Convert CSS vars object to inline style string
+const styleString = Object.entries(themeCSSVars)
+  .map(([key, value]) => `${key}: ${value};`)
+  .join(" ");
+
+console.log("Style String Length:", styleString.length);
+console.log("=== End TenantTheme ===\n");
+---
+
+{
+  Object.keys(themeCSSVars).length > 0 && (
+    <style
+      is:inline
+      set:html={`
+    :root {
+      ${styleString}
+    }
+  `}
+    />
+  )
+}
+
+<!-- Debug: Show that TenantTheme was rendered -->
+<!-- Tenant Theme CSS Variables Applied: {Object.keys(themeCSSVars).length} vars -->

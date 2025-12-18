@@ -2,6 +2,7 @@
 import { fade, ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import TenantTheme from "../components/TenantTheme.astro";
 
 import classNames from "classnames";
 
@@ -27,11 +28,15 @@ import "../styles/prose.css";
     <meta name="generator" content={Astro.generator} />
 
     <title>
-      {contentTitle + " - " + Astro.locals?.tenant?.name || "Narr8"}
+      {contentTitle + " - " + Astro.locals?.tenant?.name || "Default Theme"}
     </title>
     <link rel="icon" href="/favicon.ico" />
 
-    <ViewTransitions />
+    <!-- Inject tenant-specific theme CSS variables -->
+    <TenantTheme />
+
+    <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->
+    <!-- <ViewTransitions /> -->
   </head>
 
   <!--  -->
