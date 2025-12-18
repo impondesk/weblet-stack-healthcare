@@ -1,12 +1,13 @@
 ---
 import FeaturesDefault from "./features-default.astro";
+import FeaturesList from "./features-list.astro";
 
 const { variant } = Astro.props;
 
 // Map variant to components
 const collectionMap = {
   default: FeaturesDefault,
-  //   list: FeaturesDefault,
+  list: FeaturesList,
   //   grid: FeaturesDefault,
 };
 
