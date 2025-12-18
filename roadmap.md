@@ -13,3 +13,6 @@
 
 [x]] Menu
 [ ] Events
+
+
+[ ] Integrations - Bookings
