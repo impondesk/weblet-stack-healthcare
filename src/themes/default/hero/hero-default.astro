@@ -15,6 +15,9 @@ const isDarkMode = bgMood === 'dark';
 // Get hero theme configuration
 const heroTheme = themeConfig.components.hero.default;
 
+// Get shared button styles
+const buttonTheme = themeConfig.buttonStyles;
+
 // Helper function to get color based on mode
 const getColor = (colorConfig: any) => {
   if (hasImage) return colorConfig.withImage;
@@ -27,15 +30,14 @@ const subtitleColor = getColor(heroTheme.subtitle.color);
 const titleColor = getColor(heroTheme.title.color);
 const excerptColor = getColor(heroTheme.excerpt.color);
 
-// Primary button colors and styles
-const primaryButtonConfig = getColor(heroTheme.cta.primary);
+// Button colors and styles from shared config
+const primaryButtonConfig = getColor(buttonTheme.primary);
 const primaryButtonBg = primaryButtonConfig.background;
 const primaryButtonBgHover = primaryButtonConfig.backgroundHover;
 const primaryButtonText = primaryButtonConfig.text;
 const primaryButtonShadow = primaryButtonConfig.shadow;
 
-// Secondary button colors
-const secondaryButtonConfig = getColor(heroTheme.cta.secondary);
+const secondaryButtonConfig = getColor(buttonTheme.secondary);
 const secondaryButtonText = secondaryButtonConfig.text;
 const secondaryButtonTextHover = secondaryButtonConfig.textHover;
 
@@ -124,8 +126,8 @@ const focusOutlineColor = themeConfig.colors.border[isDarkMode ? 'dark' : 'light
       <div 
         class="flex flex-wrap items-center justify-center"
         style={`
-          margin-top: ${heroTheme.cta.marginTop};
-          gap: ${heroTheme.cta.gap};
+          margin-top: ${buttonTheme.marginTop};
+          gap: ${buttonTheme.gap};
         `}
       >
         {links.map((link, index) => {
@@ -166,21 +168,21 @@ const focusOutlineColor = themeConfig.colors.border[isDarkMode ? 'dark' : 'light
                   ? `
                     background-color: ${primaryButtonBg};
                     color: ${primaryButtonText};
-                    padding: ${heroTheme.cta.padding.y} ${heroTheme.cta.padding.x};
-                    font-size: ${heroTheme.cta.fontSize};
-                    font-weight: ${heroTheme.cta.fontWeight};
-                    border-radius: ${heroTheme.cta.borderRadius};
+                    padding: ${buttonTheme.padding.y} ${buttonTheme.padding.x};
+                    font-size: ${buttonTheme.fontSize};
+                    font-weight: ${buttonTheme.fontWeight};
+                    border-radius: ${buttonTheme.borderRadius};
                     box-shadow: ${primaryButtonShadow};
-                    transition: ${heroTheme.cta.transition};
+                    transition: ${buttonTheme.transition};
                     border: none;
                     cursor: pointer;
                     text-decoration: none;
                   `
                   : `
                     color: ${secondaryButtonText};
-                    font-size: ${heroTheme.cta.fontSize};
-                    font-weight: ${heroTheme.cta.fontWeight};
-                    transition: ${heroTheme.cta.transition};
+                    font-size: ${buttonTheme.fontSize};
+                    font-weight: ${buttonTheme.fontWeight};
+                    transition: ${buttonTheme.transition};
                     background: transparent;
                     border: none;
                     cursor: pointer;

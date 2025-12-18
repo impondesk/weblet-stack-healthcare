@@ -1,23 +1,73 @@
 ---
 import SectionTitle from "../section-title.astro";
+import { themeConfig } from "../theme-config";
 
 const { title, variant, links, bgMood } = Astro.props;
 
 let className = variant === "center" ? " text-center lg:text-center " : "";
 
-// Determine background styling based on bgMood
-const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "";
+// Get CTA theme configuration
+const ctaTheme = themeConfig.components.cta.default;
+
+// Get shared button styles
+const buttonTheme = themeConfig.buttonStyles;
+
+// Determine theme mode
+const isDarkMode = bgMood === "dark";
+
+// Helper function to get color based on mode
+const getColor = (colorConfig: any) => {
+  return isDarkMode ? colorConfig.dark : colorConfig.light;
+};
+
+// Background and text colors
+const bgColor = isDarkMode
+  ? ctaTheme.background.dark
+  : ctaTheme.background.light;
+const textColor = isDarkMode ? ctaTheme.text.dark : ctaTheme.text.light;
+
+// Button colors from shared config
+const primaryButtonConfig = getColor(buttonTheme.primary);
+const primaryButtonBg = primaryButtonConfig.background;
+const primaryButtonBgHover = primaryButtonConfig.backgroundHover;
+const primaryButtonText = primaryButtonConfig.text;
+const primaryButtonShadow = primaryButtonConfig.shadow;
+
+const secondaryButtonConfig = getColor(buttonTheme.secondary);
+const secondaryButtonText = secondaryButtonConfig.text;
+const secondaryButtonTextHover = secondaryButtonConfig.textHover;
+
+// Focus outline color from theme
+const focusOutlineColor =
+  themeConfig.colors.border[isDarkMode ? "dark" : "light"].focus;
 ---
 
-<div class={bgClass}>
-  <div class="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
-    <section class={`max-w-7xl mx-auto py-5 pt-10 ${className} text-center`}>
+<div style={`background-color: ${bgColor}; color: ${textColor};`}>
+  <div
+    style={`
+    padding: ${ctaTheme.padding.y.sm} ${ctaTheme.padding.x.sm};
+  `}
+  >
+    <section
+      style={`
+      max-width: ${ctaTheme.container.maxWidth};
+      margin: 0 auto;
+      padding: ${ctaTheme.container.padding} 0 2.5rem 0;
+    `}
+      class={className}
+    >
       <SectionTitle {...Astro.props} />
     </section>
 
     {
       links && links.length > 0 && (
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
+        <div
+          class="flex flex-wrap items-center justify-center"
+          style={`
+            margin-top: ${buttonTheme.marginTop};
+            gap: ${buttonTheme.gap};
+          `}
+        >
           {links.map((link, index) => {
             // Skip empty links
             if (!link || Object.keys(link).length === 0) return null;
@@ -49,18 +99,33 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "";
               <a
                 href={href}
                 {...linkProps}
-                class={
+                class="inline-flex items-center justify-center cta-button"
+                data-variant={isPrimary ? "primary" : "secondary"}
+                style={
                   isPrimary
-                    ? `inline-flex items-center justify-center rounded-lg ${
-                        bgMood === "dark"
-                          ? "bg-white text-gray-900 hover:bg-gray-100"
-                          : "bg-blue-600 text-white hover:bg-blue-700"
-                      } px-5 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600`
-                    : `inline-flex items-center justify-center text-sm font-semibold ${
-                        bgMood === "dark"
-                          ? "text-white hover:text-gray-200"
-                          : "text-gray-900 hover:text-gray-700"
-                      } transition-colors`
+                    ? `
+                      background-color: ${primaryButtonBg};
+                      color: ${primaryButtonText};
+                      padding: ${buttonTheme.padding.y} ${buttonTheme.padding.x};
+                      font-size: ${buttonTheme.fontSize};
+                      font-weight: ${buttonTheme.fontWeight};
+                      border-radius: ${buttonTheme.borderRadius};
+                      box-shadow: ${primaryButtonShadow};
+                      transition: ${buttonTheme.transition};
+                      border: none;
+                      cursor: pointer;
+                      text-decoration: none;
+                    `
+                    : `
+                      color: ${secondaryButtonText};
+                      font-size: ${buttonTheme.fontSize};
+                      font-weight: ${buttonTheme.fontWeight};
+                      transition: ${buttonTheme.transition};
+                      background: transparent;
+                      border: none;
+                      cursor: pointer;
+                      text-decoration: none;
+                    `
                 }
               >
                 {link?.label || link?.text || "Learn more"}
@@ -77,3 +142,71 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "";
     }
   </div>
 </div>
+
+<style
+  define:vars={{
+    primaryButtonBgHover,
+    secondaryButtonTextHover,
+    focusOutlineColor,
+  }}
+>
+  .cta-button {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Primary button styles */
+  .cta-button[data-variant="primary"]:hover {
+    background-color: var(--primaryButtonBgHover);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+  }
+
+  .cta-button[data-variant="primary"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .cta-button[data-variant="primary"]:focus-visible {
+    outline: 2px solid var(--focusOutlineColor);
+    outline-offset: 2px;
+  }
+
+  /* Secondary button styles */
+  .cta-button[data-variant="secondary"]:hover {
+    color: var(--secondaryButtonTextHover);
+  }
+
+  .cta-button[data-variant="secondary"]:hover span {
+    transform: translateX(4px);
+    display: inline-block;
+    transition: transform 150ms ease-out;
+  }
+
+  .cta-button[data-variant="secondary"]:focus-visible {
+    outline: 2px solid var(--focusOutlineColor);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Ripple effect for primary button */
+  .cta-button[data-variant="primary"]::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition:
+      width 0.6s,
+      height 0.6s;
+  }
+
+  .cta-button[data-variant="primary"]:active::before {
+    width: 300px;
+    height: 300px;
+  }
+</style>

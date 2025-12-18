@@ -255,6 +255,64 @@ export const animations = {
 } as const;
 
 /**
+ * Shared Button/Link Configuration
+ * Used consistently across all components (hero, CTA, cards, etc.)
+ */
+export const buttonStyles = {
+  // Spacing and sizing
+  padding: {
+    x: "1.25rem", // px-5
+    y: "0.75rem", // py-3
+  },
+  gap: "1rem", // Gap between buttons when in a group
+  marginTop: "2.5rem", // Default margin-top for button groups
+
+  // Visual styling
+  borderRadius: borderRadius.none,
+  fontSize: typography.fontSize.sm,
+  fontWeight: typography.fontWeight.semibold,
+  transition: `all ${animations.duration.normal} ${animations.timing.easeInOut}`,
+
+  // Primary button variants (light/dark/withImage modes)
+  primary: {
+    light: {
+      background: colorScheme.brand.primary[600],
+      backgroundHover: colorScheme.brand.primary[700],
+      text: "#ffffff",
+      shadow: shadows.sm,
+    },
+    dark: {
+      background: "#ffffff",
+      backgroundHover: "#f3f4f6",
+      text: colorScheme.text.light.primary,
+      shadow: shadows.sm,
+    },
+    withImage: {
+      background: "#ffffff",
+      backgroundHover: "#f3f4f6",
+      text: colorScheme.text.light.primary,
+      shadow: shadows.sm,
+    },
+  },
+
+  // Secondary button variants (text-only links)
+  secondary: {
+    light: {
+      text: colorScheme.text.light.primary,
+      textHover: colorScheme.text.light.secondary,
+    },
+    dark: {
+      text: "#ffffff",
+      textHover: "#e5e7eb",
+    },
+    withImage: {
+      text: "#ffffff",
+      textHover: "#e5e7eb",
+    },
+  },
+} as const;
+
+/**
  * Component-Specific Theme Configuration
  * Each component can have its own theme settings
  */
@@ -321,62 +379,41 @@ export const components = {
         },
         marginTop: "1rem",
       },
+    },
+  },
 
-      // CTA Buttons
-      cta: {
-        marginTop: "2.5rem",
-        gap: "1rem",
-
-        primary: {
-          light: {
-            background: colorScheme.brand.primary[600],
-            backgroundHover: colorScheme.brand.primary[700],
-            text: "#ffffff",
-            shadow: shadows.sm,
-          },
-          dark: {
-            background: "#ffffff",
-            backgroundHover: "#f9fafb",
-            text: colorScheme.text.light.primary,
-            shadow: shadows.sm,
-          },
-          withImage: {
-            background: "#ffffff",
-            backgroundHover: "#f3f4f6",
-            text: colorScheme.text.light.primary,
-            shadow: shadows.sm,
-          },
+  // CTA Section Configuration
+  cta: {
+    default: {
+      padding: {
+        x: {
+          sm: "1.5rem", // sm:px-6
+          lg: "2rem", // lg:px-8
         },
-
-        secondary: {
-          light: {
-            text: colorScheme.text.light.primary,
-            textHover: colorScheme.text.light.secondary,
-          },
-          dark: {
-            text: "#ffffff",
-            textHover: "#e5e7eb",
-          },
-          withImage: {
-            text: "#ffffff",
-            textHover: "#e5e7eb",
-          },
+        y: {
+          sm: "6rem", // py-24
+          md: "8rem", // sm:py-32
         },
+      },
+      container: {
+        maxWidth: "80rem", // max-w-7xl
+        padding: "1.25rem",
+      },
 
-        // Button styling
-        padding: {
-          x: "1.25rem", // px-5
-          y: "0.75rem", // py-3
-        },
-        borderRadius: borderRadius.none,
-        fontSize: typography.fontSize.sm,
-        fontWeight: typography.fontWeight.semibold,
-        transition: `all ${animations.duration.normal} ${animations.timing.easeInOut}`,
+      // Background colors
+      background: {
+        light: colorScheme.surface.light.primary,
+        dark: colorScheme.surface.dark.primary,
+      },
+
+      text: {
+        light: colorScheme.text.light.primary,
+        dark: colorScheme.text.dark.primary,
       },
     },
   },
 
-  // Add more component configurations as needed
+  // Card Component Configuration
   card: {
     default: {
       background: colorScheme.surface.light.primary,
@@ -386,14 +423,6 @@ export const components = {
       borderRadius: borderRadius.lg,
       shadow: shadows.md,
       padding: "1.5rem",
-    },
-  },
-
-  button: {
-    default: {
-      borderRadius: borderRadius.md,
-      fontWeight: typography.fontWeight.semibold,
-      transition: `all ${animations.duration.normal} ${animations.timing.easeInOut}`,
     },
   },
 } as const;
@@ -409,6 +438,7 @@ export const themeConfig = {
   borderRadius,
   shadows,
   animations,
+  buttonStyles, // Shared button configuration
   components,
 } as const;
 
