@@ -60,15 +60,24 @@ const groupedEntries = (
           const excerpt = group?.excerpt;
           const featuredIcon = group?.featuredIcon;
 
-          // Construct the featured icon URL
-          const iconUrl =
-            featuredIcon?.url ||
-            (featuredIcon?.prefix && featuredIcon?.filename
-              ? `https://${featuredIcon.prefix}/${featuredIcon.filename}`
-              : null);
+          // Check if featuredIcon is an object (populated) or just an ID string
+          const isPopulated =
+            typeof featuredIcon === "object" && featuredIcon !== null;
+
+          // Construct the featured icon URL only if it's populated
+          const iconUrl = isPopulated
+            ? featuredIcon?.url ||
+              (featuredIcon?.prefix && featuredIcon?.filename
+                ? `https://${featuredIcon.prefix}/${featuredIcon.filename}`
+                : null)
+            : null;
+
+          // console.warn(group, featuredIcon, iconUrl);
 
           return (
             <div class="space-y-3">
+              {/* {JSON.stringify(group)} */}
+
               {groupedEntries.length > 1 && (
                 <div class="space-y-2 pt-6">
                   {iconUrl && (
