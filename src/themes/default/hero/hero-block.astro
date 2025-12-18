@@ -1,5 +1,6 @@
 ---
 import HeroDefault from "./hero-default.astro";
+import HeroLeft from "./hero-left.astro";
 
 const { variant } = Astro.props;
 
@@ -12,7 +13,7 @@ const collectionMap = {
   minimal: HeroDefault,
   featured: HeroDefault,
   features: HeroDefault,
-  left: HeroDefault,
+  left: HeroLeft,
   right: HeroDefault,
   badge: HeroDefault,
   grouped: HeroDefault,
