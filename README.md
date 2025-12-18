@@ -1,7 +1,38 @@
 # weblet-theme-template
-weblet-theme-template
 
+A flexible, white-label Astro theme template with a powerful theming system for easy customization.
 
+## 🎨 Theming System
+
+This template includes a comprehensive theming system that allows easy white-labeling and customization without modifying component code.
+
+### Quick Start
+
+1. **For Single Theme** - Fork this repository and customize `src/themes/default/theme-config.ts`
+2. **For Multiple Themes** - Create theme directories under `src/themes/`
+3. **For Simple Changes** - Edit CSS variables in `src/styles/theme-variables.css`
+
+### Documentation
+
+- **[📖 Theme System Overview](THEME_SYSTEM.md)** - Quick start guide for child themes
+- **[📚 Detailed Theming Guide](src/themes/THEMING.md)** - Complete theming documentation
+- **[🔧 Component Migration Guide](COMPONENT_MIGRATION_GUIDE.md)** - Migrate components to use themes
+- **[✅ Implementation Summary](THEME_IMPLEMENTATION_SUMMARY.md)** - What's included in the theme system
+- **[💡 Example Theme Config](src/themes/example-child-theme-config.ts)** - Example customization
+
+### Features
+
+- ✅ **Configuration-driven theming** - All styling in one config file
+- ✅ **Component decoupling** - Components consume theme config, not hardcoded values
+- ✅ **CSS variables support** - Runtime theming with CSS custom properties
+- ✅ **Dark mode ready** - Built-in light/dark mode support
+- ✅ **TypeScript types** - Type-safe theme customization
+- ✅ **Child theme friendly** - Easy to fork and customize
+- ✅ **Multiple override methods** - Choose what works for you
+
+---
+
+## Development
 
 git checkout main
 git fetch upstream

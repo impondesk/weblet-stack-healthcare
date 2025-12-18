@@ -8,6 +8,9 @@
 
 @import "tailwindcss";
 
+/* Import theme variables - customize in child themes */
+@import "./theme-variables.css";
+
 /* @import "./theme.css"; */
 
 html {
