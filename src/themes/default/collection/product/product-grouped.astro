@@ -60,17 +60,24 @@ const groupedEntries = (
           const excerpt = group?.excerpt;
           const featuredIcon = group?.featuredIcon;
 
+          // Construct the featured icon URL
+          const iconUrl =
+            featuredIcon?.url ||
+            (featuredIcon?.prefix && featuredIcon?.filename
+              ? `https://${featuredIcon.prefix}/${featuredIcon.filename}`
+              : null);
+
           return (
             <div class="space-y-3">
               {groupedEntries.length > 1 && (
                 <div class="space-y-2 pt-6">
-                  {featuredIcon && (
+                  {iconUrl && (
                     <div class="flex justify-left mb-4">
                       <img
-                        src={featuredIcon.url}
-                        alt={featuredIcon.alt || heading}
-                        width={featuredIcon.width || 64}
-                        height={featuredIcon.height || 64}
+                        src={iconUrl}
+                        alt={featuredIcon?.alt || heading}
+                        width={featuredIcon?.width || 64}
+                        height={featuredIcon?.height || 64}
                         class="object-contain"
                         loading="lazy"
                       />
