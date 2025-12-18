@@ -6,36 +6,45 @@
  * It should be included in the <head> section of your layout.
  *
  * The CSS variables are set by the tenant middleware based on the hostname.
+ * This component waits for middleware to complete before rendering.
  */
 
+// Wait for middleware to provide theme CSS vars
+// In Astro SSR, middleware completes before component renders
 const themeCSSVars = Astro.locals.themeCSSVars || {};
+const hasTenantData = !!Astro.locals.tenant;
 
 console.log("=== TenantTheme Component ===");
+console.log("Has Tenant Data:", hasTenantData);
+if (hasTenantData) {
+  console.log("Tenant Name:", Astro.locals.tenant.name);
+}
 console.log("CSS Vars Count:", Object.keys(themeCSSVars).length);
 console.log("Primary 500:", themeCSSVars["--color-primary-500"]);
 console.log("Primary 600:", themeCSSVars["--color-primary-600"]);
 
-// Convert CSS vars object to inline style string
+// Convert CSS vars object to inline style string with !important
 const styleString = Object.entries(themeCSSVars)
-  .map(([key, value]) => `${key}: ${value};`)
-  .join(" ");
+  .map(([key, value]) => `  ${key}: ${value} !important;`)
+  .join("\n");
 
 console.log("Style String Length:", styleString.length);
+if (styleString.length > 0) {
+  console.log("✓ Theme CSS will be injected");
+  console.log("First 100 chars:", styleString.substring(0, 100));
+} else {
+  console.log("⚠ No theme CSS vars - using defaults from theme-variables.css");
+}
 console.log("=== End TenantTheme ===\n");
 ---
 
-{
-  Object.keys(themeCSSVars).length > 0 && (
-    <style
-      is:inline
-      set:html={`
-    :root {
-      ${styleString}
-    }
-  `}
-    />
-  )
-}
+{styleString.length > 0 ? (
+  <style is:inline>
+    {`:root, html {
+${styleString}
+}`}
+  </style>
+) : null}
 
-<!-- Debug: Show that TenantTheme was rendered -->
-<!-- Tenant Theme CSS Variables Applied: {Object.keys(themeCSSVars).length} vars -->
+<!-- Debug: Show tenant theme status -->
+<!-- Tenant: {hasTenantData ? Astro.locals.tenant.name : 'None'} | CSS Vars: {Object.keys(themeCSSVars).length} -->

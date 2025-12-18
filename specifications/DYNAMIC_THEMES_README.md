@@ -218,7 +218,14 @@ app.get('/api/tenants/by-domain', async (req, res) => {
 ### Theme not applying?
 - Check `Astro.locals.tenant` has data
 - Verify theme middleware runs after tenant loader
-- Check CSS variables in DevTools
+- Check CSS variables in DevTools:
+  1. Open browser DevTools (F12 or right-click → Inspect)
+  2. Go to **Elements** tab (Chrome/Edge) or **Inspector** tab (Firefox)
+  3. Look in the `<head>` section for a `<style>` tag with `:root` CSS variables
+  4. Click on any element (like a button with `bg-primary-500`)
+  5. In the **Computed** tab, search for "background-color" 
+  6. Or in **Styles** tab, look for `:root` to see all CSS variables
+  7. Verify `--color-primary-500` shows the correct RGB value (e.g., `255, 69, 0`)
 
 ### Colors wrong format?
 - Ensure RGB format: `"255, 69, 0"`

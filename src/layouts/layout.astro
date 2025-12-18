@@ -11,6 +11,8 @@ const { title } = tenant || Astro.props;
 
 const contentTitle = Astro.props.title || "Narr8";
 
+// Import base styles first - these will be injected into <head>
+// TenantTheme component below will override these with tenant-specific values
 import "../styles/global.css";
 import "../styles/prose.css";
 ---
@@ -32,7 +34,7 @@ import "../styles/prose.css";
     </title>
     <link rel="icon" href="/favicon.ico" />
 
-    <!-- Inject tenant-specific theme CSS variables -->
+    <!-- Inject tenant-specific theme CSS variables AFTER base styles to override defaults -->
     <TenantTheme />
 
     <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->

@@ -5,6 +5,38 @@ import { defineConfig } from "@tailwindcss/vite";
 export default defineConfig({
   darkMode: "class", // Enable dark mode support
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  safelist: [
+    // Safelist all primary color classes to ensure they're generated
+    {
+      pattern: /^bg-primary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    {
+      pattern: /^text-primary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    {
+      pattern: /^border-primary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    // Safelist all secondary color classes
+    {
+      pattern: /^bg-secondary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    {
+      pattern: /^text-secondary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    {
+      pattern: /^border-secondary-(50|100|200|300|400|500|600|700|800|900)$/,
+    },
+    // Safelist all accent color classes
+    {
+      pattern: /^bg-accent-(50|100|500|600|900)$/,
+    },
+    {
+      pattern: /^text-accent-(50|100|500|600|900)$/,
+    },
+    {
+      pattern: /^border-accent-(50|100|500|600|900)$/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
