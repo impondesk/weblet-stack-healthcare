@@ -9,10 +9,12 @@ const imageUrl =
     : null);
 ---
 
-<section class="relative py-12 max-w-7xl mx-auto">
-  <div class="container flex flex-col items-center lg:h-screen lg:flex-row">
+<section class="relative py-0 overflow-hidden">
+  <div
+    class="max-w-7xl mx-auto flex flex-col items-center lg:h-screen lg:flex-row -lg:pt-200"
+  >
     <!-- Text Content -->
-    <aside class="order-2 pb-12 lg:order-1 lg:w-[70%] lg:pb-0">
+    <aside class="order-2 pb-12 lg:order-1 lg:w-[70%] lg:pb-0 px-4">
       <!-- Subtitle -->
       {
         subTitle && (
@@ -32,7 +34,7 @@ const imageUrl =
         data-aos="fade-right"
         data-aos-duration="1000"
       >
-        {title || "Experience the Art of Coffee at Beanery"}
+        {title}
       </h1>
 
       <!-- Paragraph -->
