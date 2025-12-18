@@ -58,11 +58,24 @@ const groupedEntries = (
           const heading = group?.title || "Other";
           const subTitle = group?.subTitle || group?.subtitle;
           const excerpt = group?.excerpt;
+          const featuredIcon = group?.featuredIcon;
 
           return (
             <div class="space-y-3">
               {groupedEntries.length > 1 && (
                 <div class="space-y-2 pt-6">
+                  {featuredIcon && (
+                    <div class="flex justify-center mb-4">
+                      <img
+                        src={featuredIcon.url}
+                        alt={featuredIcon.alt || heading}
+                        width={featuredIcon.width || 64}
+                        height={featuredIcon.height || 64}
+                        class="object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
                   <h2 class="text-2xl font-semibold capitalize">{heading}</h2>
                   {(subTitle || excerpt) && (
                     <p class="text-sm text-gray-600">{subTitle || excerpt}</p>
