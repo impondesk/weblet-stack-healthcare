@@ -1,7 +1,11 @@
 ---
 import SectionTitle from "../../section-title.astro";
 
-const { records } = Astro.props;
+const { records, columns } = Astro.props;
+
+// Default grid columns: 4 columns on desktop, responsive on smaller screens
+// Use specific Tailwind classes instead of dynamic concatenation
+const gridColumns = columns || "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
 
 // Group products by their associated record groups for categorized rendering.
 const groupedRecords = (records || []).reduce(
@@ -72,6 +76,9 @@ const groupedEntries = (
                 : null)
             : null;
 
+          // Use gridColumns from parent scope or group-specific columns
+          const columnsClass = group?.columns || gridColumns;
+
           // console.warn(group, featuredIcon, iconUrl);
 
           return (
@@ -100,7 +107,7 @@ const groupedEntries = (
               )}
 
               <ol
-                class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                class={`grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`}
                 role="list"
               >
                 {items.map((record) => {
@@ -111,8 +118,19 @@ const groupedEntries = (
                   const isOutOfStock = Boolean(record?.outOfStock);
                   const priceLabel =
                     typeof record?.price === "number"
-                      ? `₹ ${record.price}`
+                      ? `${record?.currency || "$"} ${record.price}`
                       : null;
+
+                  // Extract featured image
+                  const featuredImage = record?.featuredImage;
+                  const isFeaturedImagePopulated =
+                    typeof featuredImage === "object" && featuredImage !== null;
+                  const imageUrl = isFeaturedImagePopulated
+                    ? featuredImage?.url ||
+                      (featuredImage?.prefix && featuredImage?.filename
+                        ? `https://${featuredImage.prefix}/${featuredImage.filename}`
+                        : null)
+                    : null;
 
                   return (
                     <li class="list-none">
@@ -120,70 +138,85 @@ const groupedEntries = (
                         aria-label={record?.title} */}
                       <a
                         href={`/${basePath}/${record?.slug}`}
-                        class="no-underline block border-0 border-gray-200 rounded-md py-3 hover:border-gray-300 transition"
+                        class="no-underline block no-border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 hover:shadow-md transition group"
                       >
-                        <div class="flex items-start justify-between gap-2">
-                          <span
-                            class={`font-semibold ${
-                              isOutOfStock
-                                ? "text-gray-400 line-through"
-                                : "text-gray-900-x"
-                            }`}
-                          >
-                            {record?.title}
-                          </span>
-                          {priceLabel && (
-                            <span
-                              class={`text-sm font-medium ${
-                                isOutOfStock
-                                  ? "text-gray-400 line-through"
-                                  : "text-gray-900"
-                              }`}
-                            >
-                              {priceLabel}
-                            </span>
-                          )}
-                        </div>
-
-                        {record?.excerpt && (
-                          <p
-                            class={`text-sm mt-1 line-clamp-2 ${
-                              isOutOfStock
-                                ? "text-gray-400 line-through"
-                                : "text-gray-600"
-                            }`}
-                          >
-                            {record.excerpt}
-                          </p>
+                        {imageUrl && (
+                          <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                            <img
+                              src={imageUrl}
+                              alt={featuredImage?.alt || record?.title}
+                              width={featuredImage?.width || 400}
+                              height={featuredImage?.height || 300}
+                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
                         )}
 
-                        <div class="flex flex-wrap gap-1.5 mt-2">
-                          {isOutOfStock && (
-                            <span class="inline-block text-xs font-medium bg-gray-300 text-gray-700 px-2 py-0.5 rounded">
-                              Not Available
+                        <div class="p-4">
+                          <div class="flex items-start justify-between gap-2">
+                            <span
+                              class={`font-semibold ${
+                                isOutOfStock
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-900-x"
+                              }`}
+                            >
+                              {record?.title}
                             </span>
+                            {priceLabel && (
+                              <span
+                                class={`text-sm font-medium ${
+                                  isOutOfStock
+                                    ? "text-gray-400 line-through"
+                                    : "text-gray-900"
+                                }`}
+                              >
+                                {priceLabel}
+                              </span>
+                            )}
+                          </div>
+
+                          {record?.excerpt && (
+                            <p
+                              class={`text-sm mt-1 line-clamp-2 ${
+                                isOutOfStock
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-600"
+                              }`}
+                            >
+                              {record.excerpt}
+                            </p>
                           )}
 
-                          {Array.isArray(record?.tags) &&
-                            record.tags.length > 0 &&
-                            record.tags.map((tag) => {
-                              const bgColorClass = tag?.color
-                                ? `bg-${tag.color}-100`
-                                : "bg-gray-100";
-                              const textColorClass = tag?.color
-                                ? `text-${tag.color}-700`
-                                : "text-gray-700";
+                          <div class="flex flex-wrap gap-1.5 mt-2">
+                            {isOutOfStock && (
+                              <span class="inline-block text-xs font-medium bg-gray-300 text-gray-700 px-2 py-0.5 rounded">
+                                Not Available
+                              </span>
+                            )}
 
-                              return (
-                                <span
-                                  class={`inline-flex items-center gap-1 text-xs font-medium ${bgColorClass} ${textColorClass} px-2 py-0.5 rounded`}
-                                  title={tag?.category || tag?.tag}
-                                >
-                                  {tag?.icon && <span>{tag.icon}</span>}
-                                  <span>{tag?.tag}</span>
-                                </span>
-                              );
-                            })}
+                            {Array.isArray(record?.tags) &&
+                              record.tags.length > 0 &&
+                              record.tags.map((tag) => {
+                                const bgColorClass = tag?.color
+                                  ? `bg-${tag.color}-100`
+                                  : "bg-gray-100";
+                                const textColorClass = tag?.color
+                                  ? `text-${tag.color}-700`
+                                  : "text-gray-700";
+
+                                return (
+                                  <span
+                                    class={`inline-flex items-center gap-1 text-xs font-medium ${bgColorClass} ${textColorClass} px-2 py-0.5 rounded`}
+                                    title={tag?.category || tag?.tag}
+                                  >
+                                    {tag?.icon && <span>{tag.icon}</span>}
+                                    <span>{tag?.tag}</span>
+                                  </span>
+                                );
+                              })}
+                          </div>
                         </div>
                       </a>
                     </li>
