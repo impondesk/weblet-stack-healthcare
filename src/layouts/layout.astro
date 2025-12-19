@@ -17,7 +17,7 @@ const { tenant } = Astro.props;
 const { title } = tenant || Astro.props;
 const contentTitle = Astro.props.title || "Default Theme";
 const tenantId = Astro.locals?.tenant?.id;
-const presetCssURL = Astro.locals?.tenant?.tenantTheme?.presetCssURL || "forest-green";
+const presetCssURL = Astro.locals?.tenant?.tenantTheme?.presetCssURL || "twitter-sky";
 
 console.log("=== Layout Component ===");
 console.log("Tenant ID:", tenantId || "None");
@@ -31,10 +31,10 @@ try {
   console.log(`✓ Loaded palette CSS: ${presetCssURL}.css (${paletteCss.length} bytes)`);
 } catch (error) {
   console.error(`✗ Failed to load palette "${presetCssURL}":`, error.message);
-  // Fallback to forest-green
-  const fallbackPath = path.join(process.cwd(), "src", "styles", "palette", "forest-green.css");
+  // Fallback to twitter-sky
+  const fallbackPath = path.join(process.cwd(), "src", "styles", "palette", "twitter-sky.css");
   paletteCss = await fs.readFile(fallbackPath, "utf-8");
-  console.log(`✓ Loaded fallback palette: forest-green.css`);
+  console.log(`✓ Loaded fallback palette: twitter-sky.css`);
 }
 ---
 
