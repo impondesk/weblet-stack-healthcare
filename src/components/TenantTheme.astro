@@ -2,49 +2,56 @@
 /**
  * Tenant Theme Injector
  *
- * This component injects tenant-specific CSS variables into the page.
- * It should be included in the <head> section of your layout.
- *
- * The CSS variables are set by the tenant middleware based on the hostname.
- * This component waits for middleware to complete before rendering.
+ * This component loads tenant-specific theme CSS from static file or generates inline CSS.
+ * Priority:
+ * 1. Load from /themes/{tenantId}.css (if exists in public/)
+ * 2. Fallback to inline CSS generation from API themeConfig
  */
 
-// Wait for middleware to provide theme CSS vars
-// In Astro SSR, middleware completes before component renders
-const themeCSSVars = Astro.locals.themeCSSVars || {};
+// Get tenant data
 const hasTenantData = !!Astro.locals.tenant;
+const tenantId = Astro.locals?.tenant?.id;
+const themeCSSVars = Astro.locals.themeCSSVars || {};
 
 console.log("=== TenantTheme Component ===");
 console.log("Has Tenant Data:", hasTenantData);
 if (hasTenantData) {
   console.log("Tenant Name:", Astro.locals.tenant.name);
+  console.log("Tenant ID:", tenantId);
 }
 console.log("CSS Vars Count:", Object.keys(themeCSSVars).length);
-console.log("Primary 500:", themeCSSVars["--color-primary-500"]);
-console.log("Primary 600:", themeCSSVars["--color-primary-600"]);
+
+// Build CSS file path for static theme files
+const tenantCssPath = tenantId ? `/themes/${tenantId}.css` : null;
 
 // Convert CSS vars object to inline style string with !important
 const styleString = Object.entries(themeCSSVars)
   .map(([key, value]) => `  ${key}: ${value} !important;`)
   .join("\n");
 
-console.log("Style String Length:", styleString.length);
+// Build complete CSS string for inline fallback
+const fullCssString = `:root, html {\n${styleString}\n}`;
+
+console.log("Tenant CSS Path:", tenantCssPath || "None");
+console.log("Inline CSS Length:", styleString.length);
 if (styleString.length > 0) {
-  console.log("✓ Theme CSS will be injected");
-  console.log("First 100 chars:", styleString.substring(0, 100));
+  console.log("✓ Inline CSS available as fallback");
 } else {
-  console.log("⚠ No theme CSS vars - using defaults from theme-variables.css");
+  console.log("⚠ No inline CSS - will use defaults");
 }
 console.log("=== End TenantTheme ===\n");
 ---
 
-{styleString.length > 0 ? (
-  <style is:inline>
-    {`:root, html {
-${styleString}
-}`}
-  </style>
-) : null}
+<!-- Try to load tenant CSS from static file first -->{
+  tenantCssPath && <link rel="stylesheet" href={tenantCssPath} />
+}
+
+<!-- Fallback: Inject inline CSS if no static file exists -->
+{
+  !tenantCssPath && styleString.length > 0 && (
+    <style is:inline set:html={fullCssString} />
+  )
+}
 
 <!-- Debug: Show tenant theme status -->
-<!-- Tenant: {hasTenantData ? Astro.locals.tenant.name : 'None'} | CSS Vars: {Object.keys(themeCSSVars).length} -->
+<!-- Tenant ID: {tenantId || 'None'} | CSS File: {tenantCssPath || 'None'} | Inline Vars: {Object.keys(themeCSSVars).length} -->

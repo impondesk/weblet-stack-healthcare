@@ -11,12 +11,11 @@ const { title } = tenant || Astro.props;
 
 const contentTitle = Astro.props.title || "Default Theme";
 
-// Import base styles first - these will be injected into <head>
-// TenantTheme component below will override these with tenant-specific values
-import "../styles/global.css";
-// import "../styles/prose.css";
+// Get tenant ID for dynamic CSS loading
+const tenantId = Astro.locals?.tenant?.id;
+const tenantCssPath = tenantId ? `/themes/brand/${tenantId}.css` : null;
 
-// Import AOS CSS
+// Import AOS CSS (bundled)
 import "aos/dist/aos.css";
 ---
 
@@ -37,8 +36,11 @@ import "aos/dist/aos.css";
     </title>
     <link rel="icon" href="/favicon.ico" />
 
+    <!-- Import base styles first -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+
     <!-- Inject tenant-specific theme CSS variables AFTER base styles to override defaults -->
-    <!-- <TenantTheme /> -->
+    <TenantTheme />
 
     <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->
     <!-- <ViewTransitions /> -->
@@ -96,7 +98,8 @@ import "aos/dist/aos.css";
                 information presented here as final or accurate. */}
                   This is a conceptual demo. Content shown is fictional and for
                   illustrative purposes only. All features, content, and
-                  examples are illustrative and subject to change.
+                  examples are illustrative and subject to change. $
+                  {tenantCssPath}
                 </p>
               </div>
             </div>

@@ -104,23 +104,41 @@ export const DEFAULT_THEME_COLORS: TenantThemeColors = {
  * Extract theme configuration from tenant API response
  * The tenant object from payload/weblet should contain a themeConfig property
  *
- * Expected tenant structure:
+ * Expected tenant structure (Option 1 - nested under tenantTheme):
+ * {
+ *   name: "Tenant Name",
+ *   tenantTheme: {
+ *     themeConfig: {
+ *       colors: {
+ *         primary: { "500": "oklch(0.606 0.25 292.717)", ... },
+ *         secondary: { ... },
+ *         accent: { ... }
+ *       }
+ *     }
+ *   }
+ * }
+ *
+ * OR (Option 2 - directly at root):
  * {
  *   name: "Tenant Name",
  *   themeConfig: {
  *     colors: {
- *       primary: { 500: "255, 69, 0", ... },
- *       secondary: { ... },
- *       accent: { ... }
+ *       primary: { "500": "255, 69, 0", ... },
  *     }
  *   }
  * }
  */
 export function getTenantTheme(tenant: any): TenantThemeConfig {
-  // If tenant has themeConfig, use it
+  // Check for nested structure first (tenantTheme.themeConfig)
+  if (tenant?.tenantTheme?.themeConfig) {
+    return tenant.tenantTheme.themeConfig;
+  }
+
+  // Fallback to root-level themeConfig
   if (tenant?.themeConfig) {
     return tenant.themeConfig;
   }
+
   // Fallback to empty config (will use defaults)
   return {};
 }
@@ -151,6 +169,32 @@ export function mergeWithDefaultTheme(
 }
 
 /**
+ * Normalize RGB value to comma-separated format for CSS variables
+ * Accepts:
+ * - "153 102 51" (space-separated RGB) → "153, 102, 51"
+ * - "153, 102, 51" (comma-separated RGB) → "153, 102, 51"
+ * - "oklch(0.606 0.25 292.717)" (oklch format) → returned as-is
+ */
+function normalizeRgbValue(value: string): string {
+  // If it's an oklch value, return as-is
+  if (
+    value.includes("oklch(") ||
+    value.includes("rgb(") ||
+    value.includes("hsl(")
+  ) {
+    return value;
+  }
+
+  // If already comma-separated, return as-is
+  if (value.includes(",")) {
+    return value;
+  }
+
+  // Convert space-separated to comma-separated
+  return value.trim().replace(/\s+/g, ", ");
+}
+
+/**
  * Convert theme colors to CSS variables object
  */
 export function themeToCSSVars(
@@ -161,21 +205,21 @@ export function themeToCSSVars(
   // Convert primary colors
   if (colors.primary) {
     Object.entries(colors.primary).forEach(([shade, value]) => {
-      cssVars[`--color-primary-${shade}`] = value;
+      cssVars[`--color-primary-${shade}`] = normalizeRgbValue(value);
     });
   }
 
   // Convert secondary colors
   if (colors.secondary) {
     Object.entries(colors.secondary).forEach(([shade, value]) => {
-      cssVars[`--color-secondary-${shade}`] = value;
+      cssVars[`--color-secondary-${shade}`] = normalizeRgbValue(value);
     });
   }
 
   // Convert accent colors
   if (colors.accent) {
     Object.entries(colors.accent).forEach(([shade, value]) => {
-      cssVars[`--color-accent-${shade}`] = value;
+      cssVars[`--color-accent-${shade}`] = normalizeRgbValue(value);
     });
   }
 

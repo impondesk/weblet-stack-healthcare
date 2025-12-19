@@ -35,19 +35,19 @@ export const tenant = defineMiddleware((context, next) => {
   //   }
   // }
 
-  // const tenantTheme = getTenantTheme(tenantData);
-  // console.log("Extracted Theme:", tenantTheme);
+  const tenantTheme = getTenantTheme(tenantData);
+  console.log("Extracted Theme:", tenantTheme);
 
-  // const mergedColors = mergeWithDefaultTheme(tenantTheme);
-  // console.log("Merged Colors:", mergedColors);
+  const mergedColors = mergeWithDefaultTheme(tenantTheme);
+  console.log("Merged Colors:", mergedColors);
 
-  // const cssVars = themeToCSSVars(mergedColors);
-  // console.log("CSS Vars Count:", Object.keys(cssVars).length);
-  // console.log("Primary 500:", cssVars["--color-primary-500"]);
+  const cssVars = themeToCSSVars(mergedColors);
+  console.log("CSS Vars Count:", Object.keys(cssVars).length);
+  console.log("Primary 500:", cssVars["--color-primary-500"]);
 
-  // // Store theme CSS variables in locals for use in layouts
-  // context.locals.themeCSSVars = cssVars;
-  // console.log("=== End Theme Middleware ===\n");
+  // Store theme CSS variables in locals for use in layouts
+  context.locals.themeCSSVars = cssVars;
+  console.log("=== End Theme Middleware ===\n");
 
   return next();
 });

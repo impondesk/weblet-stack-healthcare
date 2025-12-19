@@ -29,10 +29,13 @@ export const loadTenant = defineMiddleware(async (context, next) => {
       context.locals.theme = data.docs[0].tenant.theme;
 
       console.log("✓ Tenant loaded:", data.docs[0].tenant.name);
+      console.log("✓ Tenant ID:", data.docs[0].tenant.id);
+      console.log("✓ Has tenantTheme:", !!data.docs[0].tenant.tenantTheme);
       console.log("✓ Has themeConfig:", !!data.docs[0].tenant.themeConfig);
 
-      if (data.docs[0].tenant.themeConfig?.colors) {
-        console.log("✓ Theme colors found");
+      // Log the actual structure for debugging
+      if (data.docs[0].tenant.tenantTheme) {
+        console.log("✓ tenantTheme structure:", JSON.stringify(data.docs[0].tenant.tenantTheme, null, 2));
       }
     } else {
       console.log("⚠ No tenant data found, using defaults");
