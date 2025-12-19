@@ -75,15 +75,11 @@ const imageUrl =
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {};
 
-              // Determine variant: use link.variant if provided, otherwise default to primary for first, secondary for others
-              const variant =
-                link.variant || (index === 0 ? "primary" : "secondary");
-
               // Define button styles based on variant
               let buttonClass = "";
               let showArrow = false;
 
-              switch (variant) {
+              switch (link?.variant) {
                 case "primary":
                   buttonClass =
                     "inline-flex items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
