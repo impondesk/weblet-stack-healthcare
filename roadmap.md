@@ -1,4 +1,6 @@
 
+[x] Theme Injection - Inline
+[ ] Multiple theme support
 
 [ ] Untitled UI
 [ ] Hero UI
