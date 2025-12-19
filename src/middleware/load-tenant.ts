@@ -26,6 +26,12 @@ export const loadTenant = defineMiddleware(async (context, next) => {
 
     if (data?.docs?.[0]?.tenant) {
       context.locals.tenant = data.docs[0].tenant;
+
+      // FIXME: For testing, override themeCssUrl here
+      context.locals.tenant = {
+        themeCssUrl: "/themes/ocean-blue-theme.css", // ← Try different themes!
+      };
+
       context.locals.theme = data.docs[0].tenant.theme;
 
       console.log("✓ Tenant loaded:", data.docs[0].tenant.name);
@@ -35,7 +41,10 @@ export const loadTenant = defineMiddleware(async (context, next) => {
 
       // Log the actual structure for debugging
       if (data.docs[0].tenant.tenantTheme) {
-        console.log("✓ tenantTheme structure:", JSON.stringify(data.docs[0].tenant.tenantTheme, null, 2));
+        console.log(
+          "✓ tenantTheme structure:",
+          JSON.stringify(data.docs[0].tenant.tenantTheme, null, 2)
+        );
       }
     } else {
       console.log("⚠ No tenant data found, using defaults");

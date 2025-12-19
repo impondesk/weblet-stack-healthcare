@@ -1,11 +1,13 @@
 ---
 /**
- * Tenant Theme Injector
+ * Tenant Theme Injector - Enhanced with Dynamic CSS Support
  *
- * This component loads tenant-specific theme CSS from static file or generates inline CSS.
- * Priority:
- * 1. Load from /themes/{tenantId}.css (if exists in public/)
- * 2. Fallback to inline CSS generation from API themeConfig
+ * This component loads tenant-specific theme CSS with the following priority:
+ * 1. themeCssUrl - URL to complete theme.css from payload (HIGHEST PRIORITY - NEW!)
+ * 2. themeCssContent - Raw CSS content from payload (NEW!)
+ * 3. /themes/{tenantId}.css - Static file in public/
+ * 4. Inline CSS generation from API themeConfig (CSS variables)
+ * 5. Default theme (if nothing provided)
  */
 
 // Get tenant data
@@ -13,12 +15,28 @@ const hasTenantData = !!Astro.locals.tenant;
 const tenantId = Astro.locals?.tenant?.id;
 const themeCSSVars = Astro.locals.themeCSSVars || {};
 
-console.log("=== TenantTheme Component ===");
+// NEW: Get dynamic CSS options from payload
+let themeCssUrl = Astro.locals?.tenant?.themeCssUrl;
+const themeCssContent = Astro.locals?.tenant?.themeCssContent;
+
+const themeMap = {
+  "6944754c649b0752d88a5d56": "/themes/coffee-brown-theme.css", // Beanery
+  "69439919f163700385f2026f": "/themes/ocean-blue-theme.css", // Reset Room
+};
+
+themeCssUrl = themeMap[tenantId] || null; // Example mapping for dynamic URL
+
+console.log("=== TenantTheme Component (Enhanced) ===");
 console.log("Has Tenant Data:", hasTenantData);
 if (hasTenantData) {
   console.log("Tenant Name:", Astro.locals.tenant.name);
   console.log("Tenant ID:", tenantId);
 }
+console.log("Dynamic CSS URL:", themeCssUrl || "None");
+console.log(
+  "Dynamic CSS Content:",
+  themeCssContent ? `${themeCssContent.length} chars` : "None"
+);
 console.log("CSS Vars Count:", Object.keys(themeCSSVars).length);
 
 // Build CSS file path for static theme files
@@ -32,26 +50,42 @@ const styleString = Object.entries(themeCSSVars)
 // Build complete CSS string for inline fallback
 const fullCssString = `:root, html {\n${styleString}\n}`;
 
-console.log("Tenant CSS Path:", tenantCssPath || "None");
-console.log("Inline CSS Length:", styleString.length);
-if (styleString.length > 0) {
-  console.log("✓ Inline CSS available as fallback");
-} else {
-  console.log("⚠ No inline CSS - will use defaults");
-}
+// Determine which method to use
+let loadMethod = "default";
+if (themeCssUrl) loadMethod = "dynamic-url";
+else if (themeCssContent) loadMethod = "dynamic-content";
+else if (tenantCssPath) loadMethod = "static-file";
+else if (styleString.length > 0) loadMethod = "inline-vars";
+
+console.log("Load Method:", loadMethod);
 console.log("=== End TenantTheme ===\n");
 ---
 
-<!-- Try to load tenant CSS from static file first -->{
-  tenantCssPath && <link rel="stylesheet" href={tenantCssPath} />
+<!-- PRIORITY 1: Load CSS from dynamic URL (from payload) -->{
+  themeCssUrl && <link rel="stylesheet" href={themeCssUrl} />
 }
 
-<!-- Fallback: Inject inline CSS if no static file exists -->
+<!-- PRIORITY 2: Inject raw CSS content (from payload) -->
 {
-  !tenantCssPath && styleString.length > 0 && (
-    <style is:inline set:html={fullCssString} />
+  !themeCssUrl && themeCssContent && (
+    <style is:inline set:html={themeCssContent} />
   )
 }
 
+<!-- PRIORITY 3: Load from static file in public/themes/ -->
+{
+  !themeCssUrl && !themeCssContent && tenantCssPath && (
+    <link rel="stylesheet" href={tenantCssPath} />
+  )
+}
+
+<!-- PRIORITY 4: Fallback to inline CSS variables -->
+{
+  !themeCssUrl &&
+    !themeCssContent &&
+    !tenantCssPath &&
+    styleString.length > 0 && <style is:inline set:html={fullCssString} />
+}
+
 <!-- Debug: Show tenant theme status -->
-<!-- Tenant ID: {tenantId || 'None'} | CSS File: {tenantCssPath || 'None'} | Inline Vars: {Object.keys(themeCSSVars).length} -->
+<!-- Method: {loadMethod} | Tenant ID: {tenantId || 'None'} | CSS Vars: {Object.keys(themeCSSVars).length} -->

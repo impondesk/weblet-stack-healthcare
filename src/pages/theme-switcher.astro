@@ -1,0 +1,212 @@
+---
+/**
+ * Theme Switcher Demo Page
+ * 
+ * Visit /theme-switcher to see all 4 themes side by side
+ * and switch between them in real-time
+ */
+import Layout from '../layouts/layout.astro';
+
+const themes = [
+  { name: 'Coffee Brown', file: 'coffee-brown-theme', color: 'oklch(0.48 0.065 38)' },
+  { name: 'Ocean Blue', file: 'ocean-blue-theme', color: 'oklch(0.52 0.135 225)' },
+  { name: 'Forest Green', file: 'forest-green-theme', color: 'oklch(0.54 0.135 138)' },
+  { name: 'Sunset Purple', file: 'sunset-purple-theme', color: 'oklch(0.56 0.195 298)' },
+];
+
+const currentTheme = Astro.url.searchParams.get('theme') || 'coffee-brown-theme';
+---
+
+<Layout title="Theme Switcher Demo">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-primary-900 mb-4">Theme Switcher Demo</h1>
+    <p class="text-secondary-700 mb-8">Select a theme to see it applied instantly</p>
+
+    <!-- Theme Selector -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      {themes.map(theme => (
+        <a 
+          href={`?theme=${theme.file}`}
+          class={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${
+            currentTheme === theme.file 
+              ? 'border-primary-500 bg-primary-50' 
+              : 'border-gray-200 bg-white hover:border-primary-300'
+          }`}
+        >
+          <div 
+            class="w-16 h-16 rounded-full mb-4 mx-auto"
+            style={`background-color: ${theme.color}`}
+          ></div>
+          <h3 class="text-center font-semibold text-primary-900">{theme.name}</h3>
+          {currentTheme === theme.file && (
+            <p class="text-center text-sm text-primary-600 mt-2">✓ Active</p>
+          )}
+        </a>
+      ))}
+    </div>
+
+    <!-- Demo Components -->
+    <div class="space-y-12">
+      <!-- Buttons -->
+      <section>
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">Buttons</h2>
+        <div class="flex flex-wrap gap-4">
+          <button class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+            Primary Button
+          </button>
+          <button class="bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+            Secondary Button
+          </button>
+          <button class="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+            Accent Button
+          </button>
+          <button class="border-2 border-primary-500 text-primary-600 hover:bg-primary-50 px-6 py-3 rounded-lg font-semibold transition-colors">
+            Outline Button
+          </button>
+        </div>
+      </section>
+
+      <!-- Cards -->
+      <section>
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">Cards</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-primary-50 border-l-4 border-primary-500 p-6 rounded-r-lg">
+            <h3 class="text-xl font-bold text-primary-900 mb-2">Primary Card</h3>
+            <p class="text-secondary-700">Using primary-50 background with primary-500 border.</p>
+          </div>
+          <div class="bg-secondary-50 border-l-4 border-secondary-500 p-6 rounded-r-lg">
+            <h3 class="text-xl font-bold text-secondary-900 mb-2">Secondary Card</h3>
+            <p class="text-secondary-700">Using secondary-50 background with secondary-500 border.</p>
+          </div>
+          <div class="bg-accent-50 border-l-4 border-accent-500 p-6 rounded-r-lg">
+            <h3 class="text-xl font-bold text-accent-900 mb-2">Accent Card</h3>
+            <p class="text-secondary-700">Using accent-50 background with accent-500 border.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section>
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">Typography</h2>
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold text-primary-900">Heading 1 - primary-900</h1>
+          <h2 class="text-3xl font-bold text-primary-800">Heading 2 - primary-800</h2>
+          <h3 class="text-2xl font-semibold text-primary-700">Heading 3 - primary-700</h3>
+          <p class="text-lg text-primary-600">Body text - primary-600</p>
+          <p class="text-secondary-600">Muted text - secondary-600</p>
+          <p class="text-accent-600">Accent text - accent-600</p>
+        </div>
+      </section>
+
+      <!-- Badges -->
+      <section>
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">Badges</h2>
+        <div class="flex flex-wrap gap-3">
+          <span class="bg-primary-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Primary Badge</span>
+          <span class="bg-secondary-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Secondary Badge</span>
+          <span class="bg-accent-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Accent Badge</span>
+          <span class="bg-primary-100 text-primary-800 px-4 py-2 rounded-full text-sm font-semibold">Light Primary</span>
+          <span class="bg-secondary-100 text-secondary-800 px-4 py-2 rounded-full text-sm font-semibold">Light Secondary</span>
+        </div>
+      </section>
+
+      <!-- Gradients -->
+      <section>
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">Gradients</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="h-32 rounded-lg bg-gradient-to-r from-primary-500 to-primary-700 flex items-center justify-center">
+            <p class="text-white font-bold text-lg">Primary Gradient</p>
+          </div>
+          <div class="h-32 rounded-lg bg-gradient-to-r from-secondary-500 to-accent-500 flex items-center justify-center">
+            <p class="text-white font-bold text-lg">Secondary to Accent</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Color Palette -->
+      <section>
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">Color Palette</h2>
+        
+        <h3 class="text-lg font-semibold text-primary-800 mb-3">Primary Colors</h3>
+        <div class="flex flex-wrap gap-2 mb-6">
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-50 rounded border border-gray-300"></div>
+            <span class="text-xs mt-1">50</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-100 rounded"></div>
+            <span class="text-xs mt-1">100</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-200 rounded"></div>
+            <span class="text-xs mt-1">200</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-300 rounded"></div>
+            <span class="text-xs mt-1">300</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-400 rounded"></div>
+            <span class="text-xs mt-1">400</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-500 rounded"></div>
+            <span class="text-xs mt-1 font-bold">500</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-600 rounded"></div>
+            <span class="text-xs mt-1">600</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-700 rounded"></div>
+            <span class="text-xs mt-1">700</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-800 rounded"></div>
+            <span class="text-xs mt-1">800</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-primary-900 rounded"></div>
+            <span class="text-xs mt-1">900</span>
+          </div>
+        </div>
+
+        <h3 class="text-lg font-semibold text-primary-800 mb-3">Secondary Colors</h3>
+        <div class="flex flex-wrap gap-2 mb-6">
+          {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
+            <div class="flex flex-col items-center">
+              <div class={`w-16 h-16 bg-secondary-${shade} rounded ${shade === 50 ? 'border border-gray-300' : ''}`}></div>
+              <span class={`text-xs mt-1 ${shade === 500 ? 'font-bold' : ''}`}>{shade}</span>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-lg font-semibold text-primary-800 mb-3">Accent Colors</h3>
+        <div class="flex flex-wrap gap-2">
+          {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
+            <div class="flex flex-col items-center">
+              <div class={`w-16 h-16 bg-accent-${shade} rounded ${shade === 50 ? 'border border-gray-300' : ''}`}></div>
+              <span class={`text-xs mt-1 ${shade === 500 ? 'font-bold' : ''}`}>{shade}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Implementation Code -->
+      <section class="bg-gray-50 p-6 rounded-lg">
+        <h2 class="text-2xl font-bold text-primary-900 mb-4">How to Use This Theme</h2>
+        <p class="text-secondary-700 mb-4">Add this to your tenant API response:</p>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto"><code>{`{
+  "id": "tenant-123",
+  "name": "My Tenant",
+  "themeCssUrl": "/themes/${currentTheme}.css"
+}`}</code></pre>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* Override tenant theme for this demo page */
+  @import url('/themes/{currentTheme}.css');
+</style>

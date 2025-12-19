@@ -2,15 +2,36 @@
 /* @import "tailwindcss"; */
 
 @theme {
-  --color-primary-50: oklch(0.969 0.016 293.756) !important;
-  --color-primary-100: oklch(0.943 0.029 294.588) !important;
-  --color-primary-200: oklch(0.894 0.057 293.283) !important;
-  --color-primary-300: oklch(0.811 0.111 293.571) !important;
-  --color-primary-400: oklch(0.702 0.183 293.541) !important;
-  --color-primary-500: oklch(0.606 0.25 292.717) !important;
-  --color-primary-600: oklch(0.541 0.281 293.009) !important;
-  --color-primary-700: oklch(0.491 0.27 292.581) !important;
-  --color-primary-800: oklch(0.432 0.232 292.759) !important;
-  --color-primary-900: oklch(0.38 0.189 293.745) !important;
-  --color-primary-950: oklch(0.283 0.141 291.089) !important;
+  --color-primary-50: oklch(0.965 0.011 63.361);
+  --color-primary-100: oklch(0.93 0.022 63.195);
+  --color-primary-200: oklch(0.859 0.045 62.78);
+  --color-primary-300: oklch(0.789 0.069 62.169);
+  --color-primary-400: oklch(0.652 0.115 59.187);
+  --color-primary-500: oklch(0.554 0.094 63.662);
+  --color-primary-600: oklch(0.474 0.078 64.611);
+  --color-primary-700: oklch(0.367 0.072 52.766);
+  --color-primary-800: oklch(0.3 0.045 66.013);
+  --color-primary-900: oklch(0.203 0.026 62.836);
+
+  --color-secondary-50: oklch(0.987 0.021 95.277);
+  --color-secondary-100: oklch(0.962 0.058 95.617);
+  --color-secondary-200: oklch(0.924 0.115 95.746);
+  --color-secondary-300: oklch(0.879 0.153 91.605);
+  --color-secondary-400: oklch(0.837 0.164 84.429);
+  --color-secondary-500: oklch(0.769 0.165 70.08);
+  --color-secondary-600: oklch(0.666 0.157 58.318);
+  --color-secondary-700: oklch(0.555 0.146 48.998);
+  --color-secondary-800: oklch(0.473 0.125 46.201);
+  --color-secondary-900: oklch(0.414 0.105 45.904);
+
+  --color-accent-50: oklch(0.984 0.003 247.858);
+  --color-accent-100: oklch(0.968 0.007 247.896);
+  --color-accent-200: oklch(0.929 0.013 255.508);
+  --color-accent-300: oklch(0.869 0.02 252.894);
+  --color-accent-400: oklch(0.711 0.035 256.788);
+  --color-accent-500: oklch(0.554 0.041 257.417);
+  --color-accent-600: oklch(0.446 0.037 257.281);
+  --color-accent-700: oklch(0.372 0.039 257.287);
+  --color-accent-800: oklch(0.279 0.037 260.031);
+  --color-accent-900: oklch(0.208 0.04 265.755);
 }

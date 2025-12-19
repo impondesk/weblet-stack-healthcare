@@ -4,6 +4,17 @@
 
 The tenant theme system has been refactored to load theme configurations **dynamically from your backend API** (payload/weblet) instead of hardcoded mappings. This provides maximum flexibility for managing tenant themes at runtime.
 
+### ✨ NEW: Dynamic CSS Delivery
+
+You can now pass **complete CSS files** from your payload to tenant websites! This enables:
+
+- 🎨 Share Tailwind customization files on the fly
+- 🚀 Update themes without frontend redeployment  
+- 💪 Full CSS control (animations, fonts, custom utilities)
+- 📦 CDN-hosted theme files for better performance
+
+**👉 [Quick Start Guide](./DYNAMIC_CSS_QUICK_START.md)** | **[Full Documentation](./DYNAMIC_CSS_DELIVERY.md)** | **[Examples](./DYNAMIC_CSS_EXAMPLES.ts)**
+
 ## How It Works
 
 ### 1. Backend Provides Theme Data

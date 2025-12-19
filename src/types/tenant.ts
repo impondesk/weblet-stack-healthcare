@@ -16,6 +16,11 @@ export interface TenantData {
   domains?: Array<{ domain: string; id: string }>;
   theme?: any; // The theme object (metadata about theme)
   themeConfig?: TenantThemeConfig; // The actual color configuration
+
+  // Dynamic CSS options - NEW!
+  themeCssUrl?: string; // URL to complete theme.css file (highest priority)
+  themeCssContent?: string; // Raw CSS content as string (alternative to URL)
+
   demo?: boolean;
   // Add other tenant properties as needed
   [key: string]: any;

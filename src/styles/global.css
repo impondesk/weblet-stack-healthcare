@@ -11,41 +11,6 @@
 @import "tailwindcss";
 /* @import url("/public/themes/6944754c649b0752d88a5d56.css"); */
 
-@theme {
-  --color-primary-50: oklch(0.965 0.011 63.361) !important;
-  --color-primary-100: oklch(0.93 0.022 63.195) !important;
-  --color-primary-200: oklch(0.859 0.045 62.78) !important;
-  --color-primary-300: oklch(0.789 0.069 62.169) !important;
-  --color-primary-400: oklch(0.652 0.115 59.187) !important;
-  --color-primary-500: oklch(0.554 0.094 63.662) !important;
-  --color-primary-600: oklch(0.474 0.078 64.611) !important;
-  --color-primary-700: oklch(0.367 0.072 52.766) !important;
-  --color-primary-800: oklch(0.3 0.045 66.013) !important;
-  --color-primary-900: oklch(0.203 0.026 62.836) !important;
-
-  --color-secondary-50: oklch(0.984 0.003 247.858);
-  --color-secondary-100: oklch(0.968 0.007 247.896);
-  --color-secondary-200: oklch(0.929 0.013 255.508);
-  --color-secondary-300: oklch(0.869 0.02 252.894);
-  --color-secondary-400: oklch(0.711 0.035 256.788);
-  --color-secondary-500: oklch(0.554 0.041 257.417);
-  --color-secondary-600: oklch(0.446 0.037 257.281);
-  --color-secondary-700: oklch(0.372 0.039 257.287);
-  --color-secondary-800: oklch(0.279 0.037 260.031);
-  --color-secondary-900: oklch(0.208 0.04 265.755);
-
-  --color-accent-50: oklch(0.987 0.021 95.277);
-  --color-accent-100: oklch(0.962 0.058 95.617);
-  --color-accent-200: oklch(0.924 0.115 95.746);
-  --color-accent-300: oklch(0.879 0.153 91.605);
-  --color-accent-400: oklch(0.837 0.164 84.429);
-  --color-accent-500: oklch(0.769 0.165 70.08);
-  --color-accent-600: oklch(0.666 0.157 58.318);
-  --color-accent-700: oklch(0.555 0.146 48.998);
-  --color-accent-800: oklch(0.473 0.125 46.201);
-  --color-accent-900: oklch(0.414 0.105 45.904);
-}
-
 html {
   box-sizing: border-box;
   transition: background-color 0.1s ease, color 0.1s ease;
@@ -58,6 +23,64 @@ html {
 
 html.dark {
   color-scheme: dark;
+}
+
+/* Coffee Brown Theme - Warm, earthy tones */
+@theme {
+  /* Primary: Rich Coffee Browns */
+  --color-primary-50: oklch(0.97 0.008 60) !important;
+  --color-primary-100: oklch(0.92 0.018 55) !important;
+  --color-primary-200: oklch(0.84 0.035 50) !important;
+  --color-primary-300: oklch(0.75 0.055 45) !important;
+  --color-primary-400: oklch(0.62 0.075 40) !important;
+  --color-primary-500: oklch(0.48 0.065 38) !important;
+  --color-primary-600: oklch(0.38 0.055 35) !important;
+  --color-primary-700: oklch(0.28 0.045 32) !important;
+  --color-primary-800: oklch(0.22 0.035 30) !important;
+  --color-primary-900: oklch(0.16 0.025 28) !important;
+
+  /* Secondary: Warm Caramel */
+  --color-secondary-50: oklch(0.98 0.012 75);
+  --color-secondary-100: oklch(0.94 0.025 72);
+  --color-secondary-200: oklch(0.88 0.045 68);
+  --color-secondary-300: oklch(0.78 0.065 65);
+  --color-secondary-400: oklch(0.68 0.085 62);
+  --color-secondary-500: oklch(0.58 0.095 60);
+  --color-secondary-600: oklch(0.48 0.085 58);
+  --color-secondary-700: oklch(0.38 0.075 56);
+  --color-secondary-800: oklch(0.28 0.065 54);
+  --color-secondary-900: oklch(0.2 0.055 52);
+
+  /* Accent: Cream & Gold */
+  --color-accent-50: oklch(0.99 0.008 95);
+  --color-accent-100: oklch(0.96 0.022 90);
+  --color-accent-200: oklch(0.91 0.048 88);
+  --color-accent-300: oklch(0.85 0.075 85);
+  --color-accent-400: oklch(0.78 0.095 82);
+  --color-accent-500: oklch(0.7 0.11 80);
+  --color-accent-600: oklch(0.6 0.105 78);
+  --color-accent-700: oklch(0.5 0.095 75);
+  --color-accent-800: oklch(0.42 0.085 72);
+  --color-accent-900: oklch(0.35 0.075 70);
+}
+
+/* Optional: Custom utility classes for coffee theme */
+.coffee-card {
+  background: linear-gradient(
+    135deg,
+    oklch(0.48 0.065 38 / 0.1),
+    oklch(0.7 0.11 80 / 0.1)
+  );
+  border-color: oklch(0.38 0.055 35);
+}
+
+.coffee-button {
+  background-color: oklch(0.48 0.065 38);
+  color: oklch(0.99 0.008 95);
+}
+
+.coffee-button:hover {
+  background-color: oklch(0.38 0.055 35);
 }
 
 body {

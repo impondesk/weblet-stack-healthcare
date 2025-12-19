@@ -14,15 +14,6 @@ const hostname = Astro.locals.host;
   <div class="container mx-auto px-4 py-12 max-w-4xl">
     <h1 class="text-4xl font-bold text-primary-600 mb-4">Tenant Theme Demo</h1>
 
-    <div class="bg-blue-100 border border-blue-300 rounded-lg p-6 mb-8">
-      <p class="text-blue-900">
-        Current hostname: <strong class="text-blue-600">{hostname}</strong>
-      </p>
-      <p class="text-blue-700 mt-2">
-        The colors on this page will change based on your tenant configuration.
-      </p>
-    </div>
-
     <div
       class="bg-secondary-100 border border-secondary-300 rounded-lg p-6 mb-8"
     >
@@ -36,44 +27,34 @@ const hostname = Astro.locals.host;
 
     <!-- Primary Color Showcase -->
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold text-secondary-900 mb-4">
+      <h2 class="text-2xl font-semibold text-primary-900 mb-4">
         Primary Colors
       </h2>
       <div class="grid grid-cols-5 gap-4">
         <div class="text-center">
-          <div
-            class="bg-primary-50 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-primary-50 h-20 rounded-lg border border-primary-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">50</p>
+          <p class="text-xs mt-2 text-primary-600">50</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-primary-100 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-primary-100 h-20 rounded-lg border border-primary-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">100</p>
+          <p class="text-xs mt-2 text-primary-600">100</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-primary-500 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-primary-500 h-20 rounded-lg border border-primary-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">500</p>
+          <p class="text-xs mt-2 text-primary-600">500</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-primary-600 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-primary-600 h-20 rounded-lg border border-primary-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">600</p>
+          <p class="text-xs mt-2 text-primary-600">600</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-primary-900 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-primary-900 h-20 rounded-lg border border-primary-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">900</p>
+          <p class="text-xs mt-2 text-primary-600">900</p>
         </div>
       </div>
     </section>
@@ -129,37 +110,29 @@ const hostname = Astro.locals.host;
       </h2>
       <div class="grid grid-cols-5 gap-4">
         <div class="text-center">
-          <div class="bg-accent-50 h-20 rounded-lg border border-secondary-200">
+          <div class="bg-accent-50 h-20 rounded-lg border border-accent-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">50</p>
+          <p class="text-xs mt-2 text-accent-600">50</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-accent-100 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-accent-100 h-20 rounded-lg border border-accent-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">100</p>
+          <p class="text-xs mt-2 text-accent-600">100</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-accent-500 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-accent-500 h-20 rounded-lg border border-accent-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">500</p>
+          <p class="text-xs mt-2 text-accent-600">500</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-accent-600 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-accent-600 h-20 rounded-lg border border-accent-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">600</p>
+          <p class="text-xs mt-2 text-accent-600">600</p>
         </div>
         <div class="text-center">
-          <div
-            class="bg-accent-900 h-20 rounded-lg border border-secondary-200"
-          >
+          <div class="bg-accent-900 h-20 rounded-lg border border-accent-200">
           </div>
-          <p class="text-xs mt-2 text-secondary-600">900</p>
+          <p class="text-xs mt-2 text-accent-600">900</p>
         </div>
       </div>
     </section>
