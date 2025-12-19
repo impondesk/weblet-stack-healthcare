@@ -3,6 +3,7 @@ import { fade, ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import TenantTheme from "../components/TenantTheme.astro";
+import ThemeLayer from "../components/theme-layer.astro";
 
 import classNames from "classnames";
 
@@ -13,7 +14,7 @@ const contentTitle = Astro.props.title || "Default Theme";
 
 // Get tenant ID for dynamic CSS loading
 const tenantId = Astro.locals?.tenant?.id;
-const tenantCssPath = tenantId ? `/themes/brand/${tenantId}.css` : null;
+// const tenantCssPath = tenantId ? `/themes/brand/${tenantId}.css` : null;
 
 import "../styles/global.css";
 import "../styles/prose.css";
@@ -38,11 +39,6 @@ import "aos/dist/aos.css";
       {contentTitle + " - " + Astro.locals?.tenant?.name || "Default Theme"}
     </title>
     <link rel="icon" href="/favicon.ico" />
-
-    <!-- Inject tenant-specific theme CSS variables AFTER base styles to override defaults -->
-    <TenantTheme />
-
-    <link rel="stylesheet" href="/themes/ocean-blue-theme.css" />
 
     <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->
     <ViewTransitions />

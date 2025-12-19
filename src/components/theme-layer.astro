@@ -1,0 +1,17 @@
+---
+const tenantId = Astro.locals?.tenant?.id;
+
+console.log("=== ThemeLayer Component ===");
+console.log("Tenant ID:", tenantId || "None");
+---
+
+<!-- PRIORITY 3: Load CSS from static file based on tenant ID -->{
+  !Astro.locals?.tenant?.themeCssUrl &&
+    !Astro.locals?.tenant?.themeCssContent &&
+    tenantId && (
+      <link
+        rel="stylesheet"
+        href={`./../stores/themes/ocean-blue-themes.css`}
+      />
+    )
+}

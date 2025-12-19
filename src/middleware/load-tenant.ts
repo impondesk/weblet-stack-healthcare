@@ -28,24 +28,24 @@ export const loadTenant = defineMiddleware(async (context, next) => {
       context.locals.tenant = data.docs[0].tenant;
 
       // FIXME: For testing, override themeCssUrl here
-      context.locals.tenant = {
-        themeCssUrl: "/themes/ocean-blue-theme.css", // ← Try different themes!
-      };
+      // context.locals.tenant = {
+      //   themeCssUrl: "/themes/ocean-blue-theme.css", // ← Try different themes!
+      // };
 
       context.locals.theme = data.docs[0].tenant.theme;
 
-      console.log("✓ Tenant loaded:", data.docs[0].tenant.name);
-      console.log("✓ Tenant ID:", data.docs[0].tenant.id);
-      console.log("✓ Has tenantTheme:", !!data.docs[0].tenant.tenantTheme);
-      console.log("✓ Has themeConfig:", !!data.docs[0].tenant.themeConfig);
+      // console.log("✓ Tenant loaded:", data.docs[0].tenant.name);
+      // console.log("✓ Tenant ID:", data.docs[0].tenant.id);
+      // console.log("✓ Has tenantTheme:", !!data.docs[0].tenant.tenantTheme);
+      // console.log("✓ Has themeConfig:", !!data.docs[0].tenant.themeConfig);
 
       // Log the actual structure for debugging
-      if (data.docs[0].tenant.tenantTheme) {
-        console.log(
-          "✓ tenantTheme structure:",
-          JSON.stringify(data.docs[0].tenant.tenantTheme, null, 2)
-        );
-      }
+      // if (data.docs[0].tenant.tenantTheme) {
+      //   console.log(
+      //     "✓ tenantTheme structure:",
+      //     JSON.stringify(data.docs[0].tenant.tenantTheme, null, 2)
+      //   );
+      // }
     } else {
       console.log("⚠ No tenant data found, using defaults");
     }
