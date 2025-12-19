@@ -1,11 +1,21 @@
 ---
-const { title, subTitle, excerpt } = Astro.props;
-
+const { title, subTitle, excerpt, bgMood } = Astro.props;
 const { features } = Astro.props;
+
+// Map bgMood to theme-aware background classes
+const bgMoodClass = bgMood === 'primary'
+  ? 'bg-primary-50'
+  : bgMood === 'secondary'
+  ? 'bg-secondary-50'
+  : bgMood === 'dark'
+  ? 'bg-base-900 text-white'
+  : bgMood === 'light'
+  ? 'bg-base-50'
+  : '';
 ---
 
-<section>
-  <div class="relative pt-24 mx-auto max-w-7xl py-16">
+<section class={bgMoodClass}>
+  <div class="relative py-24 mx-auto max-w-7xl py-16">
     <!-- Features Heading Section -->
     <div class="max-w-3xl">
       <p class="text-sm leading-normal font-bold uppercase text-accent-600">
