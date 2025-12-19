@@ -4,7 +4,7 @@ import {
   mergeWithDefaultTheme,
   themeToCSSVars,
 } from "../config/tenant-theme-config";
-import brownTheme from "../../brown-earth-theme-config.json";
+// import brownTheme from "../../brown-earth-theme-config.json";
 
 export const tenant = defineMiddleware((context, next) => {
   console.log("=== Theme Middleware Debug ===");

@@ -35,7 +35,7 @@ https://tailwindcss.com/docs/preflight */
 /* @import url("./theme-sample.css"); */
 /* @import "./theme-default.css"; */
 
-@import url("./theme-template.css");
+@import "./theme-template.css";
 
 html {
   box-sizing: border-box;
