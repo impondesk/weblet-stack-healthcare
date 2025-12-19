@@ -7,6 +7,6 @@ import { sequence } from "astro:middleware";
 // IMPORTANT: loadTenant must run BEFORE tenant middleware
 // to ensure theme configuration is available
 export const onRequest = sequence(
-  loadTenant,  // Load tenant data first
-  tenant       // Then apply theme
+  // loadTenant,  // Load tenant data first
+  tenant // Then apply theme
 );
