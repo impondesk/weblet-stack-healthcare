@@ -3,6 +3,8 @@
 @theme {
   --*: initial;
 
+  --aspect-retro: 4 / 3;
+
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -29,6 +31,8 @@
   --color-dusk: oklch(0.82 0.15 72.09);
   --color-lime-*: initial;
   --color-fuchsia-*: initial;
+
+  --acme-canvas-color: oklch(0.967 0.003 264.542);
 
   --color-avocado-100: oklch(0.99 0 0);
   --color-avocado-200: oklch(0.98 0.04 113.22);
@@ -68,13 +72,22 @@
   }
 }
 
+/* https://tailwindcss.com/docs/colors#referencing-other-variables */
+[data-theme="dark"] {
+  --acme-canvas-color: oklch(0.21 0.034 264.665);
+}
+
+@theme inline {
+  --color-canvas: var(--acme-canvas-color);
+}
+
 /* https://tailwindcss.com/docs/theme#generating-all-css-variables */
 /* @theme static {
   --color-primary: var(--color-red-500);
   --color-secondary: var(--color-blue-500);
 } */
 
-/* With custom CSS */
+/* https://tailwindcss.com/docs/adding-custom-styles#adding-component-classes */
 @layer components {
   .typography {
     p {
@@ -91,6 +104,13 @@
       font-weight: var(--font-weight-semibold);
       color: var(--color-gray-950);
     }
+
+    .card {
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: --spacing(6);
+      box-shadow: var(--shadow-xl);
+    }
   }
 }
 
@@ -99,3 +119,5 @@
     background-color: --alpha(var(--color-gray-950) / 10%);
   }
 }
+
+/* https://tailwindcss.com/docs/adding-custom-styles#arbitrary-variants */
