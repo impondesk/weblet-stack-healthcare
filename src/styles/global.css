@@ -9,7 +9,7 @@
 /* Import theme variables FIRST - these define the base CSS variables */
 
 @import "tailwindcss";
-@import url("/public/themes/6944754c649b0752d88a5d56.css");
+/* @import url("/public/themes/6944754c649b0752d88a5d56.css"); */
 
 @theme {
   --color-primary-50: oklch(0.965 0.011 63.361) !important;
