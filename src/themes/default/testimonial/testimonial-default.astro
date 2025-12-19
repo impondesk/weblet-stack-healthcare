@@ -72,9 +72,9 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
                         bgMood === "dark" ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
-                      {role}
+                      {role || ""}
                       {role && organization && " · "}
-                      {organization}
+                      {organization || ""}
                     </p>
                   )}
                 </div>
