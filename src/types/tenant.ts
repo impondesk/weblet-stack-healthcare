@@ -4,7 +4,7 @@
  * Types for tenant data coming from payload/weblet API
  */
 
-import type { TenantThemeConfig } from "../config/tenant-theme-config";
+// import type { TenantThemeConfig } from "../config/tenant-theme-config";
 
 /**
  * Complete tenant data structure from API
@@ -15,7 +15,7 @@ export interface TenantData {
   domain?: string;
   domains?: Array<{ domain: string; id: string }>;
   theme?: any; // The theme object (metadata about theme)
-  themeConfig?: TenantThemeConfig; // The actual color configuration
+  // themeConfig?: TenantThemeConfig; // The actual color configuration
 
   // Dynamic CSS options - NEW!
   themeCssUrl?: string; // URL to complete theme.css file (highest priority)
