@@ -15,6 +15,9 @@ const contentTitle = Astro.props.title || "Narr8";
 // TenantTheme component below will override these with tenant-specific values
 import "../styles/global.css";
 import "../styles/prose.css";
+
+// Import AOS CSS
+import "aos/dist/aos.css";
 ---
 
 <!doctype html>
@@ -39,6 +42,11 @@ import "../styles/prose.css";
 
     <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->
     <!-- <ViewTransitions /> -->
+
+    <!-- Initialize AOS animations -->
+    <script>
+      import "../scripts/aos-init.ts";
+    </script>
   </head>
 
   <!--  -->

@@ -28,6 +28,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "alpinejs": "^3.14.9",
+    "aos": "^2.3.4",
     "astro": "^5.12.2",
     "classnames": "^2.5.1",
     "node-fetch": "^3.3.2",
