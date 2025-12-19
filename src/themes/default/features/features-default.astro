@@ -81,7 +81,7 @@ const { features } = Astro.props;
                   {...(feature.refURL.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  class="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                  class="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
                 >
                   {feature.ref}
                   <svg
@@ -131,8 +131,8 @@ const { features } = Astro.props;
                     // Determine link styling based on variant
                     const isPrimary = link.variant === "primary";
                     const linkClass = isPrimary
-                      ? "inline-flex items-center justify-center gap-1 rounded-lg bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 text-sm font-semibold shadow-sm transition-colors"
-                      : "inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors";
+                      ? "inline-flex items-center justify-center gap-1 rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 text-sm font-semibold shadow-sm transition-colors"
+                      : "inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors";
 
                     return (
                       <a href={href} {...linkProps} class={linkClass}>
