@@ -1,0 +1,119 @@
+---
+const { title, subTitle, excerpt, features, featuredImage } = Astro.props;
+
+// Get image URL from featuredImage
+const mainImage =
+  featuredImage?.url ||
+  (featuredImage?.prefix && featuredImage?.filename
+    ? `https://${featuredImage.prefix}/${featuredImage.filename}`
+    : null);
+---
+
+<section class="bg-blue-900 bg-opacity-90 py-20 text-white lg:py-28">
+  <div class="container max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+      <!-- About Image -->
+      {
+        mainImage && (
+          <aside class="relative">
+            <img
+              src={mainImage}
+              class="w-full rounded"
+              alt={featuredImage?.alt || title || "Feature image"}
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              data-aos-delay="100"
+            />
+          </aside>
+        )
+      }
+
+      <!-- About Text -->
+      <aside>
+        <!-- About Heading -->
+        <h2
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+        >
+          {title || "Indulge in Artisanal Coffee and Delightful Food"}
+        </h2>
+
+        <!-- About Paragraph -->
+        <p
+          class="mt-3 lg:mt-6 text-lg"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+        >
+          {
+            excerpt ||
+              "Experience the perfect blend of handcrafted coffee and delicious food at Beanery. Our artisanal offerings are made with passion and precision to deliver an exceptional culinary experience."
+          }
+        </p>
+
+        <div
+          class="mb-6 mt-4 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:mb-12 lg:mt-8 lg:gap-12"
+        >
+          {
+            features && features.length > 0 ? (
+              features.slice(0, 2).map((feature, index) => (
+                <aside
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  data-aos-delay={index === 0 ? "0" : "100"}
+                >
+                  {/* Feature Heading */}
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-2">
+                    {feature.title}
+                  </h3>
+
+                  {/* Feature Paragraph */}
+                  <p class="text-base opacity-90">
+                    {feature.summary || feature.description}
+                  </p>
+                </aside>
+              ))
+            ) : (
+              <>
+                {/* Default Quality */}
+                <aside data-aos="fade-left" data-aos-duration="1000">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-2">
+                    Quality
+                  </h3>
+                  <p class="text-base opacity-90">
+                    Savor the rich flavors of our carefully sourced coffee beans
+                    and locally inspired dishes.
+                  </p>
+                </aside>
+
+                {/* Default Craftsmanship */}
+                <aside
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  data-aos-delay="100"
+                >
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-2">
+                    Craftsmanship
+                  </h3>
+                  <p class="text-base opacity-90">
+                    Every cup of coffee and every dish is prepared with
+                    meticulous attention to detail.
+                  </p>
+                </aside>
+              </>
+            )
+          }
+        </div>
+
+        <!-- About Button -->
+        <div data-aos="fade-left" data-aos-duration="1000">
+          <button
+            class="inline-flex items-center justify-center rounded-lg bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-base font-semibold shadow-sm transition-colors"
+          >
+            Explore
+          </button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
