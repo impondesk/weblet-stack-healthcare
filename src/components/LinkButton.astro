@@ -1,6 +1,8 @@
 ---
 export interface Props {
   href: string;
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "link" | "accent";
+  size?: "sm" | "md" | "lg";
   className?: string;
   ariaLabel?: string;
   title?: string;
@@ -10,18 +12,55 @@ export interface Props {
 
 const {
   href,
-  className,
+  variant = "primary",
+  size = "md",
+  className = "",
   ariaLabel,
   title,
   disabled = false,
   target = "_self",
 } = Astro.props;
+
+{
+  JSON.stringify(Astro.props);
+}
+
+// Variant styles
+const variantClasses = {
+  primary:
+    "bg-primary-500 hover:bg-primary-600 text-white shadow-sm focus-visible:outline-primary-500",
+  secondary:
+    "bg-secondary-500 hover:bg-secondary-600 text-white shadow-sm focus-visible:outline-secondary-500",
+  accent:
+    "bg-accent-500 hover:bg-accent-600 text-gray-900 shadow-sm focus-visible:outline-accent-500",
+  outline:
+    "border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus-visible:outline-primary-500",
+  ghost: "text-primary-500 hover:bg-primary-50 hover:text-primary-600",
+  link: "text-primary-500 hover:text-primary-600 underline-offset-4 hover:underline",
+};
+
+// Size styles
+const sizeClasses = {
+  sm: "px-3 py-1.5 text-xs",
+  md: "px-5 py-3 text-sm",
+  lg: "px-6 py-4 text-base",
+};
+
+// Base classes
+const baseClasses =
+  "inline-flex items-center justify-center rounded-lg font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+
+// Disabled classes
+const disabledClasses = disabled ? "opacity-50 cursor-not-allowed" : "";
+
+// Combined classes
+const buttonClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`;
 ---
 
 {
   disabled ? (
     <span
-      class={`group inline-block ${className}`}
+      class={buttonClasses}
       aria-label={ariaLabel}
       title={title}
       aria-disabled={disabled}
@@ -32,7 +71,7 @@ const {
     <a
       {href}
       target={target}
-      class={`group inline-block hover:text-skin-accent ${className}`}
+      class={buttonClasses}
       aria-label={ariaLabel}
       title={title}
     >

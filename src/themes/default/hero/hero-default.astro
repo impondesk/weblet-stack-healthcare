@@ -5,6 +5,22 @@ const { subTitle, title, excerpt, links, bgMood, heroImage } = Astro.props;
 const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename 
   ? `https://${heroImage.prefix}/${heroImage.filename}` 
   : null);
+
+// Variant styles for links
+const variantClasses = {
+  primary: "bg-primary-500 hover:bg-primary-600 text-white shadow-sm focus-visible:outline-primary-500",
+  secondary: "bg-secondary-500 hover:bg-secondary-600 text-white shadow-sm focus-visible:outline-secondary-500",
+  accent: "bg-accent-500 hover:bg-accent-600 text-gray-900 shadow-sm focus-visible:outline-accent-500",
+  outline: "border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus-visible:outline-primary-500",
+  ghost: "text-primary-500 hover:bg-primary-50 hover:text-primary-600",
+  link: "text-primary-500 hover:text-primary-600 underline-offset-4 hover:underline",
+};
+
+const sizeClasses = {
+  sm: "px-3 py-1.5 text-xs",
+  md: "px-5 py-3 text-sm",
+  lg: "px-6 py-4 text-base",
+};
 ---
 
 <section class="relative py-12 min-h-[500px] flex items-center">
@@ -32,7 +48,7 @@ const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename
   <p class={`mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl ${imageUrl ? 'text-white drop-shadow-2xl' : ''}`}>
     {title}
   </p>
-  <p class={`max-w-5xl mt-4 text-center mx-auto text-xl/8 ${imageUrl ? 'text-gray-100 drop-shadow-lg' : 'text-secondary-500'}`}>
+  <p class={`max-w-5xl mt-4 text-center mx-auto text-xl/8 ${imageUrl ? 'text-gray-100 drop-shadow-lg' : 'text-black'}`}>
     {excerpt}
   </p>
 
@@ -44,6 +60,8 @@ const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename
           if (!link || Object.keys(link).length === 0) return null;
 
           const isPrimary = index === 0;
+          const variant = link.variant || (isPrimary ? "primary" : "ghost");
+          const size = link.size || "md";
 
           // Determine the URL based on link type
           let href = "#";
@@ -66,22 +84,22 @@ const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {};
 
+          // Build class string
+          const baseClasses = "inline-flex items-center justify-center rounded-lg font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+          const buttonClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`;
+
           return (
             <a
               href={href}
+              class={buttonClasses}
               {...linkProps}
-              class={
-                isPrimary
-                  ? `inline-flex items-center justify-center rounded-lg bg-primary-500  hover:bg-primary-700 text-white px-5 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600`
-                  : `inline-flex items-center justify-center text-sm font-semibold  transition-colors`
-              }
             >
               {link?.label || link?.text || "Learn more"}
-              {!isPrimary && (
+              {variant === "ghost" || variant === "link" ? (
                 <span class="ml-1" aria-hidden="true">
                   →
                 </span>
-              )}
+              ) : null}
             </a>
           );
         })}
