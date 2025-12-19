@@ -10,8 +10,8 @@ let { collectionType = "products", slug } = Astro.params;
 const host = (Astro.locals as { host?: string })?.host || "";
 const data = await getProductByDomain(host, slug);
 
-console.log("Products found:", data?.docs[0]?.id);
-console.log("Products Found:", data?.docs[0]);
+// console.log("Products found:", data?.docs[0]?.id);
+// console.log("Products Found:", data?.docs[0]);
 
 console.log("Products items:", data?.docs[0]?.items?.length || 0);
 

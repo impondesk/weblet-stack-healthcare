@@ -2,25 +2,22 @@
 import { fade, ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import TenantTheme from "../components/TenantTheme.astro";
-import ThemeLayer from "../components/theme-layer.astro";
-
 import classNames from "classnames";
 
-const { tenant } = Astro.props;
-const { title } = tenant || Astro.props;
-
-const contentTitle = Astro.props.title || "Default Theme";
-
-// Get tenant ID for dynamic CSS loading
-const tenantId = Astro.locals?.tenant?.id;
-// const tenantCssPath = tenantId ? `/themes/brand/${tenantId}.css` : null;
-
+// Import base styles
 import "../styles/global.css";
 import "../styles/prose.css";
 
-// Import AOS CSS (bundled)
+import "../styles/palette/purple-palette.css";
+import "../styles/theme-runtime.css";
+
 import "aos/dist/aos.css";
+
+// Props and constants
+const { tenant } = Astro.props;
+const { title } = tenant || Astro.props;
+const contentTitle = Astro.props.title || "Default Theme";
+const tenantId = Astro.locals?.tenant?.id;
 ---
 
 <!doctype html>

@@ -1,0 +1,40 @@
+/**
+ * Runtime Theme System - CSS Custom Properties
+ * These can be dynamically overridden per tenant
+ */
+
+:root {
+  /* Default theme colors */
+  --color-primary-50: oklch(0.97 0.025 310);
+  --color-primary-100: oklch(0.93 0.048 308);
+  --color-primary-200: oklch(0.86 0.09 305);
+  --color-primary-300: oklch(0.77 0.135 302);
+  --color-primary-400: oklch(0.66 0.175 300);
+  --color-primary-500: oklch(0.56 0.195 298);
+  --color-primary-600: oklch(0.47 0.18 295);
+  --color-primary-700: oklch(0.39 0.16 293);
+  --color-primary-800: oklch(0.32 0.14 290);
+  --color-primary-900: oklch(0.25 0.115 288);
+
+  --color-secondary-50: oklch(0.98 0.022 340);
+  --color-secondary-100: oklch(0.94 0.048 338);
+  --color-secondary-200: oklch(0.88 0.092 335);
+  --color-secondary-300: oklch(0.8 0.138 332);
+  --color-secondary-400: oklch(0.71 0.175 330);
+  --color-secondary-500: oklch(0.62 0.195 328);
+  --color-secondary-600: oklch(0.53 0.185 325);
+  --color-secondary-700: oklch(0.45 0.165 323);
+  --color-secondary-800: oklch(0.37 0.145 320);
+  --color-secondary-900: oklch(0.3 0.12 318);
+
+  --color-accent-50: oklch(0.99 0.015 95);
+  --color-accent-100: oklch(0.96 0.045 92);
+  --color-accent-200: oklch(0.92 0.09 90);
+  --color-accent-300: oklch(0.87 0.135 88);
+  --color-accent-400: oklch(0.81 0.17 85);
+  --color-accent-500: oklch(0.75 0.195 83);
+  --color-accent-600: oklch(0.66 0.185 80);
+  --color-accent-700: oklch(0.57 0.165 78);
+  --color-accent-800: oklch(0.48 0.145 75);
+  --color-accent-900: oklch(0.4 0.125 73);
+}
