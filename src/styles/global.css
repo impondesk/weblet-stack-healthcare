@@ -6,12 +6,14 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+/* Import theme variables FIRST - these define the base CSS variables */
+/* @import "./theme-variables.css"; */
+
 @import "tailwindcss";
 
-/* Import theme variables - customize in child themes */
-@import "./theme-variables.css";
-
-/* @import "./theme.css"; */
+/* Import default theme styles */
+@import url("./theme-sample.css");
+/* @import "./theme-default.css"; */
 
 html {
   box-sizing: border-box;
@@ -33,59 +35,21 @@ body {
   margin: 0;
   padding: 0;
   text-align: left;
-  /* background: linear-gradient(var(--gray-gradient)) no-repeat; */
-  /* background-size: 100% 600px; */
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
-
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-old(full-embed),
-::view-transition-new(full-embed) {
-  /* Prevent the default animation,
-  so both views remain opacity:1 throughout the transition */
-  animation: none;
-  /* Use normal blending,
-  so the new view sits on top and obscures the old view */
-  mix-blend-mode: normal;
-  /* Make the height the same as the group,
-  meaning the view size might not match its aspect-ratio. */
-  height: 100%;
-  /* Clip any overflow of the view */
-  overflow: clip;
-}
-
-/* The old view is the thumbnail */
-::view-transition-old(full-embed) {
-  /* Maintain the aspect ratio of the view,
-  by shrinking it to fit within the bounds of the element */
-  object-fit: contain;
-}
-
-/* The new view is the full image */
-::view-transition-new(full-embed) {
-  /* Maintain the aspect ratio of the view,
-  by growing it to cover the bounds of the element */
-  object-fit: cover;
-}
-
-img::view-transition-new(full-embed) {
-  /* Maintain the aspect ratio of the view,
-  by growing it to cover the bounds of the element */
-  object-fit: cover;
-}
+/* background: linear-gradient(var(--gray-gradient)) no-repeat; */
+/* background-size: 100% 600px; */
 
 .text-muted {
-  color: rgb(var(--color-text-muted));
+  /* color: rgb(var(--color-text-muted));
   @apply transition-colors duration-200 ease-in-out;
-  @apply text-gray-500  dark:text-gray-400;
-  /* @apply hover:text-gray-700 dark:hover:text-gray-300;
+  @apply text-gray-500  dark:text-gray-400; */
+}
+
+/* @apply hover:text-gray-700 dark:hover:text-gray-300;
   @apply focus:text-gray-600 dark:focus:text-gray-300;
   @apply active:text-gray-800 dark:active:text-gray-300; */
-}
 
 /* text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 */
 /* text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 */

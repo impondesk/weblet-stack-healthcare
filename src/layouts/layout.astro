@@ -9,12 +9,12 @@ import classNames from "classnames";
 const { tenant } = Astro.props;
 const { title } = tenant || Astro.props;
 
-const contentTitle = Astro.props.title || "Narr8";
+const contentTitle = Astro.props.title || "Default Theme";
 
 // Import base styles first - these will be injected into <head>
 // TenantTheme component below will override these with tenant-specific values
 import "../styles/global.css";
-import "../styles/prose.css";
+// import "../styles/prose.css";
 
 // Import AOS CSS
 import "aos/dist/aos.css";
@@ -73,7 +73,7 @@ import "aos/dist/aos.css";
           x-transition:leave-start="opacity-100"
           x-transition:leave-end="opacity-0"
           id="demo-alert"
-          class="bg-blue-500  border-l-4-x border-primary text-white  p-4 mb-0 max-w-full mx-auto"
+          class="bg-orange-500 no-border border-primary text-white  p-4 mb-0 max-w-full mx-auto"
           role="alert"
         >
           <div class="flex items-center justify-center gap-3">

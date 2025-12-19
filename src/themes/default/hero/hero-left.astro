@@ -57,8 +57,6 @@ const imageUrl =
             {links.map((link, index) => {
               if (!link || Object.keys(link).length === 0) return null;
 
-              const isPrimary = index === 0;
-
               // Determine the URL based on link type
               let href = "#";
               let isExternal = false;
@@ -77,7 +75,42 @@ const imageUrl =
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {};
 
-              const delay = isPrimary ? "300" : "200";
+              // Determine variant: use link.variant if provided, otherwise default to primary for first, secondary for others
+              const variant =
+                link.variant || (index === 0 ? "primary" : "secondary");
+
+              // Define button styles based on variant
+              let buttonClass = "";
+              let showArrow = false;
+
+              switch (variant) {
+                case "primary":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
+                  break;
+                case "secondary":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg border-2 border-primary-600 text-primary-600 hover:bg-primary-50 px-6 py-3 text-sm font-semibold transition-colors";
+                  break;
+                case "outline":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg border border-gray-300 text-gray-900 hover:border-primary-600 hover:text-primary-600 px-6 py-3 text-sm font-semibold transition-colors";
+                  break;
+                case "ghost":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg text-gray-900 hover:bg-gray-100 px-6 py-3 text-sm font-semibold transition-colors";
+                  break;
+                case "link":
+                  buttonClass =
+                    "inline-flex items-center justify-center text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors";
+                  showArrow = true;
+                  break;
+                default:
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg bg-orange-500 text-white hover:bg-orange-600 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
+              }
+
+              const delay = index === 0 ? "300" : "200";
 
               return (
                 <div
@@ -85,18 +118,13 @@ const imageUrl =
                   data-aos-duration="1000"
                   data-aos-delay={delay}
                 >
-                  <a
-                    href={href}
-                    {...linkProps}
-                    class={
-                      isPrimary
-                        ? "inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-sm font-semibold shadow-sm transition-colors"
-                        : "inline-flex items-center justify-center rounded-lg border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 text-sm font-semibold transition-colors"
-                    }
-                  >
-                    {link?.label ||
-                      link?.text ||
-                      (isPrimary ? "Explore More" : "Learn More")}
+                  <a href={href} {...linkProps} class={buttonClass}>
+                    {link?.label || link?.text || link?.title}
+                    {showArrow && (
+                      <span class="ml-1" aria-hidden="true">
+                        →
+                      </span>
+                    )}
                   </a>
                 </div>
               );
