@@ -21,6 +21,7 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
               testimonial?.excerpt?.split(", ")[0] ||
               "";
             const comment = testimonial?.comment || "";
+            const website = testimonial?.website || "";
 
             return (
               <article
@@ -75,6 +76,27 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
                       {role || ""}
                       {role && organization && " · "}
                       {organization || ""}
+                    </p>
+                  )}
+
+                  {website && (
+                    <p
+                      class={`mt-1 text-sm ${
+                        bgMood === "dark" ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
+                      <a
+                        href={website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class={` text-xs font-normal no-underline ${
+                          bgMood === "dark"
+                            ? "text-secondary-400 hover:text-secondary-500"
+                            : "text-primary-600 hover:text-primary-700"
+                        }`}
+                      >
+                        {website}
+                      </a>
                     </p>
                   )}
                 </div>
