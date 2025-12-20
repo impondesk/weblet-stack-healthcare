@@ -1,10 +1,12 @@
 ---
 import CtaDefault from "./cta-default.astro";
+import CtaSplit from "./cta-split.astro";
 
 const { variant } = Astro.props;
 
 const collectionMap = {
   default: CtaDefault,
+  split: CtaSplit,
 };
 
 const getComponent = (variant) => {
