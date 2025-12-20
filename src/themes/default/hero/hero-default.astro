@@ -1,4 +1,6 @@
 ---
+import LinksBlock from "../../../components/links-block.astro";
+
 const { subTitle, title, excerpt, links, bgMood, heroImage } = Astro.props;
 
 // Build the full image URL
@@ -52,7 +54,9 @@ const sizeClasses = {
     {excerpt}
   </p>
 
-  {
+  <LinksBlock {...{ links, bgMood, clazz:"items-center justify-center" }}  />
+
+  <!-- {
     links && links.length > 0 && (
       <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
         {links.map((link, index) => {
@@ -105,7 +109,7 @@ const sizeClasses = {
         })}
       </div>
     )
-  }
+  } -->
   </div>
 </section>
 

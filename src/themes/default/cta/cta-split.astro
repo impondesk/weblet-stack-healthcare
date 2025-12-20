@@ -54,7 +54,13 @@ const { title, excerpt, subTitle, links, bgMood, bgImg } = Astro.props;
         {excerpt}
       </p>
 
-      <LinksBlock {...{ links, bgMood }} />
+      <LinksBlock
+        {...{
+          links,
+          bgMood,
+          clazz: "items-left justify-left",
+        }}
+      />
     </div>
   </div>
 </div>

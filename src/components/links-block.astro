@@ -1,5 +1,5 @@
 ---
-const { links, bgMood } = Astro.props;
+const { links, bgMood, clazz = "items-center justify-center" } = Astro.props;
 
 const btnDecoratorClass =
   "inline-flex rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:shadow-none";
@@ -31,7 +31,10 @@ const btnClassMap = {
 <section>
   {
     links && links.length > 0 && (
-      <div class="mt-10 flex flex-wrap items-left justify-left gap-4 lg:gap-x-6 w-full overflow-x-auto">
+      <div
+        class={`mt-10 flex flex-wrap  gap-4 lg:gap-x-6 w-full overflow-x-auto ${clazz}`}
+      >
+        {/* items-center justify-center */}
         {links.map((link, index) => {
           if (!link || Object.keys(link).length === 0) return null;
 
