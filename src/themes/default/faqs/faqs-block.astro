@@ -1,10 +1,16 @@
 ---
 import FaqsDefault from "./faqs-default.astro";
+import FaqsGrid from "./faqs-grid.astro";
+import FaqsOffset from "./faqs-offset.astro";
 
 const { variant } = Astro.props;
 
 const collectionMap = {
   default: FaqsDefault,
+
+  // FIXME
+  offset: FaqsOffset,
+  grid: FaqsGrid,
 };
 
 const getComponent = (variant) => {
