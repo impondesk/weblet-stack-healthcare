@@ -1,0 +1,30 @@
+---
+import TeamsCard from "./teams-card.astro";
+import TeamsDefault from "./teams-default.astro";
+import TeamsList from "./teams-list.astro";
+import TeamsMinimal from "./teams-minimal.astro";
+
+const { variant } = Astro.props;
+
+// Map variant to components
+const collectionMap = {
+  default: TeamsDefault,
+  list: TeamsList,
+  card: TeamsCard,
+  minimal: TeamsMinimal,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || TeamsDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}
