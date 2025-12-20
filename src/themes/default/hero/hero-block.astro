@@ -1,6 +1,7 @@
 ---
 import HeroDefault from "./hero-default.astro";
 import HeroLeft from "./hero-left.astro";
+import HeroOffset from "./hero-offset.astro";
 
 const { variant } = Astro.props;
 
@@ -16,7 +17,7 @@ const collectionMap = {
   left: HeroLeft,
   right: HeroDefault,
   badge: HeroDefault,
-  grouped: HeroDefault,
+  grouped: HeroOffset,
   vertical: HeroDefault,
   app: HeroDefault,
   gallery: HeroDefault,
