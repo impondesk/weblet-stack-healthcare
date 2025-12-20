@@ -1,4 +1,6 @@
 ---
+import LinksBlock from "../../../components/links-block.astro";
+
 const { title, subTitle, excerpt, bgMood, links } = Astro.props;
 const { features } = Astro.props;
 
@@ -111,7 +113,15 @@ const bgMoodClass =
                 </a>
               )}
 
-              {feature.links && feature.links.length > 0 && (
+              <LinksBlock
+                {...{
+                  links: feature.links,
+                  bgMood,
+                  clazz: "flex-col items-start justify-start mt-3",
+                }}
+              />
+
+              {/* {feature.links && feature.links.length > 0 && (
                 <div class="mt-3 flex flex-col gap-2">
                   {feature.links.map((link) => {
                     if (!link || Object.keys(link).length === 0) return null;
@@ -167,7 +177,7 @@ const bgMoodClass =
                     );
                   })}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         ))

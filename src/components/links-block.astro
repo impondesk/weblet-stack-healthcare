@@ -2,24 +2,28 @@
 const { links, bgMood, clazz = "items-center justify-center" } = Astro.props;
 
 const btnDecoratorClass =
-  "inline-flex rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:shadow-none";
-
-let linkPostfix = `<span class="ml-1" aria-hidden="true">→</span>`;
+  "inline-flex rounded-md px-3.5  text-sm font-semibold   focus-visible:outline-0 focus-visible:outline-offset-1  dark:shadow-none";
 
 // Primary button class with bgMood consideration
 let btnPrimaryClass = btnDecoratorClass;
 btnPrimaryClass +=
   bgMood === "dark"
-    ? " bg-primary-400 hover:bg-primary-300 text-gray-900"
-    : " bg-primary-600 hover:bg-primary-500 text-white";
+    ? " py-2.5 bg-primary-400 hover:bg-primary-300 text-gray-900"
+    : " py-2.5 bg-primary-600 hover:bg-primary-500 text-white";
 
 // Secondary button class with bgMood consideration
-let btnSecondaryClass =
-  "bg-secondary-200  text-secondary-900  hover:bg-gray-300 focus-visible:outline-indigo-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600";
+let btnSecondaryClass = btnDecoratorClass;
+btnSecondaryClass +=
+  bgMood === "dark"
+    ? "py-2.5 bg-secondary-600 text-white hover:bg-gray-600 focus-visible:outline-indigo-400"
+    : "py-2.5 bg-secondary-200  text-secondary-900  hover:bg-gray-300 focus-visible:outline-indigo-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600";
 
 // Link button class with text color adjustments for bgMood
-let btnLinkClass =
-  "text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300";
+let btnLinkClass = btnDecoratorClass;
+btnLinkClass +=
+  bgMood === "dark"
+    ? "gap-2 text-primary-400 hover:text-primary-300 dark:text-primary-400 dark:hover:text-primary-300"
+    : "gap-2 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300";
 
 const btnClassMap = {
   primary: btnPrimaryClass,
@@ -63,11 +67,11 @@ const btnClassMap = {
               class={btnClassMap[link.variant || "primary"] || btnPrimaryClass}
             >
               {link?.label || link?.text || "Learn more"}
-              {/* {!isPrimary && (
+              {link.variant === "link" && (
                 <span class="ml-1" aria-hidden="true">
                   →
                 </span>
-              )} */}
+              )}
             </a>
           );
         })}
