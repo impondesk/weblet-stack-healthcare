@@ -1,0 +1,27 @@
+---
+import NewsletterDefault from "./newsletter-default.astro";
+import NewsletterSide from "./newsletter-side.astro";
+import NewsletterStacked from "./newsletter-stacked.astro";
+
+const { variant } = Astro.props;
+
+const collectionMap = {
+  default: NewsletterDefault,
+  stacked: NewsletterStacked,
+  side: NewsletterSide,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || NewsletterDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}
