@@ -1,10 +1,20 @@
 ---
 import StatsDefault from "./stats-default.astro";
+import StatsGrid from "./stats-grid.astro";
+import StatsSplit from "./stats-split.astro";
+import StatsStepped from "./stats-stepped.astro";
+import StatsTimeline from "./stats-timeline.astro";
 
 const { variant } = Astro.props;
 
 const collectionMap = {
   default: StatsDefault,
+
+  // TODO
+  timeline: StatsTimeline,
+  split: StatsSplit,
+  grid: StatsGrid,
+  step: StatsStepped,
 };
 
 const getComponent = (variant) => {
