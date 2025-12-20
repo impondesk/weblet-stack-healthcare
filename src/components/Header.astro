@@ -4,12 +4,14 @@ import ThemeMgmt from "./theme-mgmt.astro";
 const { title } = Astro.props;
 ---
 
-<header class="max-w-7xl mx-auto px-4 py-3 scroll-smooth focus:scroll-auto">
-  <nav class="container mx-auto py-3">
-    <div class="flex justify-between items-center">
-      <a href="/" class="text-base font-bold no-a-style"
-        >{Astro.locals?.tenant?.name || title}</a
-      >
+<header
+  class="max-w-7xl mx-auto px-4 py-3 scroll-smooth focus:scroll-auto w-full"
+>
+  <nav class="w-full py-3">
+    <div class="flex justify-between items-center w-full">
+      <a href="/" class="text-base font-bold no-a-style">
+        {Astro.locals?.tenant?.name || title}
+      </a>
       <div class="flex space-x-4 no-a-style">
         <a href="/about" class="">About</a>
         <!-- <a href="/blog" class="">Featured</a>
