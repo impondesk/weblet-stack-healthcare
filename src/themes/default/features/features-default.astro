@@ -1,17 +1,18 @@
 ---
-const { title, subTitle, excerpt, bgMood } = Astro.props;
+const { title, subTitle, excerpt, bgMood, links } = Astro.props;
 const { features } = Astro.props;
 
 // Map bgMood to theme-aware background classes
-const bgMoodClass = bgMood === 'primary'
-  ? 'bg-primary-50'
-  : bgMood === 'secondary'
-  ? 'bg-secondary-50'
-  : bgMood === 'dark'
-  ? 'bg-base-900 text-white'
-  : bgMood === 'light'
-  ? 'bg-base-50'
-  : '';
+const bgMoodClass =
+  bgMood === "primary"
+    ? "bg-primary-50"
+    : bgMood === "secondary"
+      ? "bg-secondary-50"
+      : bgMood === "dark"
+        ? "bg-base-900 text-white"
+        : bgMood === "light"
+          ? "bg-base-50"
+          : "";
 ---
 
 <section class={bgMoodClass}>
@@ -172,6 +173,79 @@ const bgMoodClass = bgMood === 'primary'
         ))
       }
     </div>
+
+    {
+      links && links.length > 0 && (
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          {links.map((link, index) => {
+            if (!link || Object.keys(link).length === 0) return null;
+
+            const isPrimary = index === 0;
+            let href = "#";
+            let isExternal = false;
+
+            if (link.type === "internal" && link.internalLink?.value?.slug) {
+              href = `/${link.internalLink.value.slug}`;
+            } else if (link.type === "external" && link.externalLink) {
+              href = link.externalLink;
+              isExternal = true;
+            } else if (link.url) {
+              href = link.url;
+              isExternal = link.url.startsWith("http");
+            }
+
+            const linkProps = isExternal
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {};
+
+            // Determine variant: use link.variant if provided, otherwise default to primary for first, link for others
+            const variant = link.variant || (isPrimary ? "primary" : "link");
+
+            // Define button styles based on variant
+            let buttonClass = "";
+            let showArrow = false;
+
+            switch (variant) {
+              case "primary":
+                buttonClass =
+                  "inline-flex items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
+                break;
+              case "secondary":
+                buttonClass =
+                  "inline-flex items-center justify-center rounded-lg border-2 border-primary-600 text-primary-600 hover:bg-primary-50 px-6 py-3 text-sm font-semibold transition-colors";
+                break;
+              case "outline":
+                buttonClass =
+                  "inline-flex items-center justify-center rounded-lg border border-gray-300 text-gray-900 hover:border-primary-600 hover:text-primary-600 px-6 py-3 text-sm font-semibold transition-colors";
+                break;
+              case "ghost":
+                buttonClass =
+                  "inline-flex items-center justify-center rounded-lg text-gray-900 hover:bg-gray-100 px-6 py-3 text-sm font-semibold transition-colors";
+                break;
+              case "link":
+                buttonClass =
+                  "inline-flex items-center justify-center text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors";
+                showArrow = true;
+                break;
+              default:
+                buttonClass =
+                  "inline-flex items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
+            }
+
+            return (
+              <a href={href} {...linkProps} class={buttonClass}>
+                {link?.label || link?.text || "Learn More"}
+                {showArrow && (
+                  <span class="ml-1" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </a>
+            );
+          })}
+        </div>
+      )
+    }
     <!-- <div class="w-full mt-12 -mb-12">
       <img
         src="/images/dashboardLight.svg"
