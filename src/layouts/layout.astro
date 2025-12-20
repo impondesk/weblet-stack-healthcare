@@ -17,7 +17,8 @@ const { tenant } = Astro.props;
 const { title } = tenant || Astro.props;
 const contentTitle = Astro.props.title || "Default Theme";
 const tenantId = Astro.locals?.tenant?.id;
-const presetCssURL = Astro.locals?.tenant?.tenantTheme?.presetCssURL || "twitter-sky";
+const presetCssURL =
+  Astro.locals?.tenant?.tenantTheme?.presetCssURL || "twitter-sky";
 
 console.log("=== Layout Component ===");
 console.log("Tenant ID:", tenantId || "None");
@@ -26,13 +27,27 @@ console.log("Preset CSS URL:", presetCssURL);
 // Load the specific palette CSS file content
 let paletteCss = "";
 try {
-  const paletteFilePath = path.join(process.cwd(), "src", "styles", "palette", `${presetCssURL}.css`);
+  const paletteFilePath = path.join(
+    process.cwd(),
+    "src",
+    "styles",
+    "palette",
+    `${presetCssURL}.css`
+  );
   paletteCss = await fs.readFile(paletteFilePath, "utf-8");
-  console.log(`✓ Loaded palette CSS: ${presetCssURL}.css (${paletteCss.length} bytes)`);
+  console.log(
+    `✓ Loaded palette CSS: ${presetCssURL}.css (${paletteCss.length} bytes)`
+  );
 } catch (error) {
   console.error(`✗ Failed to load palette "${presetCssURL}":`, error.message);
   // Fallback to twitter-sky
-  const fallbackPath = path.join(process.cwd(), "src", "styles", "palette", "twitter-sky.css");
+  const fallbackPath = path.join(
+    process.cwd(),
+    "src",
+    "styles",
+    "palette",
+    "twitter-sky.css"
+  );
   paletteCss = await fs.readFile(fallbackPath, "utf-8");
   console.log(`✓ Loaded fallback palette: twitter-sky.css`);
 }
