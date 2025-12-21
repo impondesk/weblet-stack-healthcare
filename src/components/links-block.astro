@@ -88,10 +88,10 @@ const btnClassMap = {
           return (
             <a
               href={href}
+              data-target={isAnchorNav ? href : undefined}
               {...linkProps}
               class={btnClassMap[link.variant || "primary"] || btnPrimaryClass}
               onClick={isAnchorNav ? handleAnchorNavClick : undefined}
-              data-target={isAnchorNav ? href : undefined}
             >
               {link?.label || link?.text || "Learn more"}
               {link.variant === "link" && (
