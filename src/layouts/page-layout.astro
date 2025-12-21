@@ -11,22 +11,36 @@ const { layout, records } = Astro.props;
 
     <div>
       {
-        layout?.map((block: { blockType: any; id: string }, index: number) => {
-          const BlockComponent = DefaultThemeBlocks[block.blockType];
-          if (!BlockComponent) return null;
-          return (
-            <BlockComponent
-              key={index}
-              {...block}
-              records={
-                records && records?.data?.length > 0
-                  ? records?.data.find((item: any) => item.id === block.id)
-                      ?.data?.docs
-                  : []
-              }
-            />
-          );
-        })
+        layout?.map(
+          (
+            block: {
+              [x: string]: any;
+              blockType: any;
+              id: string;
+            },
+            index: number
+          ) => {
+            const BlockComponent = DefaultThemeBlocks[block.blockType];
+            if (!BlockComponent) return null;
+            return (
+              <>
+                {block.anchor && <a data-id={block.anchor} id={block.anchor} />}
+                <BlockComponent
+                  key={index}
+                  data-id={block?.anchor}
+                  data-block={block.blockType}
+                  {...block}
+                  records={
+                    records && records?.data?.length > 0
+                      ? records?.data.find((item: any) => item.id === block.id)
+                          ?.data?.docs
+                      : []
+                  }
+                />
+              </>
+            );
+          }
+        )
       }
     </div>
   </div>
