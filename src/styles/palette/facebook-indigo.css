@@ -23,15 +23,15 @@
   --color-secondary-800: oklch(0.35 0.02 260);
   --color-secondary-900: oklch(0.25 0.022 260);
 
-  /* Accent — Facebook Green (CTA / Success / Activity) */
-  --color-accent-50: oklch(0.98 0.02 145);
-  --color-accent-100: oklch(0.94 0.045 143);
-  --color-accent-200: oklch(0.88 0.08 141);
-  --color-accent-300: oklch(0.8 0.115 139);
-  --color-accent-400: oklch(0.71 0.145 137);
-  --color-accent-500: oklch(0.62 0.165 135); /* FB-style green */
-  --color-accent-600: oklch(0.54 0.155 133);
-  --color-accent-700: oklch(0.46 0.14 131);
-  --color-accent-800: oklch(0.38 0.125 129);
-  --color-accent-900: oklch(0.3 0.11 127);
+  /* Accent — Electric Cyan / Blue-Teal */
+  --color-accent-50: oklch(0.98 0.02 215);
+  --color-accent-100: oklch(0.94 0.045 213);
+  --color-accent-200: oklch(0.88 0.08 211);
+  --color-accent-300: oklch(0.8 0.12 209);
+  --color-accent-400: oklch(0.71 0.15 207);
+  --color-accent-500: oklch(0.62 0.18 205); /* CTA / focus */
+  --color-accent-600: oklch(0.54 0.17 203);
+  --color-accent-700: oklch(0.46 0.15 201);
+  --color-accent-800: oklch(0.38 0.13 199);
+  --color-accent-900: oklch(0.3 0.11 197);
 }
