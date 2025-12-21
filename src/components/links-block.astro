@@ -45,26 +45,52 @@ const btnClassMap = {
           // Determine the URL based on link type
           let href = "#";
           let isExternal = false;
+          let isAnchorNav = false;
 
           if (link.type === "internal" && link.internalLink?.value?.slug) {
             href = `/${link.internalLink.value.slug}`;
           } else if (link.type === "external" && link.externalLink) {
             href = link.externalLink;
-            isExternal = true;
+            if (href.startsWith("#")) {
+              isAnchorNav = true;
+              isExternal = false;
+            } else {
+              isExternal = true;
+            }
           } else if (link.url) {
             href = link.url;
-            isExternal = link.url.startsWith("http");
+            if (href.startsWith("#")) {
+              isAnchorNav = true;
+              isExternal = false;
+            } else {
+              isExternal = link.url.startsWith("http");
+            }
           }
 
           const linkProps = isExternal
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {};
 
+          // Handler for anchor navigation links (start with #)
+          const handleAnchorNavClick = (e) => {
+            if (isAnchorNav && href.startsWith("#")) {
+              const hash = href.substring(1);
+              if (hash) {
+                e.preventDefault();
+                const el = document.getElementById(hash);
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }
+            }
+          };
+
           return (
             <a
               href={href}
               {...linkProps}
               class={btnClassMap[link.variant || "primary"] || btnPrimaryClass}
+              onClick={isAnchorNav ? handleAnchorNavClick : undefined}
             >
               {link?.label || link?.text || "Learn more"}
               {link.variant === "link" && (
