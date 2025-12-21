@@ -1,4 +1,5 @@
 ---
+import LinksBlock from "../../../components/links-block.astro";
 import SectionTitle from "../section-title.astro";
 
 const { title, variant, links, bgMood } = Astro.props;
@@ -15,7 +16,14 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "";
       <SectionTitle {...Astro.props} />
     </section>
 
-    {
+    <LinksBlock
+      {...{
+        links,
+        bgMood,
+      }}
+    />
+
+    <!-- {
       links && links.length > 0 && (
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
           {links.map((link, index) => {
@@ -74,6 +82,6 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "";
           })}
         </div>
       )
-    }
+    } -->
   </div>
 </div>
