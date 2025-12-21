@@ -1,15 +1,30 @@
 ---
-const { title, excerpt, faqs = [], bgMood = "light" } = Astro.props;
+const { subTitle, title, excerpt, faqs = [], bgMood = "light" } = Astro.props;
 
 const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-white";
 const excerptClass = bgMood === "dark" ? "text-gray-300" : "text-gray-600";
 const questionClass = bgMood === "dark" ? "text-white" : "text-gray-900";
 const answerClass = bgMood === "dark" ? "text-gray-300" : "text-gray-700";
 const borderClass = bgMood === "dark" ? "border-gray-10" : "border-gray-10";
+
+const imageUrl =
+  faqs.length > 0 && faqs[0]?.entry?.heroImage?.url
+    ? faqs[0].entry.heroImage.url
+    : null;
 ---
 
 <section class={`py-12 ${bgClass}`}>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    {
+      subTitle && (
+        <p
+          class={`mt-2 text-base uppercase font-semibold text-center ${imageUrl ? "text-white drop-shadow-lg" : ""}`}
+        >
+          {subTitle}
+        </p>
+      )
+    }
+
     {
       title && (
         <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">{title}</h2>
