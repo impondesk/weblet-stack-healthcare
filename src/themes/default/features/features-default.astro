@@ -72,15 +72,17 @@ const bgMoodClass =
                 </p>
               )}
 
+              {/* Features Tags */}
               {feature.tags && feature.tags.length > 0 && (
                 <div class="flex flex-wrap gap-2 mt-2">
                   {feature.tags.map((tag) => (
-                    <span class="inline-flex items-center rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700 ring-1 ring-inset ring-primary-50">
+                    <span class="inline-flex items-center rounded-md bg-accent-100 px-2 py-1 text-xs font-medium text-accent-600 dark:bg-accent-400/10 dark:text-accent-400">
                       {tag.title || tag.excerpt}
                     </span>
                   ))}
                 </div>
               )}
+              {/* <span class="">Badge</span> */}
 
               {feature.description && (
                 <p class="text-base leading-normal mt-2 text-base-500 font-normal">
