@@ -29,6 +29,7 @@ const { layout, records } = Astro.props;
                   key={index}
                   data-id={block?.anchor}
                   data-block={block.blockType}
+                  decorator={`${block.blockType}${block.variant ? `-${block.variant}` : ""}`}
                   {...block}
                   records={
                     records && records?.data?.length > 0
