@@ -21,38 +21,65 @@ const presetCssURL =
   Astro.locals?.tenant?.tenantTheme?.presetCssURL || "twitter-sky";
 
 console.log("=== Layout Component ===");
-console.log("Tenant ID:", tenantId || "None");
-console.log("Preset CSS URL:", presetCssURL);
+// console.log("Tenant ID:", tenantId || "None");
+// console.log("Preset CSS URL:", presetCssURL);
 
 // Load the specific palette CSS file content
-let paletteCss = "";
-try {
-  const paletteFilePath = path.join(
-    process.cwd(),
-    "src",
-    "themes",
-    "palette",
-    `${presetCssURL}.css`
-  );
-  paletteCss = await fs.readFile(paletteFilePath, "utf-8");
-  console.log(
-    `✓ Loaded palette CSS: ${presetCssURL}.css (${paletteCss.length} bytes)`
-  );
-} catch (error) {
-  console.error(`✗ Failed to load palette "${presetCssURL}":`, error.message);
-  // Fallback to twitter-sky
-  const fallbackPath = path.join(
-    process.cwd(),
-    "src",
-    "themes",
-    "palette",
-    "twitter-sky.css"
-  );
-  paletteCss = await fs.readFile(fallbackPath, "utf-8");
-  console.log(`✓ Loaded fallback palette: twitter-sky.css`);
-}
+// let paletteCss = "";
+// try {
+//   const paletteFilePath = path.join(
+//     process.cwd(),
+//     "src",
+//     "themes",
+//     "palette",
+//     `${presetCssURL}.css`
+//   );
+//   paletteCss = await fs.readFile(paletteFilePath, "utf-8");
+//   console.log(
+//     `✓ Loaded palette CSS: ${presetCssURL}.css (${paletteCss.length} bytes)`
+//   );
+// } catch (error) {
+//   console.error(`✗ Failed to load palette "${presetCssURL}":`, error.message);
+//   // Fallback to twitter-sky
+//   const fallbackPath = path.join(
+//     process.cwd(),
+//     "src",
+//     "themes",
+//     "palette",
+//     "twitter-sky.css"
+//   );
+//   paletteCss = await fs.readFile(fallbackPath, "utf-8");
+//   console.log(`✓ Loaded fallback palette: twitter-sky.css`);
+// }
 
-import "../themes/decorators/radiant.css";
+// import "../themes/decorators/radiant.css";
+
+// Dynamically load kit CSS files based on type and slug
+let kitsCss = "";
+const kits = Astro.locals?.tenant?.tenantTheme?.kits || [];
+for (const kit of kits) {
+  if (kit.type && kit.slug) {
+    try {
+      const kitFilePath = path.join(
+        process.cwd(),
+        "src",
+        "themes",
+        kit.type,
+        `${kit.slug}.css`
+      );
+      const kitCss = await fs.readFile(kitFilePath, "utf-8");
+      kitsCss += `\n/* Kit: ${kit.slug} */\n` + kitCss;
+      console.log(
+        `✓ Loaded kit CSS: ${kit.type}/${kit.slug}.css (${kitCss.length} bytes)`
+      );
+    } catch (error) {
+      console.error(
+        `✗ Failed to load kit CSS for ${kit.type}/${kit.slug}:`,
+        error.message
+      );
+    }
+  }
+}
 ---
 
 <!doctype html>
@@ -73,7 +100,10 @@ import "../themes/decorators/radiant.css";
     <link rel="icon" href="/favicon.ico" />
 
     <!-- Inject palette CSS inline for proper theme loading -->
-    {paletteCss && <style is:inline set:html={paletteCss} />}
+    <!-- {paletteCss && <style is:inline set:html={paletteCss} />} -->
+
+    <!-- Inject kits CSS inline for additional kit themes -->
+    {kitsCss && <style is:inline set:html={kitsCss} />}
 
     <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->
     <ViewTransitions />

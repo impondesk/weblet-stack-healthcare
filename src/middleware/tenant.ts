@@ -1,7 +1,7 @@
 import { defineMiddleware } from "astro/middleware";
 
 export const tenant = defineMiddleware((context, next) => {
-  console.log("=== Theme Middleware Debug ===");
+  // console.log("=== Theme Middleware Debug ===");
   const hostname = context.request.headers.get("host") || "NA";
   context.locals.host = hostname;
 
@@ -9,7 +9,7 @@ export const tenant = defineMiddleware((context, next) => {
   // The tenant object should be loaded from payload/weblet API
   // and should contain a themeConfig property with color overrides
   let tenantData = context.locals.tenant; // Tenant data from API
-  console.log("Tenant Data:", tenantData);
+  // console.log("Tenant Data:", tenantData);
 
   return next();
 });
