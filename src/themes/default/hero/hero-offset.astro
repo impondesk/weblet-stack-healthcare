@@ -1,8 +1,16 @@
 ---
 import LinksBlock from "../../../components/links-block.astro";
 
-const { subTitle, title, excerpt, heroImage, bgMood, links, decorator } =
-  Astro.props;
+const {
+  subTitle,
+  title,
+  excerpt,
+  heroImage,
+  bgMood,
+  links,
+  decorator,
+  disclaimer,
+} = Astro.props;
 ---
 
 <section class="" data-decorator={decorator}>
@@ -26,8 +34,13 @@ const { subTitle, title, excerpt, heroImage, bgMood, links, decorator } =
         >
           {excerpt}
         </p>
-        <div class="mt-10 flex items-center gap-x-6">
-          <LinksBlock {...{ links, bgMood }} />
+        <div class="mt-10 flex flex-col items-start gap-y-2 gap-x-6">
+          <div class="flex items-center gap-x-6">
+            <LinksBlock {...{ links, bgMood }} />
+          </div>
+          <small class="text-xs text-dark-400 dark:text-dark-300 mt-2"
+            >{disclaimer}</small
+          >
         </div>
       </div>
       {
