@@ -1,0 +1,66 @@
+/**
+ * Eco Guard Theme — Pest Control (Validated OKLCH)
+ * Clean botanical greens, calm herbal secondary, gentle organic accent
+ * Designed for trust, hygiene, eco-safety, and long-term UI usage
+ */
+
+:root {
+  /* ======================================================
+     PRIMARY — Eco Guard Green
+     Trust, safety, eco protection (green range ~138–148)
+     ====================================================== */
+  --color-primary-50: oklch(0.975 0.015 148);
+  --color-primary-100: oklch(0.94 0.03 147);
+  --color-primary-200: oklch(0.885 0.055 146);
+  --color-primary-300: oklch(0.8 0.085 145);
+  --color-primary-400: oklch(0.7 0.115 144);
+  --color-primary-500: oklch(0.6 0.14 143); /* Brand Eco Green */
+  --color-primary-600: oklch(0.52 0.13 142);
+  --color-primary-700: oklch(0.44 0.115 141);
+  --color-primary-800: oklch(0.35 0.095 140);
+  --color-primary-900: oklch(0.27 0.08 139);
+
+  /* ======================================================
+     SECONDARY — Herbal Sage Neutral
+     Calm, residential, non-toxic perception (~115–125)
+     ====================================================== */
+  --color-secondary-50: oklch(0.98 0.008 124);
+  --color-secondary-100: oklch(0.95 0.018 122);
+  --color-secondary-200: oklch(0.9 0.035 120);
+  --color-secondary-300: oklch(0.83 0.055 118);
+  --color-secondary-400: oklch(0.73 0.07 116);
+  --color-secondary-500: oklch(0.63 0.085 114); /* Secondary Sage */
+  --color-secondary-600: oklch(0.54 0.08 112);
+  --color-secondary-700: oklch(0.46 0.07 110);
+  --color-secondary-800: oklch(0.38 0.06 108);
+  --color-secondary-900: oklch(0.3 0.05 106);
+
+  /* ======================================================
+     ACCENT — Herbal Earth / Sunleaf
+     Gentle warmth, no gold/red aggression (~88–96)
+     ====================================================== */
+  --color-accent-50: oklch(0.99 0.01 96);
+  --color-accent-100: oklch(0.965 0.025 94);
+  --color-accent-200: oklch(0.92 0.045 92);
+  --color-accent-300: oklch(0.86 0.065 90);
+  --color-accent-400: oklch(0.79 0.085 88);
+  --color-accent-500: oklch(0.73 0.1 86); /* Accent */
+  --color-accent-600: oklch(0.64 0.095 84);
+  --color-accent-700: oklch(0.55 0.085 82);
+  --color-accent-800: oklch(0.46 0.075 80);
+  --color-accent-900: oklch(0.38 0.065 78);
+}
+
+:root {
+  /* Background */
+  --color-background: oklch(0.985 0.002 260);
+  /* ≈ #F9FAFB */
+
+  /* Primary Text */
+  --color-text-primary: oklch(0.18 0.015 260);
+  /* ≈ #111827 */
+
+  /* Secondary Text */
+  --color-text-secondary: oklch(0.45 0.02 260);
+  /* ≈ #6B7280 */
+}
