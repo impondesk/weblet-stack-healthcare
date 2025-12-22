@@ -53,14 +53,14 @@
 
 :root {
   /* Background */
-  --color-background: oklch(0.985 0.002 260);
+  /* --color-background: oklch(0.985 0.002 260); */
   /* ≈ #F9FAFB */
 
   /* Primary Text */
-  --color-text-primary: oklch(0.18 0.015 260);
+  /* --color-text-primary: oklch(0.18 0.015 260); */
   /* ≈ #111827 */
 
   /* Secondary Text */
-  --color-text-secondary: oklch(0.45 0.02 260);
+  /* --color-text-secondary: oklch(0.45 0.02 260); */
   /* ≈ #6B7280 */
 }
