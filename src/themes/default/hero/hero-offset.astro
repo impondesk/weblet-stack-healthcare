@@ -34,6 +34,20 @@ const {
         >
           {excerpt}
         </p>
+        <ul class="mt-4 space-y-2">
+          {
+            Astro.props.lists &&
+              Astro.props.lists.map((item) => (
+                <li
+                  class="flex items-start gap-x-2 text-sm text-dark-600 dark:text-dark-300"
+                  key={item.id}
+                >
+                  <span class="inline-block text-green-600 mt-0.5">✔</span>
+                  {item.label}
+                </li>
+              ))
+          }
+        </ul>
         <div class="mt-10 flex flex-col items-start gap-y-2 gap-x-6">
           <div class="flex items-center gap-x-6">
             <LinksBlock {...{ links, bgMood }} />
