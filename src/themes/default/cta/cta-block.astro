@@ -1,5 +1,6 @@
 ---
 import CtaDefault from "./cta-default.astro";
+import CtaImageTile from "./cta-image-tile.astro";
 import CtaSplit from "./cta-split.astro";
 
 const { variant } = Astro.props;
@@ -7,6 +8,7 @@ const { variant } = Astro.props;
 const collectionMap = {
   default: CtaDefault,
   split: CtaSplit,
+  "image-tile": CtaImageTile,
 };
 
 const getComponent = (variant) => {
