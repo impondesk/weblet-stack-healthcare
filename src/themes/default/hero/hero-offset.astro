@@ -8,6 +8,7 @@ const {
   heroImage,
   bgMood,
   links,
+  lists,
   decorator,
   disclaimer,
 } = Astro.props;
@@ -34,10 +35,10 @@ const {
         >
           {excerpt}
         </p>
-        <ul class="mt-4 space-y-2">
+        <ul class="mt-4 space-y-2 pt-4">
           {
-            Astro.props.lists &&
-              Astro.props.lists.map((item) => (
+            lists &&
+              lists.map((item) => (
                 <li
                   class="flex items-start gap-x-2 text-sm text-dark-600 dark:text-dark-300"
                   key={item.id}
