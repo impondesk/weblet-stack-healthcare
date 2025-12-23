@@ -24,13 +24,13 @@ const bgMoodClass =
   <section class="content-wrapper max-w-7xl mx-auto px-6 lg:px-8">
     {
       sectionTitle && (
-        <div class={` max-w-7xl mx-auto py-4 ${className}`}>
+        <div class={` max-w-7xl mx-auto ${className}`}>
           <SectionTitle {...Astro.props} />
         </div>
       )
     }
 
-    <ContentRender {...Astro.props} className={"pt-16"} />
+    <ContentRender {...Astro.props} className={"pt-16-x"} />
 
     <LinksBlock {...Astro.props} />
   </section>
