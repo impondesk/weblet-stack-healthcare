@@ -1,0 +1,55 @@
+/* Rosé Surface Palette */
+
+:root {
+  /* ============================
+     BLUSH — Soft Pink Surface
+     ============================ */
+  --color-blush-25: oklch(0.995 0.006 15);
+  --color-blush-50: oklch(0.985 0.01 15);
+  --color-blush-100: oklch(0.97 0.018 15);
+  --color-blush-200: oklch(0.95 0.028 15);
+  --color-blush-300: oklch(0.92 0.04 15);
+
+  /* ============================
+     ROSE — Highlight Surface
+     ============================ */
+  --color-rose-50: oklch(0.98 0.02 20);
+  --color-rose-100: oklch(0.96 0.035 20);
+  --color-rose-200: oklch(0.93 0.055 20);
+  --color-rose-300: oklch(0.9 0.075 20);
+
+  /* ============================
+     PEACH — Warm Accent Surface
+     ============================ */
+  --color-peach-50: oklch(0.985 0.018 30);
+  --color-peach-100: oklch(0.96 0.035 30);
+  --color-peach-200: oklch(0.93 0.055 30);
+
+  /* ============================
+     WINE — Deep Red Surface
+     ============================ */
+  --color-wine-700: oklch(0.45 0.12 20);
+  --color-wine-800: oklch(0.38 0.1 20);
+  --color-wine-900: oklch(0.3 0.08 20);
+
+  /* ============================
+     SEMANTIC BACKGROUND USE
+     ============================ */
+  --bg-surface-soft: var(--bg-blush-50);
+  --bg-surface-highlight: var(--bg-rose-100);
+  --bg-surface-accent: var(--bg-peach-100);
+  --bg-surface-contrast: var(--bg-wine-800);
+}
+
+/* [data-decorator="section-soft"] {
+  background: var(--bg-surface-soft);
+}
+
+[data-decorator="section-highlight"] {
+  background: var(--bg-surface-highlight);
+}
+
+[data-decorator="section-contrast"] {
+  background: var(--bg-surface-contrast);
+  color: white;
+} */
