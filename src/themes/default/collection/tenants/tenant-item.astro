@@ -23,22 +23,43 @@ const url = `/c/${collectionName}/${slug}`;
 ---
 
 <li
-  class="group ring-1 ring-inset ring-white/5 rounded-xl p-[0.060rem] overflow-hidden shadow-vulcan-950 shadow-2xl"
+  class="group ring-1 ring-inset ring-white/5  p-[0.060rem] overflow-hidden shadow-vulcan-950 shadow-2xl"
 >
   <a href={`/post/${slug}`} aria-label={url} class="no-underline">
-    <div class="bg-vulcan-900 rounded-xl">
-      <div class="flex items-end justify-center overflow-hidden rounded-t-xl">
+    <div class="bg-vulcan-900">
+      <div class="flex items-end justify-center overflow-hidden">
         <div class="flex">
-          <img
-            class="group-hover:translate-y-[-20%] duration-300 aspect-[2/1] object-cover min-h-80 h-auto w-full"
-            style="object-position: top center;"
-            loading="lazy"
-            src={thumbnail?.url ||
-              thumbnail?.ref ||
-              `https://placehold.co/600x400/000000/FFFFFF@3x.png?text=${name}&font=roboto`}
-            alt={thumbnail?.alt || name}
-            width="560"
-          />
+          <div class="image-reveal-container">
+            <img
+              class="image-reveal transition-transform duration-700"
+              loading="lazy"
+              src={thumbnail?.url ||
+                thumbnail?.ref ||
+                `https://placehold.co/600x1000/000000/FFFFFF@3x.png?text=${name}&font=roboto`}
+              alt={thumbnail?.alt || name}
+              width="560"
+            />
+          </div>
+        <style>
+          .image-reveal-container {
+            position: relative;
+            width: 100%;
+            height: 280px; /* Fixed visible area, adjust as needed */
+            overflow: hidden;
+          }
+          .image-reveal {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .group:hover .image-reveal {
+            /* If image is 1000px tall and container is 280px, translateY(-720px) */
+            transform: translateY(calc(-100% + 280px));
+          }
+        </style>
         </div>
       </div>
       <div class="p-8">
