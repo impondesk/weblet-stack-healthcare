@@ -107,7 +107,7 @@ const groupedEntries = (
               )}
 
               <ol
-                class={`grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`}
+                class={`grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3`}
                 role="list"
               >
                 {items.map((record) => {
@@ -136,12 +136,18 @@ const groupedEntries = (
                     <li class="list-none">
                       {/* title={record?.title}
                         aria-label={record?.title} */}
-                      <a
+                      {/* <a
                         href={`/${basePath}/${record?.slug}`}
                         class="no-underline block no-border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 hover:shadow-md transition group"
-                      >
-                        {imageUrl && (
-                          <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                      > */}
+                      {imageUrl && (
+                        <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                          <button
+                            type="button"
+                            class="w-full h-full cursor-zoom-in"
+                            onclick={`document.getElementById('lightbox-img').src='${imageUrl}';document.getElementById('lightbox-modal').classList.remove('hidden');`}
+                            aria-label="View image larger"
+                          >
                             <img
                               src={imageUrl}
                               alt={featuredImage?.alt || record?.title}
@@ -150,75 +156,97 @@ const groupedEntries = (
                               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               loading="lazy"
                             />
-                          </div>
+                          </button>
+                        </div>
+                      )}
+
+                      <div class="p-4">
+                        <div class="flex items-start justify-between gap-2">
+                          <a
+                            href={`/${basePath}/${record?.slug}`}
+                            class={`font-semibold no-underline ${
+                              isOutOfStock
+                                ? "text-gray-400 line-through"
+                                : "text-gray-900-x"
+                            }`}
+                          >
+                            {record?.title}
+                          </a>
+                          {priceLabel && (
+                            <span
+                              class={`text-sm font-medium ${
+                                isOutOfStock
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-900"
+                              }`}
+                            >
+                              {priceLabel}
+                            </span>
+                          )}
+                        </div>
+
+                        {record?.excerpt && (
+                          <a
+                            href={`/${basePath}/${record?.slug}`}
+                            class={`text-sm mt-1 line-clamp-2 no-underline ${
+                              isOutOfStock
+                                ? "text-gray-400 line-through"
+                                : "text-gray-600"
+                            }`}
+                          >
+                            {record.excerpt}
+                          </a>
                         )}
 
-                        <div class="p-4">
-                          <div class="flex items-start justify-between gap-2">
-                            <span
-                              class={`font-semibold ${
-                                isOutOfStock
-                                  ? "text-gray-400 line-through"
-                                  : "text-gray-900-x"
-                              }`}
-                            >
-                              {record?.title}
+                        <div class="flex flex-wrap gap-1.5 mt-2">
+                          {isOutOfStock && (
+                            <span class="inline-block text-xs font-medium bg-gray-300 text-gray-700 px-2 py-0.5 rounded">
+                              Not Available
                             </span>
-                            {priceLabel && (
-                              <span
-                                class={`text-sm font-medium ${
-                                  isOutOfStock
-                                    ? "text-gray-400 line-through"
-                                    : "text-gray-900"
-                                }`}
-                              >
-                                {priceLabel}
-                              </span>
-                            )}
-                          </div>
-
-                          {record?.excerpt && (
-                            <p
-                              class={`text-sm mt-1 line-clamp-2 ${
-                                isOutOfStock
-                                  ? "text-gray-400 line-through"
-                                  : "text-gray-600"
-                              }`}
-                            >
-                              {record.excerpt}
-                            </p>
                           )}
 
-                          <div class="flex flex-wrap gap-1.5 mt-2">
-                            {isOutOfStock && (
-                              <span class="inline-block text-xs font-medium bg-gray-300 text-gray-700 px-2 py-0.5 rounded">
-                                Not Available
-                              </span>
-                            )}
+                          {Array.isArray(record?.tags) &&
+                            record.tags.length > 0 &&
+                            record.tags.map((tag) => {
+                              const bgColorClass = tag?.color
+                                ? `bg-${tag.color}-100`
+                                : "bg-gray-100";
+                              const textColorClass = tag?.color
+                                ? `text-${tag.color}-700`
+                                : "text-gray-700";
 
-                            {Array.isArray(record?.tags) &&
-                              record.tags.length > 0 &&
-                              record.tags.map((tag) => {
-                                const bgColorClass = tag?.color
-                                  ? `bg-${tag.color}-100`
-                                  : "bg-gray-100";
-                                const textColorClass = tag?.color
-                                  ? `text-${tag.color}-700`
-                                  : "text-gray-700";
-
-                                return (
-                                  <span
-                                    class={`inline-flex items-center gap-1 text-xs font-medium ${bgColorClass} ${textColorClass} px-2 py-0.5 rounded`}
-                                    title={tag?.category || tag?.tag}
-                                  >
-                                    {tag?.icon && <span>{tag.icon}</span>}
-                                    <span>{tag?.tag}</span>
-                                  </span>
-                                );
-                              })}
-                          </div>
+                              return (
+                                <span
+                                  class={`inline-flex items-center gap-1 text-xs font-medium ${bgColorClass} ${textColorClass} px-2 py-0.5 rounded`}
+                                  title={tag?.category || tag?.tag}
+                                >
+                                  {tag?.icon && <span>{tag.icon}</span>}
+                                  <span>{tag?.tag}</span>
+                                </span>
+                              );
+                            })}
                         </div>
-                      </a>
+                      </div>
+                      {/* Lightbox modal for image popup */}
+                      <div
+                        id="lightbox-modal"
+                        class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center hidden"
+                      >
+                        <button
+                          type="button"
+                          class="absolute top-4 right-4 text-white text-2xl"
+                          onclick="document.getElementById('lightbox-modal').classList.add('hidden');"
+                        >
+                          &times;
+                        </button>
+                        <img
+                          id="lightbox-img"
+                          src=""
+                          alt="Product image"
+                          class="max-w-full max-h-[80vh] rounded shadow-lg"
+                        />
+                      </div>
+                      {/* </a> */}
                     </li>
                   );
                 })}
