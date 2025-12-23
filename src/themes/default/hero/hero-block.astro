@@ -2,6 +2,7 @@
 import HeroDefault from "./hero-default.astro";
 import HeroLeft from "./hero-left.astro";
 import HeroOffset from "./hero-offset.astro";
+import HeroTile from "./hero-tile.astro";
 
 const { variant } = Astro.props;
 
@@ -28,6 +29,7 @@ const collectionMap = {
   slides: HeroDefault,
   video: HeroDefault, // FIXME
   audio: HeroDefault, //FIXME
+  "image-tile": HeroTile,
 };
 
 const getComponent = (variant) => {
