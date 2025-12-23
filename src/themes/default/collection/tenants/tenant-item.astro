@@ -3,10 +3,10 @@ import { formatDate } from "../../../../scripts/formatDate";
 
 const {
   name,
-  slug,
   labels,
   thumbnail,
   excerpt,
+  domains,
   description,
   createdAt,
   updatedAt,
@@ -14,8 +14,8 @@ const {
 
 const pubDatetime = updatedAt || createdAt || new Date().toISOString();
 
-const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
-const url = `/c/${collectionName}/${slug}`;
+// const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
+// const url = `/c/${collectionName}/${slug}`;
 
 // const {} = Astro.props.authors || {};
 // const { name } = Astro.props.authors?.[0] || {};
@@ -25,7 +25,15 @@ const url = `/c/${collectionName}/${slug}`;
 <li
   class="group ring-1 ring-inset ring-white/5  p-[0.060rem] overflow-hidden shadow-vulcan-950 shadow-2xl"
 >
-  <a href={`/post/${slug}`} aria-label={url} class="no-underline">
+  <a
+    href={Array.isArray(domains) && domains.length > 0
+      ? `https://${domains[0].domain}`
+      : `/`}
+    aria-label={name}
+    class="no-underline"
+    target={Array.isArray(domains) && domains.length > 0 ? "_blank" : undefined}
+    rel={Array.isArray(domains) && domains.length > 0 ? "noopener noreferrer" : undefined}
+  >
     <div class="bg-vulcan-900">
       <div class="flex items-end justify-center overflow-hidden">
         <div class="flex">
