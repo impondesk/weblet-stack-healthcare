@@ -1,4 +1,5 @@
 ---
+import LinksBlock from "../components/links-block.astro";
 import ContentRender from "./content-render.astro";
 import SectionTitle from "./default/section-title.astro";
 
@@ -8,15 +9,18 @@ let className = variant === "center" ? " text-center lg:text-center " : "";
 const { sectionTitle = true } = Astro.props;
 
 // Map bgMood to Tailwind classes
-const bgMoodClass = {
-  primary: "bg-primary-500 text-white",
-  secondary: "bg-secondary-500 text-white",
-  light: "bg-white text-gray-900",
-  dark: "bg-primary-900 text-white",
-}[bgMood] || "bg-white text-gray-900";
+const bgMoodClass =
+  {
+    primary: "bg-primary-500 text-white",
+    secondary: "bg-secondary-500 text-white",
+    light: "bg-white text-gray-900",
+    dark: "bg-primary-900 text-white",
+  }[bgMood] || "bg-white text-gray-900";
 ---
 
-<div class={`px-6-xyz sm:px-6-xyz lg:px-8-xyz py-24-xyz sm:py-32-xyz ${bgMoodClass}`}>
+<div
+  class={`px-6-xyz sm:px-6-xyz lg:px-8-xyz py-24-xyz sm:py-32-xyz ${bgMoodClass}`}
+>
   <section class="content-wrapper max-w-7xl mx-auto">
     {
       sectionTitle && (
@@ -26,6 +30,10 @@ const bgMoodClass = {
       )
     }
 
-    <ContentRender {...Astro.props} className={"py-16"} />
+    <ContentRender {...Astro.props} className={"pt-16"} />
+
+    <LinksBlock {...Astro.props} />
   </section>
+
+  <div class={`mb-16  max-w-7xl mx-auto ${className}`}></div>
 </div>
