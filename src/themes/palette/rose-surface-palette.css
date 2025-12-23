@@ -41,6 +41,16 @@
   --bg-surface-contrast: var(--bg-wine-800);
 }
 
+/* @layer utilities {
+  .bg-wine-700 {
+    background-color: var(--color-wine-700);
+  }
+
+  .text-wine-700 {
+    background-color: var(--color-wine-700);
+  }
+} */
+
 /* [data-decorator="section-soft"] {
   background: var(--bg-surface-soft);
 }
