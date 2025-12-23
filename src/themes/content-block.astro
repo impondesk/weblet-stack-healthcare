@@ -11,9 +11,10 @@ const { sectionTitle = true } = Astro.props;
 // Map bgMood to Tailwind classes
 const bgMoodClass =
   {
+    default: "bg-transparent text-gray-900 dark:bg-transparent dark:text-white",
     primary: "bg-primary-500 text-white",
     secondary: "bg-secondary-500 text-white",
-    light: "bg-white text-gray-900",
+    light: "bg-white text-gray-900 dark:bg-black dark:text-white",
     dark: "bg-primary-900 text-white",
   }[bgMood] || "bg-white text-gray-900";
 ---
