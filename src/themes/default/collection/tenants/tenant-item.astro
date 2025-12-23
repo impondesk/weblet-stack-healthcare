@@ -10,6 +10,7 @@ const {
   description,
   createdAt,
   updatedAt,
+  tags
 } = Astro.props;
 
 const pubDatetime = updatedAt || createdAt || new Date().toISOString();
@@ -77,6 +78,15 @@ const pubDatetime = updatedAt || createdAt || new Date().toISOString();
         <p class="mt-2 text-sm line-clamp-3 text-gray-400">
           {excerpt}
         </p>
+        {tags && tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {tags.map(tag => (
+              <span class="inline-block bg-primary-500 text-xs text-white px-2 py-1 rounded-sm font-medium">
+                {tag?.title}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   </a>
