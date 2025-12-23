@@ -7,14 +7,14 @@ const { features } = Astro.props;
 // Map bgMood to theme-aware background classes
 const bgMoodClass =
   bgMood === "primary"
-    ? "bg-primary-50"
+    ? "bg-primary-50 text-white dark:bg-primary-600 text-black"
     : bgMood === "secondary"
       ? "bg-secondary-50"
       : bgMood === "dark"
         ? "bg-base-900 text-white"
         : bgMood === "light"
           ? "bg-base-50"
-          : "";
+          : "bg-transparent text-gray-900 dark:bg-transparent dark:text-white";
 ---
 
 <section class={bgMoodClass}>
@@ -25,11 +25,11 @@ const bgMoodClass =
         {subTitle}
       </p>
       <h2
-        class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl lg:text-4xl mt-4 font-semibold text-base-900 lg:text-balance"
+        class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl lg:text-4xl mt-4 font-semibold text-base-900 lg:text-balance dark:text-black"
       >
         {title}
       </h2>
-      <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+      <p class="text-base leading-normal mt-4 font-medium dark:text-black">
         {excerpt}
       </p>
     </div>
@@ -56,18 +56,18 @@ const bgMoodClass =
                   />
                 </div>
               )}
-              <h3 class="text-base leading-normal sm:text-lg md:text-xl text-base-900 font-semibold">
+              <h3 class="text-base leading-normal sm:text-lg md:text-xl  font-semibold text-base-900 dark:text-black">
                 {feature.title}
 
                 {feature.summary && feature.description && (
-                  <span class="mt-2 text-sm text-accent-600 font-semibold">
+                  <span class="mt-2 text-sm text-accent-600 font-semibold text-base-500 dark:text-black">
                     — {feature.summary}
                   </span>
                 )}
               </h3>
 
               {feature.summary && !feature.description && (
-                <p class="text-base leading-normal mt-2 text-base-500 font-medium">
+                <p class="text-base leading-normal mt-2  font-medium text-base-500 dark:text-black">
                   {feature.summary}
                 </p>
               )}
@@ -76,7 +76,7 @@ const bgMoodClass =
               {feature.tags && feature.tags.length > 0 && (
                 <div class="flex flex-wrap gap-2 mt-2">
                   {feature.tags.map((tag) => (
-                    <span class="inline-flex items-center rounded-md bg-accent-100 px-2 py-1 text-xs font-medium text-accent-600 dark:bg-accent-400/10 dark:text-accent-400">
+                    <span class="inline-flex items-center rounded-md bg-accent-100 px-2 py-1 text-xs font-medium  dark:bg-accent-400/10 ">
                       {tag.title || tag.excerpt}
                     </span>
                   ))}
@@ -85,7 +85,7 @@ const bgMoodClass =
               {/* <span class="">Badge</span> */}
 
               {feature.description && (
-                <p class="text-base leading-normal mt-2 text-base-500 font-normal">
+                <p class="text-base leading-normal mt-2 text-base-500 font-normal text-black dark:text-black">
                   {feature.description}
                 </p>
               )}
