@@ -1,5 +1,5 @@
 ---
-const { subTitle, title } = Astro.props;
+const { subTitle, title, excerpt } = Astro.props;
 ---
 
 <div class="overflow-hidden bg-white py-32 dark:bg-gray-900">
@@ -8,15 +8,21 @@ const { subTitle, title } = Astro.props;
       class="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8"
     >
       <div class="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
+        {
+          subTitle && (
+            <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
+              {subTitle}
+            </p>
+          )
+        }
+
         <h2
           class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
         >
-          Our people
+          {title}
         </h2>
         <p class="mt-6 text-xl/8 text-gray-700 dark:text-gray-300">
-          Quasi est quaerat. Sit molestiae et. Provident ad dolorem occaecati
-          eos iste. Soluta rerum quidem minus ut molestiae velit error quod.
-          Excepturi quidem expedita molestias quas.
+          {excerpt}
         </p>
         <p class="mt-6 text-base/7 text-gray-600 dark:text-gray-400">
           Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem
