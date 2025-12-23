@@ -1,0 +1,54 @@
+---
+import { formatDate } from "../../../../scripts/formatDate";
+
+const {
+  name,
+  slug,
+  labels,
+  thumbnail,
+  excerpt,
+  description,
+  createdAt,
+  updatedAt,
+} = Astro.props;
+
+const pubDatetime = updatedAt || createdAt || new Date().toISOString();
+
+const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
+const url = `/c/${collectionName}/${slug}`;
+
+// const {} = Astro.props.authors || {};
+// const { name } = Astro.props.authors?.[0] || {};
+// const author = Astro.props.authors?.[0] ? name : "Anonymous";
+---
+
+<li
+  class="group ring-1 ring-inset ring-white/5 rounded-xl p-[0.060rem] overflow-hidden shadow-vulcan-950 shadow-2xl"
+>
+  <a href={`/post/${slug}`} aria-label={url} class="no-underline">
+    <div class="bg-vulcan-900 rounded-xl">
+      <div class="flex items-end justify-center overflow-hidden rounded-t-xl">
+        <div class="flex">
+          <img
+            class="group-hover:scale-110 duration-300 aspect-[2/1] object-cover min-h-80 h-auto w-full"
+            style="object-position: top center;"
+            loading="lazy"
+            src={thumbnail?.url ||
+              thumbnail?.ref ||
+              `https://placehold.co/600x400/000000/FFFFFF@3x.png?text=${name}&font=roboto`}
+            alt={thumbnail?.alt || name}
+            width="560"
+          />
+        </div>
+      </div>
+      <div class="p-8">
+        <h3 class="mt-1 text-sm leading-6 font-semibold line-clamp-2">
+          {name}
+        </h3>
+        <p class="mt-2 text-sm line-clamp-3 text-gray-400">
+          {excerpt}
+        </p>
+      </div>
+    </div>
+  </a>
+</li>

@@ -14,11 +14,16 @@ import RoadmapsGrid from "./roadmaps/roadmaps-grid.astro";
 import StoresAccordion from "./store/stores-accordion.astro";
 import StoresDefault from "./store/stores-default.astro";
 import StoresList from "./store/stores-list.astro";
+import TenantsDefault from "./tenants/tenants-default.astro";
 import WebinarsDefault from "./webinars/webinars-default.astro";
 
 const { variant, collectionType } = Astro.props;
 
 const collectionMap = {
+  tenants: {
+    default: TenantsDefault,
+  },
+
   stores: {
     default: StoresDefault,
     list: StoresList,
