@@ -1,0 +1,71 @@
+---
+const {
+  title,
+  slug,
+  url,
+  contentType,
+  excerpt,
+  tags,
+  author,
+  publishedAt,
+  featuredImage,
+} = Astro.props;
+console.log("Collection Default Item Props:", Astro.props);
+---
+
+<a
+  href={`/${contentType}/${slug}`}
+  aria-label={url}
+  class="group break-inside-avoid mb-4 no-underline font-semibold hover:text-primary-600 block px-3 rounded-md text-base lg:text-sm xl:text-base py-4"
+>
+  <div class="relative overflow-hidden rounded-lg bg-white">
+    {/* Image */}
+
+    {
+      featuredImage && featuredImage.url && (
+        <div class="relative aspect-[4/3] overflow-hidden">
+          <img
+            src={featuredImage?.url}
+            alt={featuredImage.ref || title}
+            class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+        </div>
+      )
+    }
+
+    {/* Content */}
+
+    <div class="p-4">
+      {/* Title */}
+      <h3
+        class="text-lg font-bold mb-2 line-clamp-2 group-hover:text-indigo-600 transition-colors"
+      >
+        {title}
+      </h3>
+
+      {/* Excerpt */}
+      <p class="text-sm text-gray-600 line-clamp-3 mb-3">
+        {excerpt}
+      </p>
+
+      {/* Tags */}
+      <div class="flex flex-wrap gap-2 mb-3">
+        {
+          tags?.map((tag) => (
+            <span class="px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded">
+              {tag?.title}
+            </span>
+          ))
+        }
+      </div>
+
+      {/* Meta */}
+      <!-- <div class="flex items-center gap-3 text-xs text-gray-500">
+        <span>{author?.name}</span>
+        <span>•</span>
+        <time>{new Date(publishedAt).toLocaleDateString()}</time>
+      </div> -->
+    </div>
+  </div>
+</a>
