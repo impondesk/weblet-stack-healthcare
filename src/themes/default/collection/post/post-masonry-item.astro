@@ -23,11 +23,11 @@ console.log("Collection Default Item Props:", Astro.props);
 
     {
       featuredImage && featuredImage.url && (
-        <div class="relative aspect-[4/3] overflow-hidden">
+        <div class="relative overflow-hidden">
           <img
             src={featuredImage?.url}
             alt={featuredImage.ref || title}
-            class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+            class="object-cover w-full transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
         </div>
