@@ -2,25 +2,27 @@
 const {
   title,
   slug,
-  url,
   contentType,
   excerpt,
   tags,
   author,
   publishedAt,
   featuredImage,
+  labels,
 } = Astro.props;
 console.log("Collection Default Item Props:", Astro.props);
+
+const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
+const url = `/${collectionName}/${slug}`;
 ---
 
-<a
-  href={`/${contentType}/${slug}`}
-  aria-label={url}
+<!-- href={`/${contentType}/${slug}`}
+  aria-label={url} -->
+<li
   class="group break-inside-avoid-column mb-4 no-underline font-semibold hover:text-primary-600 block px-3 rounded-md text-base lg:text-sm xl:text-base py-4"
 >
   <div class="relative overflow-hidden rounded-lg bg-white">
     {/* Image */}
-
     {
       featuredImage && featuredImage.url && (
         <div class="relative overflow-hidden">
@@ -38,16 +40,20 @@ console.log("Collection Default Item Props:", Astro.props);
 
     <div class="p-4">
       {/* Title */}
-      <h3
-        class="text-lg font-semibold mb-2 line-clamp-2 text-primary-500 dark:text-primary-400 group-hover:text-primary-600 transition-colors"
-      >
-        {title}
-      </h3>
+      <a href={url} aria-label={title} class="no-underline">
+        <h3
+          class="text-lg font-semibold mb-2 line-clamp-2 text-primary-500 dark:text-primary-400 group-hover:text-primary-600 transition-colors"
+        >
+          {title}
+        </h3>
+      </a>
 
       {/* Excerpt */}
-      <p class="text-sm text-gray-600 line-clamp-3-x mb-3 font-normal">
-        {excerpt}
-      </p>
+      <a href={url} aria-label={title} class="no-underline">
+        <p class="text-sm text-gray-600 line-clamp-3-x mb-3 font-normal">
+          {excerpt}
+        </p>
+      </a>
 
       {/* Tags */}
       <div class="flex flex-wrap gap-2 mb-3">
@@ -68,4 +74,4 @@ console.log("Collection Default Item Props:", Astro.props);
       </div> -->
     </div>
   </div>
-</a>
+</li>
