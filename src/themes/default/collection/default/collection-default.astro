@@ -11,7 +11,7 @@ const { records } = Astro.props;
 
   <div class="py-4 px-2 lg:px-0">
     <ol
-      class="grid grid-cols-3 gap-4 lg:grid-cols-4 sm:grid-cols-2"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
       role="list"
     >
       {records?.map((post) => <CollectionDefaultItem {...post} />)}
