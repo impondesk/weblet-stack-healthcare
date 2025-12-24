@@ -1,5 +1,5 @@
 ---
-const { title, slug, url, blockType, contentType } = Astro.props;
+const { title, slug, url, blockType, contentType, excerpt } = Astro.props;
 console.log("Collection Default Item Props:", Astro.props);
 ---
 
@@ -7,7 +7,8 @@ console.log("Collection Default Item Props:", Astro.props);
   href={`/${contentType}/${slug}`}
   title={title}
   aria-label={url}
-  class="no-underline"
+  class="no-underline font-semibold hover:text-blue-600 block px-3 rounded-md text-base lg:text-sm xl:text-base py-4"
 >
   {title}
+  <span class="block text-xs line-clamp-3 pt-1 text-gray-500">{excerpt}</span>
 </a>
