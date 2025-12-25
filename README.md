@@ -36,6 +36,9 @@ This template includes a comprehensive theming system that allows easy white-lab
 
 git remote add upstream https://github.com/impondesk/weblet-theme-template.git
 
+git merge upstream/main --allow-unrelated-histories
+
+
 
 git checkout main
 git fetch upstream
