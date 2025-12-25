@@ -1,4 +1,5 @@
 ---
+import LinksBlock from "../../../components/links-block.astro";
 import SectionTitle from "../section-title.astro";
 import TestimonialDefaultItem from "./testimonial-default-item.astro";
 
@@ -7,8 +8,7 @@ const { testimonials, bgMood, links } = Astro.props;
 const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
 ---
 
-{JSON.stringify(testimonials)}
-
+<!-- {JSON.stringify(testimonials)} -->
 <section class={`py-16 sm:py-24 ${bgClass}`}>
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <SectionTitle {...Astro.props} />
@@ -19,9 +19,9 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
           {testimonials.map((testimonial) => (
             <div>
               {/* Debug: Show comment directly */}
-              <div style={{ color: "red", fontSize: "0.9em" }}>
+              {/* <div style={{ color: "red", fontSize: "0.9em" }}>
                 {testimonial.comment}
-              </div>
+              </div> */}
               <TestimonialDefaultItem {...testimonial} />
             </div>
           ))}
@@ -29,7 +29,12 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
       )
     }
 
-    {
+    <LinksBlock
+      links={links}
+      clazz="items-left justify-left text-left mt-12 sm:mt-16"
+    />
+
+    <!-- {
       links && links.length > 0 && (
         <div class="mt-12 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
           {links.map((link, index) => {
@@ -82,6 +87,6 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
           })}
         </div>
       )
-    }
+    } -->
   </div>
 </section>
