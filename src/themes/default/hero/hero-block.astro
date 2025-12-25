@@ -1,5 +1,6 @@
 ---
 import HeroDefault from "./hero-default.astro";
+import HeroFloat from "./hero-float.astro";
 import HeroGallery from "./hero-gallery.astro";
 import HeroLeft from "./hero-left.astro";
 import HeroOffset from "./hero-offset.astro";
@@ -31,6 +32,7 @@ const collectionMap = {
   video: HeroDefault, // FIXME
   audio: HeroDefault, //FIXME
   "image-tile": HeroTile,
+  float: HeroFloat,
 };
 
 const getComponent = (variant) => {
