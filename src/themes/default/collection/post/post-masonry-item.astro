@@ -9,8 +9,10 @@ const {
   publishedAt,
   featuredImage,
   labels,
+  series,
+  category,
 } = Astro.props;
-console.log("Collection Default Item Props:", Astro.props);
+// console.log("Collection Default Item Props:", Astro.props);
 
 const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
 const url = `/${collectionName}/${slug}`;
@@ -55,11 +57,33 @@ const url = `/${collectionName}/${slug}`;
         </p>
       </a>
 
+      {
+        series && series?.title && (
+          <a
+            href={`/series/${series.slug}`}
+            class="font-semibold text-xs pr-2 px-2 py-1 my-1  no-underline bg-accent-100 text-accent-800 rounded"
+          >
+            {series?.title}
+          </a>
+        )
+      }
+
+      {
+        !series && category && category?.title && (
+          <a
+            href={`/category/${category.slug}`}
+            class="font-semibold text-xs pr-2 px-2 py-1 my-1  no-underline bg-secondary-100 text-secondary-800 rounded"
+          >
+            {category?.title}
+          </a>
+        )
+      }
+
       {/* Tags */}
       <div class="flex flex-wrap gap-2 mb-3">
         {
           tags?.map((tag) => (
-            <span class="px-2 py-1 text-xs font-semibold bg-primary-100 text-primary-800 rounded">
+            <span class="px-2 py-1 my-1 text-xs font-semibold bg-primary-100 text-primary-800 rounded">
               {tag?.title}
             </span>
           ))
