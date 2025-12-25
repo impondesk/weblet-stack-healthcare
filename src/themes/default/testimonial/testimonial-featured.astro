@@ -1,0 +1,31 @@
+---
+import LinksBlock from "../../../components/links-block.astro";
+import SectionTitle from "../section-title.astro";
+import TestimonialFeaturedItem from "./testimonial-featured-item.astro";
+
+const { testimonials, bgMood, links } = Astro.props;
+
+const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
+---
+
+<!-- {JSON.stringify(testimonials)} -->
+<section class={`py-16 sm:py-24 ${bgClass}`}>
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <SectionTitle {...Astro.props} />
+
+    {
+      testimonials && testimonials.length > 0 && (
+        <div class="mt-16 grid gap-8 sm:grid-cols-1 lg:grid-cols-1">
+          {testimonials.map((testimonial) => (
+            <div>
+              {/* <div>{testimonial.comment}</div> */}
+              <TestimonialFeaturedItem {...testimonial} />
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    <LinksBlock {...links} class="mt-12 sm:mt-16" />
+  </div>
+</section>
