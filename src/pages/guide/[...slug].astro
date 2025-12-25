@@ -1,0 +1,142 @@
+---
+import { defaultTheme } from "../../consts";
+import GroupLayout from "../../layouts/group-layout.astro";
+import { getGuideByDomain } from "../../api/guides";
+import { fetchDynamicCollection } from "../../api/collection";
+
+let { collectionType = "guides", slug } = Astro.params;
+
+// Use optional chaining and fallback to empty string if host is undefined
+// @ts-ignore: Assume host is present in locals at runtime
+const host = (Astro.locals as { host?: string })?.host || "";
+const data = await getGuideByDomain(host, slug);
+
+// let guides = await data?.docs[0];
+// if (!guides) {
+//   throw new Error(`Guides not found for slug: ${slug}`);
+// }
+
+console.log("Guides found:", data?.docs[0]?.id);
+console.log("Guides Found:", data?.docs[0]);
+
+console.log("Guides items:", data?.docs[0]?.items?.length || 0);
+
+console.log(
+  "Guides referringItems:",
+  data?.docs[0]?.referringItems?.length || 0
+);
+
+// const { content = undefined } = series;
+
+// if (!content) {
+//   throw new Error(`Content not found for post with slug: ${slug}`);
+// }
+
+// const minutesRead = readingTime(JSON.stringify(content || ""));
+// console.log(minutesRead);
+
+const guide = await data?.docs[0];
+
+// if (guide?.tenant) {
+//   (Astro.locals as { tenant?: any; theme?: any }).tenant = guide.tenant;
+//   (Astro.locals as { tenant?: any; theme?: any }).theme = guide.tenant.theme;
+// }
+
+// // Use referringItems to populate the records for the layout
+const referringItems = guide?.referringItems || [];
+
+// // Tenant Dynamic Collections
+let dynamicCollectionData: any[] = [];
+
+// const dynamicCollections = await guide?.layout.filter(
+//   (e: any) => e.blockType === "collection"
+// );
+// console.log(dynamicCollections);
+// console.log("Dynamic Collections: ", dynamicCollections);
+
+// if (!dynamicCollections || dynamicCollections.length === 0) {
+//   console.warn("No dynamic collections found for guides:", data?.docs[0]?.id);
+// }
+
+// // Loop through all dynamic collections and fetch their data
+// if (dynamicCollections.length > 0) {
+//   try {
+//     const collectionPromises = dynamicCollections.map(
+//       async (collection: any) => {
+//         const collectionType =
+//           collection?.collectionType || "groups" || "guides";
+//         console.log(
+//           `Fetching collection: ${collectionType} for guides: ${data?.docs[0]?.id}`
+//         );
+
+//         try {
+//           const data = await fetchDynamicCollection(
+//             collectionType,
+//             guide?.id,
+//             guide?.tenant?.id
+//           );
+//           return {
+//             type: collectionType,
+//             data: data,
+//             config: collection,
+//           };
+//         } catch (error) {
+//           console.error(`Error fetching collection ${collectionType}:`, error);
+//           return {
+//             type: collectionType,
+//             data: [],
+//             config: collection,
+//             error: error,
+//           };
+//         }
+//       }
+//     );
+
+//     const collectionResults = await Promise.all(collectionPromises);
+//     dynamicCollectionData = collectionResults;
+//     console.info(
+//       "Dynamic collections fetched successfully for guides:",
+//       guide.id
+//     );
+
+//     console.log("All collections loaded:", dynamicCollectionData);
+//   } catch (error) {
+//     console.error("Error loading dynamic collections:", error);
+//     dynamicCollectionData = [];
+//   }
+// } else {
+//   dynamicCollectionData = [];
+// }
+
+// console.info(dynamicCollectionData.length, "collections loaded.");
+// console.log(dynamicCollectionData);
+
+const instance = {
+  ...data?.docs[0],
+  collectionType,
+  slug,
+  className: "guides-page",
+  title: data?.docs[0]?.title || "guides",
+  excerpt: data?.docs[0]?.excerpt || "",
+  authors: data?.docs[0]?.authors || [],
+  updatedAt: data?.docs[0]?.updatedAt || new Date().toISOString(),
+  tags: data?.docs[0]?.tags || [],
+  category: data?.docs[0]?.category || "",
+  featured: data?.docs[0]?.featured || false,
+  theme: data?.docs[0]?.tenant?.theme || defaultTheme,
+  video: data?.docs[0]?.video || null,
+  audioLink: data?.docs[0]?.audioLink || null,
+  // minutesRead: minutesRead,
+  items: data?.docs[0]?.items || null,
+  records: dynamicCollectionData || [], // FIXME
+  referringItems: referringItems, //FIXME
+};
+
+// console.log(instance);
+
+// const author = authors && authors[0];
+// const product = products && products[0];
+---
+
+<!-- {JSON.stringify(referringItems, null, 2)} -->
+<GroupLayout {...instance} />

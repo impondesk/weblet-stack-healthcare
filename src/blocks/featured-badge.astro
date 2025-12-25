@@ -1,0 +1,9 @@
+---
+const { featured, clazz } = Astro.props;
+---
+
+{
+  featured && (
+    <span class={`font-semibold text-sm pr-2 ${clazz}`}>✨ Featured</span>
+  )
+}

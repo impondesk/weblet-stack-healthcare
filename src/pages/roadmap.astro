@@ -1,0 +1,152 @@
+---
+import RoadmapComponent from "../components/roadmap-component.astro";
+import PageLayout from "../layouts/page-layout.astro";
+
+const milestones = [
+  { label: "Vision", x: 100, y: 300 },
+  { label: "Scope", x: 200, y: 250 },
+  { label: "Deliverables", x: 300, y: 330 },
+  { label: "Milestones", x: 400, y: 200 },
+  { label: "Timeline", x: 500, y: 280 },
+  { label: "Resources", x: 600, y: 240 },
+  { label: "Dependencies", x: 700, y: 300 },
+  { label: "KPIs", x: 800, y: 230 },
+];
+
+// Generate SVG path for connecting line
+function generatePath(points) {
+  if (points.length === 0) return "";
+
+  let path = `M ${points[0].x} ${points[0].y}`;
+
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1];
+    const curr = points[i];
+
+    // Create smooth curve using quadratic bezier
+    const cpx = prev.x + (curr.x - prev.x) * 0.5;
+    const cpy = prev.y;
+
+    path += ` Q ${cpx} ${cpy} ${curr.x} ${curr.y}`;
+  }
+
+  return path;
+}
+
+const pathData = generatePath(milestones);
+---
+
+<PageLayout>
+  <h1 style="text-align: center; font-family: sans-serif; margin: 2rem 0;">
+    Interactive Roadmap
+  </h1>
+
+  <div class="roadmap-container">
+    <svg width="900" height="400" viewBox="0 0 900 400" class="roadmap-svg">
+      <!-- Draw connecting path -->
+      <path d={pathData} class="roadmap-path"></path>
+
+      <!-- Draw milestones -->
+      {
+        milestones.map((milestone, index) => (
+          <g key={index} class="milestone-group">
+            <circle
+              cx={milestone.x}
+              cy={milestone.y}
+              r="20"
+              class="milestone-circle"
+              data-label={milestone.label}
+            />
+            <text x={milestone.x} y={milestone.y - 35} class="milestone-text">
+              {milestone.label}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+  </div>
+
+  <script>
+    // Add interactivity with vanilla JavaScript
+    document.addEventListener("DOMContentLoaded", () => {
+      const circles = document.querySelectorAll(".milestone-circle");
+
+      circles.forEach((circle) => {
+        circle.addEventListener("mouseenter", (e) => {
+          e.target.style.r = "25";
+          e.target.style.fill = "#2563eb";
+        });
+
+        circle.addEventListener("mouseleave", (e) => {
+          e.target.style.r = "20";
+          e.target.style.fill = "#3b82f6";
+        });
+
+        circle.addEventListener("click", (e) => {
+          const label = e.target.getAttribute("data-label");
+          alert(`Clicked on: ${label}`);
+        });
+      });
+    });
+  </script>
+</PageLayout>
+
+<style>
+  .roadmap-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .roadmap-svg {
+    /* background: #f8fafc; */
+    /* border: 1px solid #e2e8f0; */
+    border-radius: 10px;
+    max-width: 100%;
+  }
+
+  .roadmap-path {
+    stroke: #64748b;
+    stroke-width: 8;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.6;
+  }
+
+  .milestone-circle {
+    fill: #3b82f6;
+    stroke: #1e40af;
+    stroke-width: 3;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .milestone-text {
+    fill: #1e293b;
+    text-anchor: middle;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: system-ui, sans-serif;
+    pointer-events: none;
+  }
+
+  /* Dark theme support */
+  .dark .roadmap-svg {
+    background: #1e293b;
+    border-color: #475569;
+  }
+
+  .dark .roadmap-path {
+    stroke: #94a3b8;
+  }
+
+  .dark .milestone-text {
+    fill: #f1f5f9;
+  }
+
+  .dark .milestone-circle {
+    fill: #3b82f6;
+    stroke: #60a5fa;
+  }
+</style>

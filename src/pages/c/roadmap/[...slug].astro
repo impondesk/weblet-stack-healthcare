@@ -1,0 +1,86 @@
+---
+import { fetchDynamicCollection } from "../../../api/collection";
+import { getRoadmapByDomain } from "../../../api/roadmap";
+import RoadmapLayout from "../../../layouts/roadmap-layout.astro";
+
+const { url, headers } = Astro.request; // Current URL
+const searchParams = new URL(url).searchParams; // Search parameters
+
+const proxyDomain = searchParams.get("proxy-domain"); // Proxy Domain for Dev
+
+const _host = Astro.locals.host; // Origin Host
+
+console.warn(Astro.props);
+console.warn(Astro.params);
+console.warn(searchParams);
+
+let dynamicCollectionData = [];
+
+let { slug } = Astro.params;
+if (slug && slug.includes("favicon.ico")) {
+  // Return an empty response or redirect if necessary
+  return new Response(null, { status: 404 });
+}
+if (slug && slug.includes("/")) {
+  slug = slug.split("/")[0].toString();
+  // Return an empty response or redirect if necessary
+}
+
+// slug = cleanSlug(slug).toString(); // Clean the slug to ensure it's a string
+
+console.log("slug", slug);
+
+const cookie = headers.get("cookie");
+
+const data = await getRoadmapByDomain(proxyDomain || _host, slug || "index");
+// console.log(data);
+
+if (!data || !data.docs || data.docs.length === 0) {
+  console.error("No page data found for the given domain and slug.");
+  return new Response(null, { status: 404, statusText: "Page Not Found" });
+}
+
+if (data.docs.length > 1) {
+  console.warn(
+    "Multiple pages found for the given domain and slug, using the first one."
+  );
+}
+
+const roadmap = data.docs[0];
+if (!roadmap) {
+  // If post not found, throw 404
+  console.error("No page found in the data.");
+  return new Response(null, {
+    status: 404,
+    statusText: "Page Not Found",
+    // message: `Post not found for slug: ${slug}`,
+  });
+}
+
+// console.log("roadmap Data:", roadmap);
+
+if (roadmap?.tenant) {
+  Astro.locals.tenant = roadmap.tenant;
+  Astro.locals.theme = roadmap.tenant.theme;
+
+  // Tenant Dynamic Collections
+  const dynamicCollections = await roadmap.layout.filter(
+    (e: any) => e.blockType === "collection"
+  );
+  console.log(dynamicCollections);
+
+  if (dynamicCollections.length > 0) {
+    dynamicCollectionData = await fetchDynamicCollection(
+      dynamicCollections[0]?.collectionType, // "roadmaps", // FIXME
+      dynamicCollections[0]?.id || roadmap?.id, // FIXME
+      roadmap?.tenant?.id
+    );
+  } else {
+    dynamicCollectionData = [];
+  }
+}
+---
+
+<RoadmapLayout {...roadmap} records={dynamicCollectionData}>
+  <!-- {roadmap?.title} -->
+</RoadmapLayout>

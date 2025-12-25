@@ -1,0 +1,164 @@
+---
+const { title, subTitle, excerpt, features, featuredImage, links } =
+  Astro.props;
+
+// Get image URL from featuredImage
+const mainImage =
+  featuredImage?.url ||
+  (featuredImage?.prefix && featuredImage?.filename
+    ? `https://${featuredImage.prefix}/${featuredImage.filename}`
+    : null);
+---
+
+<section class="bg-primary-800 bg-opacity-90 py-20 text-white lg:py-28">
+  <div class="container max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+      <!-- About Image -->
+      {
+        mainImage && (
+          <aside class="relative">
+            <img
+              src={mainImage}
+              class="w-full rounded"
+              alt={featuredImage?.alt || title || "Feature image"}
+              data-aos="fade-right"
+              data-aos-duration="1000"
+              data-aos-delay="100"
+            />
+          </aside>
+        )
+      }
+
+      <!-- About Text -->
+      <aside>
+        <!-- About Heading -->
+        <h2
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+        >
+          {title}
+        </h2>
+
+        <!-- About Paragraph -->
+        <p
+          class="mt-3 lg:mt-6 text-lg"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+        >
+          {
+            excerpt ||
+              "Experience the perfect blend of handcrafted coffee and delicious food at Beanery. Our artisanal offerings are made with passion and precision to deliver an exceptional culinary experience."
+          }
+        </p>
+
+        <div
+          class="mb-6 mt-4 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:mb-12 lg:mt-8 lg:gap-12"
+        >
+          {
+            features &&
+              features.length > 0 &&
+              features.slice(0, 2).map((feature, index) => (
+                <aside
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  data-aos-delay={index === 0 ? "0" : "100"}
+                >
+                  {/* Feature Heading */}
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-2">
+                    {feature.title}
+                  </h3>
+
+                  {/* Feature Paragraph */}
+                  <p class="text-base opacity-90">
+                    {feature.summary || feature.description}
+                  </p>
+                </aside>
+              ))
+          }
+        </div>
+
+        <!-- Call to Action Links -->
+        {
+          links && links.length > 0 && (
+            <div
+              class="flex flex-wrap gap-4"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+            >
+              {links.map((link, index) => {
+                if (!link || Object.keys(link).length === 0) return null;
+
+                // Determine the URL based on link type
+                let href = "#";
+                let isExternal = false;
+
+                if (
+                  link.type === "internal" &&
+                  link.internalLink?.value?.slug
+                ) {
+                  href = `/${link.internalLink.value.slug}`;
+                } else if (link.type === "external" && link.externalLink) {
+                  href = link.externalLink;
+                  isExternal = true;
+                } else if (link.url) {
+                  href = link.url;
+                  isExternal = link.url.startsWith("http");
+                }
+
+                const linkProps = isExternal
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {};
+
+                // Use variant from API, default to primary if not specified
+                const variant = link.variant || "primary";
+
+                // Define button styles based on variant
+                let buttonClass = "";
+                let showArrow = false;
+
+                switch (variant) {
+                  case "primary":
+                    buttonClass =
+                      "inline-flex items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-8 py-3 text-base font-semibold shadow-sm transition-colors";
+                    break;
+                  case "secondary":
+                    buttonClass =
+                      "inline-flex items-center justify-center rounded-lg border-2 border-white text-white hover:bg-white/10 px-8 py-3 text-base font-semibold transition-colors";
+                    break;
+                  case "outline":
+                    buttonClass =
+                      "inline-flex items-center justify-center rounded-lg border border-white/50 text-white hover:border-white hover:bg-white/10 px-8 py-3 text-base font-semibold transition-colors";
+                    break;
+                  case "ghost":
+                    buttonClass =
+                      "inline-flex items-center justify-center rounded-lg text-white hover:bg-white/10 px-8 py-3 text-base font-semibold transition-colors";
+                    break;
+                  case "link":
+                    buttonClass =
+                      "inline-flex items-center justify-center text-base font-semibold text-white hover:text-gray-200 transition-colors";
+                    showArrow = true;
+                    break;
+                  default:
+                    buttonClass =
+                      "inline-flex items-center justify-center rounded-lg bg-white text-primary-600 hover:bg-gray-100 px-8 py-3 text-base font-semibold shadow-sm transition-colors";
+                }
+
+                return (
+                  <a href={href} {...linkProps} class={buttonClass}>
+                    {link?.label || link?.text || link?.title}
+                    {showArrow && (
+                      <span class="ml-1" aria-hidden="true">
+                        →
+                      </span>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          )
+        }
+      </aside>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+const { category, clazz } = Astro.props;
+---
+
+{
+  category && category?.title && (
+    <a
+      rel="noopener noreferrer"
+      href={`/category/${category.slug}`}
+      class={`font-medium ${clazz}`}
+    >
+      {category?.title}
+    </a>
+  )
+}

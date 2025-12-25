@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/layout.astro";
+
+export const prerender = true;
+
+const tenant = {
+  name: "404 - Page Not Found",
+};
+---
+
+<Layout tenant={tenant} title="404 - Page Not Found">
+  <div class="min-h-screen w-full flex items-center justify-center px-4 py-16">
+    <div class="text-center max-w-2xl mx-auto">
+      <!-- Large 404 Number -->
+      <h1 class="text-9xl font-bold text-primary-500 mb-4">404</h1>
+
+      <!-- Error Message -->
+      <h2 class="text-3xl font-semibold text-gray-900 mb-4">
+        Oops! This page doesn't exist.
+      </h2>
+
+      <p class="text-xl text-gray-600 mb-8">
+        We couldn't find the content you're looking for, it may have been moved
+        or deleted.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center rounded-lg bg-indigo-500 hover:bg-indigo-600 bg-primary-500-x hover:bg-primary-600-x text-white px-6 py-3 text-base font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+        >
+          Go back home
+        </a>
+
+        <button
+          onclick="history.back()"
+          class="inline-flex items-center justify-center rounded-lg border-2 border-primary-500 text-primary-500 hover:bg-primary-50 px-6 py-3 text-base font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+        >
+          ← Go back
+        </button>
+      </div>
+
+      <!-- Optional decoration -->
+      <div class="mt-12 text-gray-400">
+        <svg
+          class="w-32 h-32 mx-auto opacity-20"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</Layout>

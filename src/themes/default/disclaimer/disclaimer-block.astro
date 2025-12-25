@@ -1,0 +1,23 @@
+---
+import DisclaimerDefault from "./disclaimer-default.astro";
+
+const { variant } = Astro.props;
+
+const collectionMap = {
+  default: DisclaimerDefault,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || DisclaimerDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

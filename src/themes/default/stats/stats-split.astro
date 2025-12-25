@@ -1,0 +1,105 @@
+---
+const { subTitle, title, excerpt, stats, featuredImage, bgMood } = Astro.props;
+
+// Compute background class based on bgMood
+const bgClass = [
+  "relative",
+  bgMood === "dark" ? "bg-secondary-900 text-white" : "",
+  bgMood === "light" ? "bg-white text-secondary-900" : "",
+  bgMood === "primary" ? "bg-primary-600 text-white" : "",
+  bgMood === "secondary"
+    ? "bg-secondary-100 text-secondary-900 dark:bg-secondary-800 dark:text-white"
+    : "",
+  bgMood === "primary-light" ? "bg-primary-50 text-primary-900" : "",
+  !bgMood ? "bg-gray-50 dark:bg-secondary-900" : "",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={bgClass}>
+  {
+    featuredImage ? (
+      <div class="mx-auto grid max-w-7xl lg:grid-cols-2">
+        <div class="hidden lg:block">
+          <img
+            src={featuredImage}
+            alt=""
+            class="h-56 w-full bg-gray-50 object-cover lg:h-full lg:w-full dark:bg-gray-800"
+          />
+        </div>
+        <div class="px-6 pt-16 pb-24 sm:pt-20 sm:pb-32 lg:px-8 lg:pt-32 flex items-center">
+          <div class="mx-auto max-w-2xl lg:mr-0 lg:max-w-lg">
+            <h2
+              class={
+                bgMood === "primary"
+                  ? "text-base/8 font-semibold text-secondary-600 dark:text-secondary-400"
+                  : "text-base/8 font-semibold text-primary-600 dark:text-primary-400"
+              }
+            >
+              {subTitle}
+            </h2>
+            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
+              {title}
+            </p>
+            <p class="mt-6 ">{excerpt}</p>
+            <dl class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16">
+              {stats &&
+                stats.map((stat) => (
+                  <div class="flex flex-col gap-y-3 border-l border-secondary-900/10 pl-6 dark:border-white/10">
+                    <dt class="text-sm/6 font-semibold">{stat.title}</dt>
+                    <dd class="order-first text-3xl font-semibold tracking-tight text-secondary-900 dark:text-white">
+                      {stat.value}
+                    </dd>
+                    {stat.excerpt && (
+                      <span class="text-xs text-secondary-700 dark:text-secondary-300">
+                        {stat.excerpt}
+                      </span>
+                    )}
+                  </div>
+                ))}
+            </dl>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="mx-auto grid max-w-7xl lg:grid-cols-2">
+        <div class="px-6 pt-16 pb-24 sm:pt-20 sm:pb-32 lg:px-8 lg:pt-32 flex items-center">
+          <div class="mx-auto max-w-2xl lg:ml-0 lg:max-w-lg">
+            <h2
+              class={
+                bgMood === "primary"
+                  ? "text-base/8 font-semibold text-secondary-600 dark:text-accent-400"
+                  : "text-base/8 font-semibold text-primary-600 dark:text-primary-400"
+              }
+            >
+              {subTitle}
+            </h2>
+            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty sm:text-5xl">
+              {title}
+            </p>
+            <p class="mt-6">{excerpt}</p>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <dl class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16 w-full">
+            {stats &&
+              stats.map((stat) => (
+                <div class="flex flex-col gap-y-3 border-l border-secondary-900/10 pl-6 dark:border-white/10">
+                  <dt class="text-sm/6 font-semibold">{stat.title}</dt>
+                  <dd class="order-first text-3xl font-semibold tracking-tight text-secondary-900 dark:text-white">
+                    {stat.value}
+                  </dd>
+                  {stat.excerpt && (
+                    <span class="text-xs text-secondary-700 dark:text-secondary-300">
+                      {stat.excerpt}
+                    </span>
+                  )}
+                </div>
+              ))}
+          </dl>
+        </div>
+      </div>
+    )
+  }
+</div>

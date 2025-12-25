@@ -1,0 +1,228 @@
+---
+import { fade, ViewTransitions } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import classNames from "classnames";
+import fs from "node:fs/promises";
+import path from "node:path";
+
+// Import base styles
+import "../styles/global.css";
+import "../styles/prose.css";
+import "../styles/theme-runtime.css";
+import "aos/dist/aos.css";
+
+// Props and constants
+const { tenant } = Astro.props;
+const { title } = tenant || Astro.props;
+const contentTitle = Astro.props.title || "Default Theme";
+const tenantId = Astro.locals?.tenant?.id;
+const presetCssURL =
+  Astro.locals?.tenant?.tenantTheme?.presetCssURL || "twitter-sky";
+
+console.log("=== Layout Component ===");
+// console.log("Tenant ID:", tenantId || "None");
+// console.log("Preset CSS URL:", presetCssURL);
+
+// Load the specific palette CSS file content
+// let paletteCss = "";
+// try {
+//   const paletteFilePath = path.join(
+//     process.cwd(),
+//     "src",
+//     "themes",
+//     "palette",
+//     `${presetCssURL}.css`
+//   );
+//   paletteCss = await fs.readFile(paletteFilePath, "utf-8");
+//   console.log(
+//     `✓ Loaded palette CSS: ${presetCssURL}.css (${paletteCss.length} bytes)`
+//   );
+// } catch (error) {
+//   console.error(`✗ Failed to load palette "${presetCssURL}":`, error.message);
+//   // Fallback to twitter-sky
+//   const fallbackPath = path.join(
+//     process.cwd(),
+//     "src",
+//     "themes",
+//     "palette",
+//     "twitter-sky.css"
+//   );
+//   paletteCss = await fs.readFile(fallbackPath, "utf-8");
+//   console.log(`✓ Loaded fallback palette: twitter-sky.css`);
+// }
+
+// import "../themes/decorators/radiant.css";
+
+// Dynamically load kit CSS files based on type and slug
+let kitsCss = "";
+const kits = Astro.locals?.tenant?.tenantTheme?.kits || [];
+for (const kit of kits) {
+  if (kit.type && kit.slug) {
+    try {
+      const kitFilePath = path.join(
+        process.cwd(),
+        "src",
+        "themes",
+        kit.type,
+        `${kit.slug}.css`
+      );
+      const kitCss = await fs.readFile(kitFilePath, "utf-8");
+      kitsCss += `\n/* Kit: ${kit.slug} */\n` + kitCss;
+      console.log(
+        `✓ Loaded kit CSS: ${kit.type}/${kit.slug}.css (${kitCss.length} bytes)`
+      );
+    } catch (error) {
+      console.error(
+        `✗ Failed to load kit CSS for ${kit.type}/${kit.slug}:`,
+        error.message
+      );
+    }
+  }
+}
+---
+
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class=`scrollbar-hide md:scrollbar-default-x light scrollbar-thumb-gray-700 scrollbar-track-gray-100 scrollbar-thin scrollbar-track-rounded-full bg-zinc-300-x scroll-smooth`
+  transition:animate={fade({ duration: "0.4s" })}
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>
+      {contentTitle + " - " + Astro.locals?.tenant?.name || "Default Theme"}
+    </title>
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Inject palette CSS inline for proper theme loading -->
+    <!-- {paletteCss && <style is:inline set:html={paletteCss} />} -->
+
+    <!-- Inject kits CSS inline for additional kit themes -->
+    {kitsCss && <style is:inline set:html={kitsCss} />}
+
+    <!-- ViewTransitions disabled temporarily to ensure middleware runs on every page load -->
+    <ViewTransitions />
+
+    <!-- Initialize AOS animations -->
+    <script>
+      import "../scripts/aos-init.ts";
+    </script>
+  </head>
+
+  <!--  -->
+  <body
+    class={classNames(
+      // "bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100",
+      // "bg-gray-50",
+      "antialiased font-sans",
+      "min-h-screen flex flex-col",
+      "bg-fixed-x scrollbar-hide md:scrollbar-default-x inset-y-0 w-full lg:block  pb-10"
+      // "bg-[url('/beams-components.png')] bg-[length:1000px_700px] bg-[position:calc(50%_+_190px)_-50px] bg-no-repeat lg:block ",
+      // "bg-[url('/beams-components.png')] bg-[length:1000px_700px] bg-[position:calc(50%_+_190px)_-50px] bg-no-repeat lg:block dark:bg-black pb-10"
+    )}
+  >
+    {
+      tenant && tenant.demo && (
+        <div
+          x-data="{ showAlert: true }"
+          x-show="showAlert"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform -translate-y-2"
+          x-transition:enter-end="opacity-100 transform translate-y-0"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          id="demo-alert"
+          class="bg-primary-500 text-white no-border border-primary  shadow-2xl  p-4 mb-0 max-w-full mx-auto"
+          role="alert"
+        >
+          <div class="flex items-center justify-center gap-3">
+            <div class="flex items-center gap-3">
+              <svg
+                class="flex-shrink-0 w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <div>
+                <span class="sr-only">Info</span>
+                <p class="text-sm font-medium">
+                  {/* This website is a conceptual prototype created for presentation
+                purposes only. All content is fictional and intended solely for
+                demonstration and illustration. Please do not consider any
+                information presented here as final or accurate. */}
+                  This is a conceptual demo. Content shown is fictional and for
+                  illustrative purposes only. All features, content, and
+                  examples are illustrative and subject to change.
+                </p>
+              </div>
+            </div>
+            <button
+              @click="showAlert = false"
+              type="button"
+              class="ml-3 -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-primary p-1.5 hover:bg-blue-100 dark:hover:bg-blue-900/40 inline-flex items-center justify-center h-8 w-8 transition-colors"
+              aria-label="Close"
+            >
+              <span class="sr-only">Dismiss</span>
+              <svg
+                class="w-4 h-4"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )
+    }
+
+    <Header title={title || "Weblet Platforms"} />
+
+    <!-- Main Content -->
+    <main id="main-content" class="mx-auto w-full py-10-none min-h-full">
+      <!-- Scroll to Top Button -->
+      <div
+        x-data="{ isVisible: false }"
+        x-init="window.addEventListener('scroll', () => { isVisible = window.scrollY > 150; })"
+        class="fixed bottom-6 right-6 z-50"
+        x-show="isVisible"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform translate-y-2"
+      >
+        <button
+          @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+          class="inline-flex items-center gap-2 justify-center rounded-lg py-2 px-6 text-sm outline-offset-2 transition bg-zinc-800 text-white font-medium hover:bg-zinc-700 dark:hover:text-neutral-50 w-full cursor-pointer"
+        >
+          Scroll to top
+        </button>
+      </div>
+
+      <slot />
+
+      <!-- <SocialShare {...Astro.props} /> -->
+
+      <Footer {...Astro.props} />
+    </main>
+  </body>
+</html>

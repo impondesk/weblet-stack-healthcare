@@ -1,0 +1,83 @@
+---
+import readingTime from "reading-time";
+import { defaultTheme } from "../../consts";
+import { fetchDynamicCollection } from "../../api/collection";
+import { getGroupByDomain } from "../../api/groups";
+import GroupLayout from "../../layouts/group-layout.astro";
+
+let { collectionType, slug } = Astro.params;
+
+// Use optional chaining and fallback to empty string if host is undefined
+// @ts-ignore: Assume host is present in locals at runtime
+const host = (Astro.locals as { host?: string })?.host || "";
+const data = await getGroupByDomain(host, slug);
+
+let series = await data?.docs[0];
+if (!series) {
+  throw new Error(`Series not found for slug: ${slug}`);
+}
+
+// const { content = undefined } = series;
+
+// if (!content) {
+//   throw new Error(`Content not found for post with slug: ${slug}`);
+// }
+
+// const minutesRead = readingTime(JSON.stringify(content || ""));
+// console.log(minutesRead);
+
+if (series?.tenant) {
+  (Astro.locals as { tenant?: any; theme?: any }).tenant = series.tenant;
+  (Astro.locals as { tenant?: any; theme?: any }).theme = series.tenant.theme;
+}
+
+// Tenant Dynamic Collections
+let dynamicCollectionData = [];
+
+const dynamicCollections = await series.layout.filter(
+  (e: any) => e.blockType === "collection"
+);
+// console.log(dynamicCollections);
+// console.log("Dynamic Collections: ", dynamicCollections);
+
+if (!dynamicCollections || dynamicCollections.length === 0) {
+  console.warn("No dynamic collections found for series:", series.id);
+}
+
+if (dynamicCollections.length > 0) {
+  dynamicCollectionData = await fetchDynamicCollection(
+    "groups", // dynamicCollections[0].blockType, // FIXME
+    series?.id,
+    series?.tenant?.id
+  );
+} else {
+  dynamicCollectionData = [];
+}
+console.error(dynamicCollectionData);
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  slug,
+  className: "series-page",
+  title: data.docs[0].title || "series",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+  // minutesRead: minutesRead,
+  records: dynamicCollectionData,
+};
+
+// console.log(instance);
+
+// const author = authors && authors[0];
+// const product = products && products[0];
+---
+
+<GroupLayout {...instance} />

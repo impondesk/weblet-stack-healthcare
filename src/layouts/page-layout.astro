@@ -1,0 +1,48 @@
+---
+import { DefaultThemeBlocks } from "../themes/default/default-theme-block.astro";
+import Layout from "./layout.astro";
+
+const { layout, records } = Astro.props;
+---
+
+<Layout {...Astro.props}>
+  <div class="container max-w-full mx-auto">
+    <slot />
+
+    <div>
+      {
+        layout?.map(
+          (
+            block: {
+              [x: string]: any;
+              blockType: any;
+              id: string;
+            },
+            index: number
+          ) => {
+            const BlockComponent = DefaultThemeBlocks[block.blockType];
+            if (!BlockComponent) return null;
+            return (
+              <>
+                {block.anchor && <a data-id={block.anchor} id={block.anchor} />}
+                <BlockComponent
+                  key={index}
+                  data-id={block?.anchor}
+                  data-block={block.blockType}
+                  decorator={`${block.blockType}${block.variant ? `-${block.variant}` : ""}`}
+                  {...block}
+                  records={
+                    records && records?.data?.length > 0
+                      ? records?.data.find((item: any) => item.id === block.id)
+                          ?.data?.docs
+                      : []
+                  }
+                />
+              </>
+            );
+          }
+        )
+      }
+    </div>
+  </div>
+</Layout>

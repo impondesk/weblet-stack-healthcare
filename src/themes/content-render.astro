@@ -1,0 +1,27 @@
+---
+import { PayloadLexicalReactRenderer } from "@atelier-disko/payload-lexical-react-renderer";
+import classNames from "classnames";
+
+const { content, className } = Astro.props;
+---
+
+{
+  content && (
+    <article
+      class={classNames(
+        "lg:col-span-9 rounded-xl prose prose-styles lexical-content",
+        className
+      )}
+    >
+      <PayloadLexicalReactRenderer
+        content={content}
+        client:only="react"
+        blockRenderers={
+          {
+            // disclaimer: (props) => <div>"Something"</div>,
+          }
+        }
+      />
+    </article>
+  )
+}

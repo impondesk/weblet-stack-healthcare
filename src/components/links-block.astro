@@ -1,0 +1,108 @@
+---
+const { links, bgMood, clazz = "items-center justify-center" } = Astro.props;
+
+const btnDecoratorClass =
+  "inline-flex rounded-md   text-sm font-semibold   focus-visible:outline-0 focus-visible:outline-offset-1  dark:shadow-none";
+
+// Primary button class with bgMood consideration
+let btnPrimaryClass = btnDecoratorClass;
+btnPrimaryClass +=
+  bgMood === "dark"
+    ? " py-2.5 px-3.5 bg-primary-400 hover:bg-primary-300 text-gray-900"
+    : " py-2.5 px-3.5 bg-primary-600 hover:bg-primary-500 text-white";
+
+// Secondary button class with bgMood consideration
+let btnSecondaryClass = btnDecoratorClass;
+btnSecondaryClass +=
+  bgMood === "dark"
+    ? "py-2.5 px-3.5 bg-secondary-600 text-white hover:bg-gray-600 focus-visible:outline-indigo-400"
+    : "py-2.5 px-3.5 bg-secondary-200  text-secondary-900  hover:bg-gray-300 focus-visible:outline-indigo-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600";
+
+// Link button class with text color adjustments for bgMood
+let btnLinkClass = btnDecoratorClass;
+btnLinkClass +=
+  bgMood === "dark"
+    ? "gap-2  text-primary-400 hover:text-primary-300 dark:text-primary-400 dark:hover:text-primary-300"
+    : "gap-2  text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300";
+
+const btnClassMap = {
+  primary: btnPrimaryClass,
+  secondary: btnSecondaryClass,
+  link: btnLinkClass,
+};
+---
+
+<section>
+  {
+    links && links.length > 0 && (
+      <div
+        class={`mt-10 flex flex-wrap  gap-4 lg:gap-x-6 w-full overflow-x-auto ${clazz}`}
+      >
+        {/* items-center justify-center */}
+        {links.map((link, index) => {
+          if (!link || Object.keys(link).length === 0) return null;
+
+          // Determine the URL based on link type
+          let href = "#";
+          let isExternal = false;
+          let isAnchorNav = false;
+
+          if (link.type === "internal" && link.internalLink?.value?.slug) {
+            href = `/${link.internalLink.value.slug}`;
+          } else if (link.type === "external" && link.externalLink) {
+            href = link.externalLink;
+            if (href.startsWith("#")) {
+              isAnchorNav = true;
+              isExternal = false;
+            } else {
+              isExternal = true;
+            }
+          } else if (link.url) {
+            href = link.url;
+            if (href.startsWith("#")) {
+              isAnchorNav = true;
+              isExternal = false;
+            } else {
+              isExternal = link.url.startsWith("http");
+            }
+          }
+
+          const linkProps = isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {};
+
+          // Handler for anchor navigation links (start with #)
+          const handleAnchorNavClick = (e) => {
+            if (isAnchorNav && href.startsWith("#")) {
+              const hash = href.substring(1);
+              if (hash) {
+                e.preventDefault();
+                const el = document.getElementById(hash);
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }
+            }
+          };
+
+          return (
+            <a
+              href={href}
+              data-target={isAnchorNav ? href : undefined}
+              {...linkProps}
+              class={btnClassMap[link.variant || "primary"] || btnPrimaryClass}
+              onClick={isAnchorNav ? handleAnchorNavClick : undefined}
+            >
+              {link?.label || link?.text || "Learn more"}
+              {link.variant === "link" && (
+                <span class="ml-1" aria-hidden="true">
+                  →
+                </span>
+              )}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
+</section>

@@ -1,0 +1,37 @@
+:root {
+  /* Soft Red — Primary (rose-red, calm & friendly) */
+  --color-primary-50: oklch(0.98 0.012 15);
+  --color-primary-100: oklch(0.96 0.022 15);
+  --color-primary-200: oklch(0.94 0.035 15);
+  --color-primary-300: oklch(0.9 0.05 15);
+  --color-primary-400: oklch(0.86 0.065 15);
+  --color-primary-500: oklch(0.82 0.08 15); /* Soft Red core */
+  --color-primary-600: oklch(0.76 0.075 15);
+  --color-primary-700: oklch(0.7 0.07 15);
+  --color-primary-800: oklch(0.64 0.065 15);
+  --color-primary-900: oklch(0.58 0.06 15);
+
+  /* Blush / Cream — Secondary (soft support, light background) */
+  --color-secondary-50: oklch(0.995 0.006 25);
+  --color-secondary-100: oklch(0.985 0.01 25);
+  --color-secondary-200: oklch(0.97 0.016 25);
+  --color-secondary-300: oklch(0.95 0.022 25);
+  --color-secondary-400: oklch(0.92 0.028 25);
+  --color-secondary-500: oklch(0.88 0.032 25);
+  --color-secondary-600: oklch(0.82 0.03 25);
+  --color-secondary-700: oklch(0.76 0.028 25);
+  --color-secondary-800: oklch(0.7 0.026 25);
+  --color-secondary-900: oklch(0.64 0.024 25);
+
+  /* Soft Coral / Strawberry — Accent (gentle contrast) */
+  --color-accent-50: oklch(0.98 0.02 20);
+  --color-accent-100: oklch(0.95 0.035 20);
+  --color-accent-200: oklch(0.92 0.055 20);
+  --color-accent-300: oklch(0.88 0.07 20);
+  --color-accent-400: oklch(0.84 0.085 20);
+  --color-accent-500: oklch(0.8 0.1 20); /* Accent highlight */
+  --color-accent-600: oklch(0.74 0.095 20);
+  --color-accent-700: oklch(0.68 0.09 20);
+  --color-accent-800: oklch(0.62 0.085 20);
+  --color-accent-900: oklch(0.56 0.08 20);
+}

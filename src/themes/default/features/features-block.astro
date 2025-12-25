@@ -1,0 +1,31 @@
+---
+import FeaturesDefault from "./features-default.astro";
+import FeaturesLeft from "./features-left.astro";
+import FeaturesList from "./features-list.astro";
+import FeaturesRight from "./features-right.astro";
+
+const { variant } = Astro.props;
+
+// Map variant to components
+const collectionMap = {
+  default: FeaturesDefault,
+  list: FeaturesList,
+  right: FeaturesRight, // Right Contents
+  left: FeaturesLeft, // Left Contents
+  minimal: FeaturesDefault,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || FeaturesDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

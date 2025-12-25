@@ -1,0 +1,175 @@
+---
+const { subTitle, title, excerpt, links, bgMood, heroImage, featuredBanner } =
+  Astro.props;
+
+// Build the full image URL
+
+const imageUrl =
+  heroImage?.url ||
+  (heroImage?.prefix && heroImage?.filename
+    ? `https://${heroImage.prefix}/${heroImage.filename}`
+    : null);
+---
+
+<section class="relative py-0 overflow-hidden">
+  <div
+    class="max-w-7xl mx-auto flex flex-col items-center lg:h-screen lg:flex-row -lg:pt-200"
+  >
+    <!-- Text Content -->
+    <aside class="order-2 pb-12 lg:order-1 lg:w-[70%] lg:pb-0 px-4">
+      <!-- Subtitle -->
+      {
+        subTitle && (
+          <p
+            class="text-base uppercase font-semibold text-primary"
+            data-aos="fade-right"
+            data-aos-duration="1000"
+          >
+            {subTitle}
+          </p>
+        )
+      }
+
+      <!-- Header -->
+      <h1
+        class="mt-4 text-4xl sm:text-5xl font-bold text-primary"
+        data-aos="fade-right"
+        data-aos-duration="1000"
+      >
+        {title}
+      </h1>
+
+      <!-- Paragraph -->
+      <p
+        class="mt-6 text-lg lg:w-3/4 text-primary"
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        data-aos-delay="100"
+      >
+        {excerpt}
+      </p>
+
+      <!-- Call to Action Buttons -->
+      <!-- {
+        links && links.length > 0 && (
+          <div class="mt-10 flex gap-6">
+            {links.map((link, index) => {
+              if (!link || Object.keys(link).length === 0) return null;
+
+              // Determine the URL based on link type
+              let href = "#";
+              let isExternal = false;
+
+              if (link.type === "internal" && link.internalLink?.value?.slug) {
+                href = `/${link.internalLink.value.slug}`;
+              } else if (link.type === "external" && link.externalLink) {
+                href = link.externalLink;
+                isExternal = true;
+              } else if (link.url) {
+                href = link.url;
+                isExternal = link.url.startsWith("http");
+              }
+
+              const linkProps = isExternal
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {};
+
+              // Define button styles based on variant
+              let buttonClass = "";
+              let showArrow = false;
+
+              switch (link?.variant) {
+                case "primary":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg bg-primary-600 text-white hover:bg-primary-700 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
+                  break;
+                case "secondary":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg border-2 border-secondary-600 text-secondary-600 hover:bg-secondary-50 px-6 py-3 text-sm font-semibold transition-colors";
+                  break;
+                case "outline":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg border border-gray-300 text-gray-900 hover:border-primary-600 hover:text-primary-600 px-6 py-3 text-sm font-semibold transition-colors";
+                  break;
+                case "ghost":
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg text-gray-900 hover:bg-gray-100 px-6 py-3 text-sm font-semibold transition-colors";
+                  break;
+                case "link":
+                  buttonClass =
+                    "inline-flex items-center justify-center text-sm py-3 font-semibold text-gray-900 hover:text-primary-600 transition-colors";
+                  showArrow = true;
+                  break;
+                default:
+                  buttonClass =
+                    "inline-flex items-center justify-center rounded-lg bg-primary-500 text-white hover:bg-primary-600 px-6 py-3 text-sm font-semibold shadow-sm transition-colors";
+              }
+
+              const delay = index === 0 ? "300" : "200";
+
+              return (
+                <div
+                  data-aos="fade-right"
+                  data-aos-duration="1000"
+                  data-aos-delay={delay}
+                >
+                  <a href={href} {...linkProps} class={buttonClass}>
+                    {link?.label || link?.text || link?.title}
+                    {showArrow && (
+                      <span class="ml-1" aria-hidden="true">
+                        →
+                      </span>
+                    )}
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        )
+      } -->
+    </aside>
+
+    <!-- Hero Banner or Hero Image -->
+    {
+      featuredBanner && featuredBanner?.url ? (
+        <img
+          src={featuredBanner.url}
+          alt={featuredBanner.alt || "banner"}
+          class="relative -right-4 order-1 mt-20 lg:absolute lg:right-0 lg:-z-10 lg:order-2 lg:w-1/2"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+        />
+      ) : (
+        heroImage &&
+        heroImage.url && (
+          <img
+            src={heroImage.url}
+            alt={heroImage?.alt || "hero"}
+            class="relative -right-4 order-1 mt-20 lg:absolute lg:right-0 lg:-z-10 lg:order-2 lg:w-1/2"
+            data-aos="fade-left"
+            data-aos-duration="1000"
+            data-aos-delay="100"
+          />
+        )
+      )
+    }
+  </div>
+</section>
+
+<!-- {JSON.stringify(video)} -->
+
+<!-- <section>
+  {
+    video && video?.link && (
+      <div class="mx-auto max-w-5xl">
+        <center>
+          <video class="h-full w-full l rounded-lg" controls autoplay muted>
+            <source src={video?.link} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </center>
+      </div>
+    )
+  }
+</section> -->

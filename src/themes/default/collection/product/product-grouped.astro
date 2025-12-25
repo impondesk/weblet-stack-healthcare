@@ -1,0 +1,260 @@
+---
+import SectionTitle from "../../section-title.astro";
+
+const { records, columns } = Astro.props;
+
+// Default grid columns: 4 columns on desktop, responsive on smaller screens
+// Use specific Tailwind classes instead of dynamic concatenation
+const gridColumns = columns || "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
+
+// Group products by their associated record groups for categorized rendering.
+const groupedRecords = (records || []).reduce(
+  (acc, record) => {
+    const recordGroups =
+      Array.isArray(record?.groups) && record.groups.length > 0
+        ? record.groups
+        : [{ title: "Other", slug: "other" }];
+
+    recordGroups.forEach((group) => {
+      const key = group?.slug || group?.title || "other";
+      if (!acc[key]) {
+        acc[key] = { group, items: [] };
+      }
+      acc[key].items.push(record);
+    });
+
+    return acc;
+  },
+  {} as Record<string, { group: any; items: any[] }>
+);
+
+const groupedEntries = (
+  Object.values(groupedRecords) as {
+    group: any;
+    items: any[];
+  }[]
+)
+  .sort((a, b) => {
+    const titleA = (a.group?.title || "Other").toLowerCase();
+    const titleB = (b.group?.title || "Other").toLowerCase();
+    return titleA.localeCompare(titleB);
+  })
+  .map((entry) => ({
+    ...entry,
+    items: entry.items.sort((a, b) => {
+      const nameA = (a?.title || "").toLowerCase();
+      const nameB = (b?.title || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    }),
+  }));
+---
+
+<!-- {JSON.stringify(records, null, 2)} -->
+<section class="relative w-full max-w-7xl mx-auto lg:pb-24 py-12">
+  <SectionTitle {...Astro.props} />
+
+  <div class="py-4 px-2 lg:px-0 space-y-10">
+    {
+      groupedEntries.length === 0 ? (
+        <p>No products available.</p>
+      ) : (
+        groupedEntries.map(({ group, items }, index) => {
+          const heading = group?.title || "Other";
+          const subTitle = group?.subTitle || group?.subtitle;
+          const excerpt = group?.excerpt;
+          const featuredIcon = group?.featuredIcon;
+
+          // Check if featuredIcon is an object (populated) or just an ID string
+          const isPopulated =
+            typeof featuredIcon === "object" && featuredIcon !== null;
+
+          // Construct the featured icon URL only if it's populated
+          const iconUrl = isPopulated
+            ? featuredIcon?.url ||
+              (featuredIcon?.prefix && featuredIcon?.filename
+                ? `https://${featuredIcon.prefix}/${featuredIcon.filename}`
+                : null)
+            : null;
+
+          // Use gridColumns from parent scope or group-specific columns
+          const columnsClass = group?.columns || gridColumns;
+
+          // console.warn(group, featuredIcon, iconUrl);
+
+          return (
+            <div class="space-y-3">
+              {/* {JSON.stringify(group)} */}
+
+              {groupedEntries.length > 1 && (
+                <div class="space-y-2 pt-6">
+                  {iconUrl && (
+                    <div class="flex justify-left mb-4">
+                      <img
+                        src={iconUrl}
+                        alt={featuredIcon?.alt || heading}
+                        width={featuredIcon?.width || 64}
+                        height={featuredIcon?.height || 64}
+                        class="object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <h2 class="text-2xl font-semibold capitalize">{heading}</h2>
+                  {(subTitle || excerpt) && (
+                    <p class="text-sm text-gray-600">{subTitle || excerpt}</p>
+                  )}
+                </div>
+              )}
+
+              <ol
+                class={`grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3`}
+                role="list"
+              >
+                {items.map((record) => {
+                  const basePath =
+                    record?.contentType ||
+                    record?.labels?.singular?.toLowerCase() ||
+                    "products";
+                  const isOutOfStock = Boolean(record?.outOfStock);
+                  const priceLabel =
+                    typeof record?.price === "number"
+                      ? `${record?.currency || "$"} ${record.price}`
+                      : null;
+
+                  // Extract featured image
+                  const featuredImage = record?.featuredImage;
+                  const isFeaturedImagePopulated =
+                    typeof featuredImage === "object" && featuredImage !== null;
+                  const imageUrl = isFeaturedImagePopulated
+                    ? featuredImage?.url ||
+                      (featuredImage?.prefix && featuredImage?.filename
+                        ? `https://${featuredImage.prefix}/${featuredImage.filename}`
+                        : null)
+                    : null;
+
+                  return (
+                    <li class="list-none">
+                      {/* title={record?.title}
+                        aria-label={record?.title} */}
+                      {/* <a
+                        href={`/${basePath}/${record?.slug}`}
+                        class="no-underline block no-border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 hover:shadow-md transition group"
+                      > */}
+                      {imageUrl && (
+                        <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                          <button
+                            type="button"
+                            class="w-full h-full cursor-zoom-in"
+                            onclick={`document.getElementById('lightbox-img').src='${imageUrl}';document.getElementById('lightbox-modal').classList.remove('hidden');`}
+                            aria-label="View image larger"
+                          >
+                            <img
+                              src={imageUrl}
+                              alt={featuredImage?.alt || record?.title}
+                              width={featuredImage?.width || 400}
+                              height={featuredImage?.height || 300}
+                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </button>
+                        </div>
+                      )}
+
+                      <div class="p-4">
+                        <div class="flex items-start justify-between gap-2">
+                          <a
+                            href={`/${basePath}/${record?.slug}`}
+                            class={`font-semibold no-underline ${
+                              isOutOfStock
+                                ? "text-gray-400 line-through"
+                                : "text-gray-900-x"
+                            }`}
+                          >
+                            {record?.title}
+                          </a>
+                          {priceLabel && (
+                            <span
+                              class={`text-sm font-medium ${
+                                isOutOfStock
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-900"
+                              }`}
+                            >
+                              {priceLabel}
+                            </span>
+                          )}
+                        </div>
+
+                        {record?.excerpt && (
+                          <a
+                            href={`/${basePath}/${record?.slug}`}
+                            class={`text-sm mt-1 line-clamp-2 no-underline ${
+                              isOutOfStock
+                                ? "text-gray-400 line-through"
+                                : "text-gray-600"
+                            }`}
+                          >
+                            {record.excerpt}
+                          </a>
+                        )}
+
+                        <div class="flex flex-wrap gap-1.5 mt-2">
+                          {isOutOfStock && (
+                            <span class="inline-block text-xs font-medium bg-gray-300 text-gray-700 px-2 py-0.5 rounded">
+                              Not Available
+                            </span>
+                          )}
+
+                          {Array.isArray(record?.tags) &&
+                            record.tags.length > 0 &&
+                            record.tags.map((tag) => {
+                              const bgColorClass = tag?.color
+                                ? `bg-${tag.color}-100`
+                                : "bg-gray-100";
+                              const textColorClass = tag?.color
+                                ? `text-${tag.color}-700`
+                                : "text-gray-700";
+
+                              return (
+                                <span
+                                  class={`inline-flex items-center gap-1 text-xs font-medium ${bgColorClass} ${textColorClass} px-2 py-0.5 rounded`}
+                                  title={tag?.category || tag?.tag}
+                                >
+                                  {tag?.icon && <span>{tag.icon}</span>}
+                                  <span>{tag?.tag}</span>
+                                </span>
+                              );
+                            })}
+                        </div>
+                      </div>
+                      {/* Lightbox modal for image popup */}
+                      <div
+                        id="lightbox-modal"
+                        class="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center hidden"
+                      >
+                        <button
+                          type="button"
+                          class="absolute top-4 right-4 text-white text-2xl"
+                          onclick="document.getElementById('lightbox-modal').classList.add('hidden');"
+                        >
+                          &times;
+                        </button>
+                        <img
+                          id="lightbox-img"
+                          src=""
+                          alt="Product image"
+                          class="max-w-full max-h-[80vh] rounded shadow-lg"
+                        />
+                      </div>
+                      {/* </a> */}
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          );
+        })
+      )
+    }
+  </div>
+</section>

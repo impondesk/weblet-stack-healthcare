@@ -1,0 +1,30 @@
+---
+import classNames from "classnames";
+
+const { tags } = Astro.props;
+---
+
+{
+  tags && tags.length > 0 && (
+    <section class="py-2">
+      <ul
+        class="flex flex-wrap gap-2 mt-0 w-full max-w-7xl mx-auto text-center justify-center py-0"
+        role="list"
+      >
+        {tags &&
+          tags?.map((tag) => (
+            <a href={`/tag/${tag?.slug}`} class="no-underline">
+              {" "}
+              <span
+                class={classNames(
+                  "inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset"
+                )}
+              >
+                {tag?.title}
+              </span>
+            </a>
+          ))}
+      </ul>
+    </section>
+  )
+}

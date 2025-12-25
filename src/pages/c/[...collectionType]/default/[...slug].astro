@@ -1,0 +1,70 @@
+---
+import { getPostByDomain } from "../../../../api/post";
+import Layout from "../../../../layouts/layout.astro";
+import readingTime from "reading-time";
+import PostLayout from "../../../../layouts/post-layout.astro";
+import { defaultTheme } from "../../../../consts";
+
+let { collectionType, slug } = Astro.params;
+
+const { host } = Astro.locals;
+const data = await getPostByDomain(host, slug);
+
+let instanceData = await data?.docs[0];
+if (!instanceData) {
+  throw new Error(`Post not found for slug: ${slug}`);
+}
+
+const { content = undefined } = instanceData;
+
+const {
+  authors,
+  authorsField,
+  title,
+  subTitle,
+  excerpt,
+  className,
+  createdAt,
+  updatedAt,
+  tags,
+  products,
+  category,
+  featured,
+  blockType,
+} = Astro.props;
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  slug,
+  className: "webinar-page",
+  title: data.docs[0].title || "Webinar",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+};
+
+// const author = authors && authors[0];
+// const product = products && products[0];
+
+const minutesRead = readingTime(JSON.stringify(content || ""));
+// console.log(minutesRead);
+---
+
+<Layout {...Astro.props}>
+  <article class="max-w-7xl mx-auto px-4 py-8 scroll-smooth focus:scroll-auto">
+    <!-- <div class="content">
+      <h1>Collection Type: {collectionType}</h1>
+      <h2>Slug: {slug}</h2>
+    </div> -->
+
+    <!-- FIXME -->
+    <PostLayout {...instanceData} minutesRead={minutesRead} />
+  </article>
+</Layout>

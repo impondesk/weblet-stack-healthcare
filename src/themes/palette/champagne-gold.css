@@ -1,0 +1,43 @@
+/**
+ * Champagne Gold — Dark Luxury Theme
+ * Muted champagne warmth, deep dark surfaces, pearl contrast
+ * Optimized for premium salons & luxury retail
+ */
+
+:root {
+  /* Primary — Champagne Gold (refined, non-brassy) */
+  --color-primary-50: oklch(0.98 0.015 95);
+  --color-primary-100: oklch(0.95 0.03 93);
+  --color-primary-200: oklch(0.91 0.055 91);
+  --color-primary-300: oklch(0.85 0.08 89);
+  --color-primary-400: oklch(0.78 0.1 87);
+  --color-primary-500: oklch(0.72 0.115 85); /* Signature Champagne */
+  --color-primary-600: oklch(0.63 0.105 83);
+  --color-primary-700: oklch(0.54 0.095 81);
+  --color-primary-800: oklch(0.45 0.085 79);
+  --color-primary-900: oklch(0.37 0.075 77);
+
+  /* Secondary — Deep Charcoal / Espresso */
+  --color-secondary-50: oklch(0.96 0.004 260);
+  --color-secondary-100: oklch(0.9 0.006 260);
+  --color-secondary-200: oklch(0.82 0.008 260);
+  --color-secondary-300: oklch(0.72 0.01 260);
+  --color-secondary-400: oklch(0.62 0.012 260);
+  --color-secondary-500: oklch(0.52 0.014 260);
+  --color-secondary-600: oklch(0.44 0.016 260);
+  --color-secondary-700: oklch(0.36 0.018 260);
+  --color-secondary-800: oklch(0.28 0.02 260);
+  --color-secondary-900: oklch(0.2 0.022 260);
+
+  /* Accent — Pearl / Soft Ivory (luxury contrast) */
+  --color-accent-50: oklch(0.99 0.005 95);
+  --color-accent-100: oklch(0.97 0.008 95);
+  --color-accent-200: oklch(0.94 0.012 95);
+  --color-accent-300: oklch(0.9 0.016 95);
+  --color-accent-400: oklch(0.85 0.02 95);
+  --color-accent-500: oklch(0.8 0.022 95);
+  --color-accent-600: oklch(0.72 0.02 95);
+  --color-accent-700: oklch(0.64 0.018 95);
+  --color-accent-800: oklch(0.56 0.016 95);
+  --color-accent-900: oklch(0.48 0.014 95);
+}

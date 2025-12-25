@@ -1,0 +1,72 @@
+---
+import SectionTitle from "../section-title.astro";
+
+const { items, grouped, variant, title, excerpt } = Astro.props;
+let className = variant === "center" ? " text-center lg:text-center " : "";
+
+const groupedItems = items.reduce((acc, item) => {
+  // Use a fallback key if relationTo is not present.
+  const key = grouped ? (item as any)?.relationTo || "related" : "ungrouped";
+  if (!acc[key]) {
+    acc[key] = [];
+  }
+  acc[key].push(item?.value || item);
+  return acc;
+}, {});
+console.log("Grouped Items by relationTo:", groupedItems);
+---
+
+<section class="content-wrapper max-w-7xl mx-auto text-center py-4">
+  <div class={` max-w-7xl mx-auto ${className}`}>
+    {
+      title && (
+        <p class="mt-4 text-balance font-normal text-3xl sm:text-3xl text-left">
+          {title}
+        </p>
+      )
+    }
+
+    {
+      excerpt && (
+        <p class="max-w-7xl py-2 text-base text-left text-gray-500 dark:text-gray-400 mx-auto">
+          {excerpt}
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<div class="py-2">
+  {
+    items && items.length > 0 && Object.keys(groupedItems).length > 0 && (
+      <div class="mt-12">
+        {Object.entries(groupedItems).map(([relationTo, items]) => (
+          <div class="mb-12">
+            {/* Group Title */}
+            {Object.keys(groupedItems).length > 1 && (
+              <h2 class="text-3xl font-bold mb-6 border-b-0 pb-0 capitalize">
+                {relationTo}
+              </h2>
+            )}
+            {/* Group Items */}
+            <ol
+              class="grid grid-cols-3 gap-4 lg:grid-cols-4 sm:grid-cols-2"
+              role="list"
+            >
+              {Array.isArray(items) &&
+                items.map((item) => (
+                  <a
+                    href={`/${item.labels.singular?.toLowerCase()}/${item.slug}`}
+                    aria-label={item.url}
+                    class="no-underline"
+                  >
+                    {item.title}
+                  </a>
+                ))}
+            </ol>{" "}
+          </div>
+        ))}
+      </div>
+    )
+  }
+</div>

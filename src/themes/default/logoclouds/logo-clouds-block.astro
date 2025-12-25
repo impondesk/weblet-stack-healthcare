@@ -1,0 +1,27 @@
+---
+import LogoCloudsDefault from "./logo-clouds-default.astro";
+import LogoCloudsGrid from "./logo-clouds-grid.astro";
+import LogoCloudsWithCta from "./logo-clouds-with-cta.astro";
+
+const { variant } = Astro.props;
+
+const collectionMap = {
+  default: LogoCloudsDefault,
+  cta: LogoCloudsWithCta,
+  grid: LogoCloudsGrid,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || LogoCloudsDefault;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

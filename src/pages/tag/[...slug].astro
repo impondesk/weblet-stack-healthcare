@@ -1,0 +1,80 @@
+---
+import readingTime from "reading-time";
+import { defaultTheme } from "../../consts";
+import TagLayout from "../../layouts/tag-layout.astro";
+import { getTagByDomain } from "../../api/tags";
+import { fetchDynamicCollection } from "../../api/collection";
+
+let { collectionType, slug } = Astro.params;
+
+// Use optional chaining and fallback to empty string if host is undefined
+// @ts-ignore: Assume host is present in locals at runtime
+const host = (Astro.locals as { host?: string })?.host || "";
+const data = await getTagByDomain(host, slug);
+
+let instanceData = await data?.docs[0];
+if (!instanceData) {
+  throw new Error(`Profile not found for slug: ${slug}`);
+}
+
+const { content = undefined } = instanceData;
+
+// if (!content) {
+//   throw new Error(`Content not found for post with slug: ${slug}`);
+// }
+
+const minutesRead = readingTime(JSON.stringify(content || ""));
+console.log(minutesRead);
+
+const tag = instanceData;
+
+if (tag?.tenant) {
+  (Astro.locals as { tenant?: any; theme?: any }).tenant = tag.tenant;
+  (Astro.locals as { tenant?: any; theme?: any }).theme = tag.tenant.theme;
+}
+
+// Tenant Dynamic Collections
+
+let dynamicCollectionData = [];
+
+const dynamicCollections = await tag.layout.filter(
+  (e: any) => e.blockType === "collection"
+);
+// console.log(dynamicCollections);
+
+if (dynamicCollections.length > 0) {
+  dynamicCollectionData = await fetchDynamicCollection(
+    "posts",
+    tag?.id,
+    tag?.tenant?.id
+  );
+} else {
+  dynamicCollectionData = [];
+}
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  slug,
+  className: "tag-page",
+  title: data.docs[0].title || "tag",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+  minutesRead: minutesRead,
+  records: dynamicCollectionData,
+};
+
+console.log(instance);
+
+// const author = authors && authors[0];
+// const product = products && products[0];
+---
+
+<TagLayout {...instance} />

@@ -1,0 +1,41 @@
+---
+import LinksBlock from "../components/links-block.astro";
+import ContentRender from "./content-render.astro";
+import SectionTitle from "./default/section-title.astro";
+
+const { title, variant, bgMood = "light" } = Astro.props;
+let className = variant === "center" ? " text-center lg:text-center " : "";
+
+const { sectionTitle = true } = Astro.props;
+
+// Map bgMood to Tailwind classes
+const bgMoodClass =
+  {
+    default: "bg-transparent text-gray-900 dark:bg-transparent dark:text-white",
+    primary: "bg-primary-500 text-white",
+    secondary: "bg-secondary-500 text-white",
+    light: "bg-white text-gray-900 dark:bg-black dark:text-white",
+    dark: "bg-primary-900 text-white",
+  }[bgMood] || "bg-white text-gray-900";
+---
+
+<!-- ${bgMoodClass} -->
+<div
+  class={`px-6-xyz sm:px-6-xyz lg:px-8-xyz py-24-xyz sm:py-32-xyz `}
+>
+  <section class="content-wrapper max-w-7xl mx-auto px-6 lg:px-8">
+    {
+      sectionTitle && (
+        <div class={` max-w-7xl mx-auto ${className}`}>
+          <SectionTitle {...Astro.props} />
+        </div>
+      )
+    }
+
+    <ContentRender {...Astro.props} className={"pt-16-x"} />
+
+    <LinksBlock {...Astro.props} />
+  </section>
+
+  <div class={`mb-16  max-w-7xl mx-auto ${className}`}></div>
+</div>

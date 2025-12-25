@@ -1,0 +1,33 @@
+---
+import { DefaultThemeBlocks } from "../themes/default/default-theme-block.astro";
+import Layout from "./layout.astro";
+
+const { layout, records } = Astro.props;
+---
+
+<Layout {...Astro.props}>
+  <div class="container max-w-7xl mx-auto px-4 py-8">
+    <slot />
+
+    <div>
+      {
+        layout?.map((block: { blockType: any; id: string }, index: number) => {
+          const BlockComponent = DefaultThemeBlocks[block.blockType];
+          if (!BlockComponent) return null;
+          return (
+            <BlockComponent
+              key={index}
+              {...block}
+              records={
+                records && records?.data?.length > 0
+                  ? records?.data.find((item: any) => item.id === block.id)
+                      ?.data?.docs
+                  : []
+              }
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</Layout>

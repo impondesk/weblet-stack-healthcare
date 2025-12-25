@@ -1,0 +1,35 @@
+---
+import { getGuideByDomain } from "../../../../api/guides";
+import GuideLayout from "../../../../layouts/guide-layout.astro";
+
+const { host } = Astro.locals;
+
+const { slug } = Astro.params;
+const { collectionType = "guides" } = Astro.params;
+
+const data = await getGuideByDomain(host, slug);
+
+let docInstance = await data?.docs[0];
+if (!docInstance) {
+  throw new Error(`Post not found for slug: ${slug}`);
+}
+
+const instance = {
+  ...docInstance,
+  collectionType,
+  slug,
+  className: "guide-page",
+  //   title: data.docs[0].title || "Webinar",
+  //   excerpt: data.docs[0].excerpt || "",
+  //   authors: data.docs[0].authors || [],
+  //   updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  //   tags: data.docs[0].tags || [],
+  //   category: data.docs[0].category || "",
+  //   featured: data.docs[0].featured || false,
+  //   theme: data.docs[0].tenant.theme || defaultTheme,
+  //   video: data.docs[0].video || null,
+  //   audioLink: data.docs[0].audioLink || null,
+};
+---
+
+<GuideLayout {...instance} />

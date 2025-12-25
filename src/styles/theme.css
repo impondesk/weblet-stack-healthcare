@@ -1,0 +1,78 @@
+@layer base {
+  :root {
+    --color-primary: 59 130 246;
+    --color-secondary: 100 116 139;
+    --color-accent: 245 158 11;
+    --color-background: 255 255 255;
+    --color-surface: 248 250 252;
+    --color-text: 15 23 42;
+    --color-text-secondary: 71 85 105;
+    --color-border: 226 232 240;
+  }
+
+  .dark {
+    --color-primary: 96 165 250;
+    --color-secondary: 148 163 184;
+    --color-accent: 251 191 36;
+    --color-background: 15 23 42;
+    --color-surface: 30 41 59;
+    --color-text: 248 250 252;
+    --color-text-secondary: 203 213 225;
+    --color-border: 51 65 85;
+  }
+
+  body {
+    @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300;
+  }
+}
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white;
+  }
+}
+@layer utilities {
+  .text-primary {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+
+  .text-secondary {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+
+  .bg-primary {
+    @apply bg-blue-600 dark:bg-blue-400;
+  }
+
+  .bg-secondary {
+    @apply bg-gray-600 dark:bg-gray-400;
+  }
+
+  .border-primary {
+    @apply border-blue-600 dark:border-blue-400;
+  }
+
+  .border-secondary {
+    @apply border-gray-600 dark:border-gray-400;
+  }
+}
+@layer forms {
+  input,
+  textarea,
+  select {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-2 ring-blue-500;
+  }
+}

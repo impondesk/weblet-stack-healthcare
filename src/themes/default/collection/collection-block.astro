@@ -1,0 +1,193 @@
+---
+import CollectionDefault from "./default/collection-default.astro";
+import GroupDefault from "./group/group-default.astro";
+import GuideGrid from "./guide/guide-grid.astro";
+import PodcastsDefault from "./podcast/podcasts-default.astro";
+import PostsGrid from "./post/posts-grid.astro";
+import PostsList from "./post/posts-list.astro";
+import PostsMasonry from "./post/posts-masonry.astro";
+import PostsSlider from "./post/posts-slider.astro";
+import ProductAccorion from "./product/product-accorion.astro";
+import ProductCard from "./product/product-card.astro";
+import ProductDefault from "./product/product-default.astro";
+import ProductGrouped from "./product/product-grouped.astro";
+import RoadmapsGrid from "./roadmaps/roadmaps-grid.astro";
+import StoresAccordion from "./store/stores-accordion.astro";
+import StoresDefault from "./store/stores-default.astro";
+import StoresList from "./store/stores-list.astro";
+import TenantsDefault from "./tenants/tenants-default.astro";
+import WebinarsDefault from "./webinars/webinars-default.astro";
+
+const { variant, collectionType } = Astro.props;
+
+const collectionMap = {
+  tenants: {
+    default: TenantsDefault,
+  },
+
+  stores: {
+    default: StoresDefault,
+    list: StoresList,
+    grid: StoresDefault,
+    accordion: StoresAccordion,
+  },
+
+  faq: {
+    default: CollectionDefault,
+    // featured: CollectionDefault,
+    // list: FaqsList,
+    // grid: FaqsGrid,
+    // carousel: FaqsDefault,
+    // accordion: FaqsDefault,
+    // grouped: FaqsGrouped,
+  },
+
+  groups: {
+    default: GroupDefault,
+  },
+
+  products: {
+    default: ProductDefault,
+    grouped: ProductGrouped,
+    categorized: ProductDefault,
+    accordion: ProductAccorion,
+    card: ProductCard,
+
+    // list: ProductsList,
+    // grid: ProductsGrid,
+    // carousel: ProductsCarousel,
+    // accordion: ProductsAccordion,
+    // minimal: ProductsMinimal,
+    // featured: ProductsFeatured,
+    // badged: ProductsBadged,
+  },
+
+  guides: {
+    default: GuideGrid, // FIXME
+    // list: GroupDefault,
+    // grouped: CollectionDefault,
+    // grid: GroupDefault,
+    // carousel: CollectionDefault,
+    // timeline: CollectionDefault,
+    // accordion: CollectionDefault,
+    // card: CollectionDefault,
+    // minimal: CollectionDefault,
+    // badged: CollectionDefault,
+    // featured: CollectionDefault,
+    // masonry: CollectionDefault,
+    // isotope: CollectionDefault,
+  },
+
+  posts: {
+    default: CollectionDefault,
+    list: PostsList,
+    groups: CollectionDefault,
+    // grouped: CollectionDefault,
+    grid: PostsGrid,
+    slider: PostsSlider,
+    carousel: PostsSlider,
+
+    masonry: PostsMasonry,
+
+    // timeline: CollectionDefault,
+    // accordion: CollectionDefault,
+    // card: CollectionDefault,
+    // minimal: CollectionDefault,
+    // badged: CollectionDefault,
+    // featured: CollectionDefault,
+    //
+    // isotope: CollectionDefault,
+  },
+
+  roadmaps: {
+    default: CollectionDefault,
+    list: CollectionDefault,
+    // grouped: CollectionDefault,
+    grid: RoadmapsGrid,
+    // carousel: CollectionDefault,
+    // timeline: CollectionDefault,
+    // accordion: CollectionDefault,
+    // card: CollectionDefault,
+    // minimal: CollectionDefault,
+    // badged: CollectionDefault,
+    // featured: CollectionDefault,
+    // masonry: CollectionDefault,
+    // isotope: CollectionDefault,
+  },
+
+  //   categories: {
+  //     default: CategoriesDefault,
+  //     list: CategoriesDefault,
+  //     grid: CategoriesDefault,
+  //     carousel: CategoriesDefault,
+  //     accordion: CategoriesDefault,
+  //     minimal: CategoriesMinimal,
+  //   },
+
+  testimonials: {
+    // default: TestimonialsDefault,
+    // list: TestimonialsDefault,
+    // grid: TestimonialsDefault,
+    // carousel: TestimonialsDefault,
+    // accordion: TestimonialsDefault,
+  },
+
+  podcasts: {
+    default: PodcastsDefault,
+    // list: PodcastsDefault,
+  },
+
+  webinars: {
+    default: WebinarsDefault,
+    // list: WebinarsDefault,
+    // grid: WebinarsDefault,
+    // carousel: WebinarsDefault,
+    // accordion: WebinarsDefault,
+  },
+
+  jobs: {
+    // default: JobsList,
+    // list: JobsList,
+    // grid: JobsList,
+    // carousel: JobsList,
+    // accordion: JobsList,
+    // minimal: JobsList,
+    // featured: JobsList,
+  },
+
+  default: {
+    default: CollectionDefault,
+    // list: CollectionList,
+    // grid: CollectionGrid,
+    // carousel: CollectionCarousel,
+    // accordion: CollectionAccordion,
+    // minimal: CollectionMinimal,
+    // featured: CollectionFeatured,
+    // badge: CollectionBadge,
+    // grouped: CollectionGrouped,
+  },
+};
+
+// Helper function to get the component based on collectionType and variant
+const getComponent = (collectionType, variant) => {
+  // If collectionType exists and variant exists for that collectionType, return it
+  return (
+    collectionMap[collectionType]?.[variant] ||
+    collectionMap.default[variant] ||
+    CollectionDefault // Fallback to default component if no match found
+  );
+};
+
+const RenderComponent = getComponent(collectionType, variant);
+---
+
+<!-- {JSON.stringify(Astro.props, null, 2)} -->
+<div class=""></div>
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

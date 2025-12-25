@@ -1,0 +1,211 @@
+---
+import CollectionBlock from "../themes/default/collection/collection-block.astro";
+import GroupDefaultItem from "../themes/default/collection/group/group-default-item.astro";
+import GroupDefault from "../themes/default/collection/group/group-default.astro";
+import { DefaultThemeBlocks } from "../themes/default/default-theme-block.astro";
+import Layout from "./layout.astro";
+
+const { layout, records, referringItems, items } = Astro.props;
+
+// 2. Group the flattened items by the 'contentType' property.
+const groupedItems = items?.reduce((acc, item) => {
+  // Use a fallback key if contentType is not present.
+  const key = (item as any)?.relationTo || "related";
+  if (!acc[key]) {
+    acc[key] = [];
+  }
+  acc[key].push(item?.value || item);
+  return acc;
+}, {});
+console.log("Grouped Items by contentType:", groupedItems);
+
+// 2. Group the flattened items by the 'contentType' property.
+const groupedRefferingItems = referringItems.reduce((acc, item) => {
+  // Use a fallback key if contentType is not present.
+  const key = (item as any)?.contentType || "related";
+  if (!acc[key]) {
+    acc[key] = [];
+  }
+  acc[key].push(item);
+  return acc;
+}, {});
+console.log("Grouped Refferring Items by contentType:", groupedRefferingItems);
+---
+
+<!-- {JSON.stringify(referringItems, null, 2)} -->
+<Layout {...Astro.props}>
+  <div class="container max-w-7xl mx-auto px-4 py-8">
+    <slot />
+
+    <!-- {JSON.stringify(layout, null, 2)} -->
+
+    <!-- {JSON.stringify(records, null, 2)} -->
+
+    <div>
+      {
+        layout?.map((block: { blockType: any; id: string }, index: number) => {
+          const BlockComponent = DefaultThemeBlocks[block.blockType];
+          if (!BlockComponent) return null;
+          return (
+            <BlockComponent
+              key={index}
+              {...block}
+              records={
+                records && records?.data?.length > 0
+                  ? records?.data.find((item: any) => item.id === block.id)
+                      ?.data?.docs
+                  : []
+              }
+            />
+          );
+        })
+      }
+    </div>
+
+    <div>
+      <!-- {JSON.stringify(layout, null, 2)} -->
+      <!-- {
+        referringItems && Object.keys(referringItems).length > 0 && (
+          <div>
+            {/* <h3>Referring Items</h3> */}
+            <pre>{JSON.stringify(referringItems, null, 2)}</pre>
+          </div>
+        )
+      } -->
+
+      <!-- {
+        referringItems && Object.keys(referringItems).length > 0 && (
+          <div class="mt-12">
+            {/* <h2 class="text-3xl font-bold mb-6 border-b pb-2">
+              Related Content
+            </h2> */}
+            {/* FIXME */}
+            <GroupDefault
+              blockType="collection"
+              id="referring-items"
+              collection="groups"
+              variant="default"
+              layout="cards"
+              records={referringItems}
+            />
+          </div>
+        )
+      } -->
+
+      <!-- {JSON.stringify(groupedItems, null, 2)} -->
+
+      <div class="py-2">
+        {
+          items && items.length > 0 && Object.keys(groupedItems).length > 0 && (
+            <div class="mt-12">
+              {Object.entries(groupedItems).map(([relationTo, items]) => (
+                <div class="mb-12">
+                  {/* Group Title */}
+                  {Object.keys(groupedItems).length > 1 && (
+                    <h2 class="text-3xl font-bold mb-6 border-b-0 pb-0 capitalize">
+                      {relationTo}
+                    </h2>
+                  )}
+                  {/* Group Items */}
+                  <ol
+                    class="grid grid-cols-3 gap-4 lg:grid-cols-4 sm:grid-cols-2"
+                    role="list"
+                  >
+                    {Array.isArray(items) &&
+                      items.map((item) => (
+                        <a
+                          href={`/${item.labels.singular?.toLowerCase()}/${item.slug}`}
+                          aria-label={item.url}
+                          class="no-underline"
+                        >
+                          {item.title}
+                        </a>
+                      ))}
+                  </ol>{" "}
+                </div>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      {/* 3. Render the grouped items. */}
+      {
+        Object.keys(groupedRefferingItems).length > 0 && (
+          <div class="mt-12">
+            {Object.entries(groupedRefferingItems).map(
+              ([contentType, items]) => (
+                <div class="mb-12">
+                  {/* Group Title */}
+                  {Object.keys(groupedRefferingItems).length > 1 && (
+                    <h2 class="text-3xl font-bold mb-6 border-b-0 pb-0 capitalize">
+                      {contentType}
+                    </h2>
+                  )}
+                  {/* Group Items */}
+                  <GroupDefault
+                    blockType="collection"
+                    id={`referring-${contentType}`}
+                    collection={contentType}
+                    variant="default"
+                    records={items as any[]}
+                  />
+                </div>
+              )
+            )}
+          </div>
+        )
+      }
+
+      <!-- <CollectionBlock
+        blockType="collection"
+        id="referring-guides"
+        title=""
+        description="Guides referring to this group"
+        collection="guides"
+        collectionType="guides"
+        variant="default"
+        layout="cards"
+        records={referringItems || []}
+      /> -->
+    </div>
+  </div></Layout
+>
+
+{/* 3. Render the grouped items. */}
+{
+  Object.keys(groupedRefferingItems).length > 0 && (
+    <div class="mt-12">
+      {Object.entries(groupedRefferingItems).map(([contentType, items]) => (
+        <div class="mb-12">
+          {/* Group Title */}
+          {Object.keys(groupedRefferingItems).length > 1 && (
+            <h2 class="text-3xl font-bold mb-6 border-b-0 pb-0 capitalize">
+              {contentType}
+            </h2>
+          )}
+          {/* Group Items */}
+          <GroupDefault
+            blockType="collection"
+            id={`referring-${contentType}`}
+            collection={contentType}
+            variant="default"
+            records={items as any[]}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<!-- <CollectionBlock
+        blockType="collection"
+        id="referring-guides"
+        title=""
+        description="Guides referring to this group"
+        collection="guides"
+        collectionType="guides"
+        variant="default"
+        layout="cards"
+        records={referringItems || []}
+      /> -->

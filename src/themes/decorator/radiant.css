@@ -1,0 +1,12 @@
+[data-decorator="hero-grouped"] {
+  /* background: linear-gradient(
+    115deg,
+    var(--color-primary-100) 28%,
+    var(--color-secondary-300) 70%,
+    var(--color-primary-500) 100%
+  ) !important; */
+
+  inset: 0.5rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+  z-index: 0;
+}

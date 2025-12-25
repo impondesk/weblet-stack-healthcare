@@ -1,0 +1,28 @@
+---
+const { author, url, clazz } = Astro.props;
+---
+
+{
+  author && author?.profiles && (
+    <a
+      href={`/profile/${author?.profiles?.slug}`}
+      class={`font-medium text-sm pr-2 ${clazz}`}
+    >
+      {author?.profiles?.name}
+    </a>
+  )
+}
+
+<!-- Author Name -->
+{
+  author && !author?.profiles && author?.name && (
+    <a
+      rel="noopener noreferrer"
+      href="#"
+      class={`font-semibold ${clazz}`}
+      transition:name={`${url}-author`}
+    >
+      {author?.name}
+    </a>
+  )
+}

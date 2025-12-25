@@ -1,0 +1,30 @@
+---
+import Impondesk from "./impondesk.astro";
+import LinkedinProfile from "./linkedin-profile.astro";
+
+const { variant } = Astro.props;
+
+// Map variant to components
+const collectionMap = {
+  //   "pricing-comparision": PricingComparision,
+  //   "weblet-market-capability": WebletMarketCapability,
+  //   "weblet-multi-column-intro": WebletMultiColumnIntro,
+  //   "weblet-branding-details": WebletBrandingDetails,
+  impondesk: Impondesk, // Placeholder for Impondesk component
+  "linkedin-profile": LinkedinProfile,
+};
+
+const getComponent = (variant) => {
+  return collectionMap[variant] || null;
+};
+
+const RenderComponent = getComponent(variant);
+---
+
+{
+  RenderComponent ? (
+    <RenderComponent {...Astro.props} />
+  ) : (
+    <p>No valid variant or collection type selected</p>
+  )
+}

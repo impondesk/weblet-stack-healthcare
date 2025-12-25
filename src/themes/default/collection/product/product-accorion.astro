@@ -1,0 +1,189 @@
+---
+import SectionTitle from "../../section-title.astro";
+
+const { records } = Astro.props;
+
+// Group products by their associated record groups for categorized rendering.
+const groupedRecords = (records || []).reduce(
+  (acc, record) => {
+    const recordGroups =
+      Array.isArray(record?.groups) && record.groups.length > 0
+        ? record.groups
+        : [{ title: "Other", slug: "other" }];
+
+    recordGroups.forEach((group) => {
+      const key = group?.slug || group?.title || "other";
+      if (!acc[key]) {
+        acc[key] = { group, items: [] };
+      }
+      acc[key].items.push(record);
+    });
+
+    return acc;
+  },
+  {} as Record<string, { group: any; items: any[] }>
+);
+
+const groupedEntries = (
+  Object.values(groupedRecords) as {
+    group: any;
+    items: any[];
+  }[]
+)
+  .sort((a, b) => {
+    const titleA = (a.group?.title || "Other").toLowerCase();
+    const titleB = (b.group?.title || "Other").toLowerCase();
+    return titleA.localeCompare(titleB);
+  })
+  .map((entry) => ({
+    ...entry,
+    items: entry.items.sort((a, b) => {
+      const nameA = (a?.title || "").toLowerCase();
+      const nameB = (b?.title || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    }),
+  }));
+---
+
+<!-- {JSON.stringify(records, null, 2)} -->
+<section class="relative w-full max-w-7xl mx-auto lg:pb-24">
+  <SectionTitle {...Astro.props} />
+
+  <div class="py-4 px-2 lg:px-0 space-y-4">
+    {
+      groupedEntries.length === 0 ? (
+        <p>No products available.</p>
+      ) : (
+        groupedEntries.map(({ group, items }, index) => {
+          const heading = group?.title || "Other";
+          const subTitle = group?.subTitle || group?.subtitle;
+          const excerpt = group?.excerpt;
+          const accordionId = `accordion-${group?.slug || index}`;
+
+          return (
+            <details
+              class="border-x border-gray-200-x rounded-lg-x border-0 border-none py-6"
+              open={index === 0}
+            >
+              {/*  */}
+              {groupedEntries.length > 1 && (
+                <summary class="cursor-pointer px-0 py-4 transition select-none">
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-1">
+                      <h2 class="text-2xl font-semibold capitalize inline">
+                        {heading}
+                      </h2>
+                      {(subTitle || excerpt) && (
+                        <p class="text-sm text-gray-600">
+                          {subTitle || excerpt}
+                        </p>
+                      )}
+                    </div>
+                    <svg
+                      class="accordion-icon w-5 h-5 text-gray-500 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </summary>
+              )}
+
+              <div class={groupedEntries.length > 1 ? "px-0 pb-6" : ""}>
+                <ol
+                  class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                  role="list"
+                >
+                  {items.map((record) => {
+                    const basePath =
+                      record?.contentType ||
+                      record?.labels?.plural?.toLowerCase() ||
+                      "products";
+                    const isOutOfStock = Boolean(record?.outOfStock);
+                    const priceLabel =
+                      typeof record?.price === "number"
+                        ? `₹ ${record.price}`
+                        : null;
+
+                    return (
+                      <li class="list-none">
+                        <a
+                          href={`/${basePath}/${record?.slug}`}
+                          title={record?.title}
+                          aria-label={record?.title}
+                          class="no-underline block border-0 border-gray-200 rounded-md py-3 hover:border-gray-300 transition"
+                        >
+                          <div class="flex items-start justify-between gap-2">
+                            <span
+                              class={`font-semibold ${
+                                isOutOfStock
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-900-x"
+                              }`}
+                            >
+                              {record?.title}
+                            </span>
+                            {priceLabel && (
+                              <span
+                                class={`text-sm font-medium ${
+                                  isOutOfStock
+                                    ? "text-gray-400 line-through"
+                                    : "text-gray-900"
+                                }`}
+                              >
+                                {priceLabel}
+                              </span>
+                            )}
+                          </div>
+
+                          {record?.excerpt && (
+                            <p
+                              class={`text-sm mt-1 line-clamp-2 ${
+                                isOutOfStock
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-600"
+                              }`}
+                            >
+                              {record.excerpt}
+                            </p>
+                          )}
+
+                          {isOutOfStock && (
+                            <span class="inline-block text-xs font-medium bg-gray-200 text-gray-700 px-2 py-0.5 rounded mt-2">
+                              Not Available
+                            </span>
+                          )}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            </details>
+          );
+        })
+      )
+    }
+  </div>
+</section>
+
+<style>
+  details[open] summary .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary {
+    list-style: none;
+  }
+</style>

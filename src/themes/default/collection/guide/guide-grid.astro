@@ -1,0 +1,21 @@
+---
+import SectionTitle from "../../section-title.astro";
+import GuideCardItem from "./guide-card-item.astro";
+
+const { records } = Astro.props;
+
+console.log("Guide Grid Props:", Astro.props);
+---
+
+<section class="relative w-full max-w-7xl mx-auto lg:pb-24">
+  <SectionTitle {...Astro.props} />
+
+  <div class="py-0">
+    <ol
+      class="grid grid-cols-1 gap-4 lg:grid-cols-4 sm:grid-cols-1 gap-x-6 gap-y-24 mt-12 pt-12 pb-10"
+      role="list"
+    >
+      {records?.map((item) => <GuideCardItem {...item} />)}
+    </ol>
+  </div>
+</section>

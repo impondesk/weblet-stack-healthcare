@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+
+const playIcon = "/play-button.svg";
+
+// import YouTubeEmbed from "./YouTubeEmbed.astro";
+const { videoURL, thumbnail } = Astro.props;
+const { url, ref } = thumbnail;
+
+const isYouTube =
+  videoURL &&
+  (decodeURIComponent(videoURL).trim().toLowerCase().includes("youtube") ||
+    decodeURIComponent(videoURL).trim().toLowerCase().includes("youtu.be"));
+const thumbnailURL = url || ""; // Default to empty string if no thumbnail URL provided
+---
+
+<section class="max-w-5xl mx-auto text-center py-10">
+  <div>
+    {
+      isYouTube ? (
+        <div class="relative w-full h-auto max-w-full aspect-video">
+          <img
+            src={thumbnailURL}
+            alt="Video Thumbnail"
+            class="absolute top-0 left-0 w-full h-full object-cover"
+          />
+          <button
+            class="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-4xl font-bold"
+            aria-label="Play Video"
+            onclick={`this.parentElement.innerHTML='<iframe style="width: 100%; height: 500px;" src="${videoURL}" title="YouTube video player" class="w-full h-auto min-h-[500px]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';`}
+          >
+            <img src={playIcon} />
+          </button>
+        </div>
+      ) : (
+        <video class="w-full h-auto max-w-full" controls poster={thumbnailURL}>
+          <source src={videoURL} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      )
+    }
+  </div>
+</section>

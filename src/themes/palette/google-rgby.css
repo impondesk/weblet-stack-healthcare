@@ -1,0 +1,61 @@
+:root {
+  /* ============================
+     PRIMARY — Google Blue
+     Brand, CTAs, links, focus
+     ============================ */
+  --color-primary-50: oklch(0.97 0.02 260);
+  --color-primary-100: oklch(0.93 0.04 260);
+  --color-primary-200: oklch(0.88 0.07 259);
+  --color-primary-300: oklch(0.81 0.11 258);
+  --color-primary-400: oklch(0.72 0.15 257);
+  --color-primary-500: oklch(0.63 0.19 256); /* Google Blue */
+  --color-primary-600: oklch(0.55 0.18 255);
+  --color-primary-700: oklch(0.47 0.16 254);
+  --color-primary-800: oklch(0.39 0.14 253);
+  --color-primary-900: oklch(0.31 0.12 252);
+
+  /* ============================
+     SECONDARY — Google Red
+     Errors, destructive actions
+     ============================ */
+  --color-secondary-50: oklch(0.97 0.02 25);
+  --color-secondary-100: oklch(0.93 0.04 26);
+  --color-secondary-200: oklch(0.88 0.08 27);
+  --color-secondary-300: oklch(0.81 0.13 28);
+  --color-secondary-400: oklch(0.72 0.17 29);
+  --color-secondary-500: oklch(0.64 0.21 30); /* Google Red */
+  --color-secondary-600: oklch(0.56 0.2 29);
+  --color-secondary-700: oklch(0.48 0.18 28);
+  --color-secondary-800: oklch(0.4 0.16 27);
+  --color-secondary-900: oklch(0.32 0.14 26);
+
+  /* ============================
+     ACCENT — Google Yellow
+     Highlights, warnings, badges
+     ============================ */
+  --color-accent-50: oklch(0.98 0.03 95);
+  --color-accent-100: oklch(0.94 0.06 94);
+  --color-accent-200: oklch(0.89 0.1 93);
+  --color-accent-300: oklch(0.82 0.14 92);
+  --color-accent-400: oklch(0.74 0.17 91);
+  --color-accent-500: oklch(0.66 0.2 90); /* Google Yellow */
+  --color-accent-600: oklch(0.58 0.19 89);
+  --color-accent-700: oklch(0.5 0.17 88);
+  --color-accent-800: oklch(0.42 0.15 87);
+  --color-accent-900: oklch(0.34 0.13 86);
+
+  /* ============================
+     SUCCESS — Google Green
+     Success, confirmation, growth
+     ============================ */
+  --color-success-50: oklch(0.97 0.02 145);
+  --color-success-100: oklch(0.93 0.04 145);
+  --color-success-200: oklch(0.88 0.07 146);
+  --color-success-300: oklch(0.81 0.11 147);
+  --color-success-400: oklch(0.72 0.15 148);
+  --color-success-500: oklch(0.63 0.18 149); /* Google Green */
+  --color-success-600: oklch(0.55 0.17 148);
+  --color-success-700: oklch(0.47 0.15 147);
+  --color-success-800: oklch(0.39 0.13 146);
+  --color-success-900: oklch(0.31 0.11 145);
+}

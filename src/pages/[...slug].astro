@@ -1,0 +1,96 @@
+---
+import { fetchDynamicCollection } from "../api/collection";
+import { getPageByDomain } from "../api/page";
+import PageLayout from "../layouts/page-layout.astro";
+import { cleanSlug } from "../scripts/utils";
+
+const { url, headers } = Astro.request;
+const searchParams = new URL(url).searchParams;
+const _path = Astro.locals.path;
+
+const proxyDomain = searchParams.get("proxy-domain");
+const _base = Astro.locals.base;
+const _tenant = Astro.locals.tenant;
+const _host = Astro.locals.host;
+
+let dynamicCollectionData = [];
+
+// Handle catch-all slug parameter correctly
+let { slug } = Astro.params;
+let finalSlug = "";
+
+// Handle favicon requests
+if (
+  slug &&
+  (Array.isArray(slug) ? slug.join("/") : slug).includes("favicon.ico")
+) {
+  return new Response(null, { status: 404 });
+}
+
+// Process slug correctly for catch-all routes
+if (Array.isArray(slug)) {
+  // For catch-all routes, slug is an array
+  finalSlug = slug.length > 0 ? slug.join("/") : "index";
+} else if (typeof slug === "string") {
+  // For single slug routes
+  finalSlug = slug;
+} else {
+  // Default to index if no slug
+  finalSlug = "index";
+}
+
+// Clean the slug
+finalSlug = cleanSlug(finalSlug).toString();
+
+console.log("Original slug:", slug);
+console.log("Final slug:", finalSlug);
+
+const cookie = headers.get("cookie");
+
+const data = await getPageByDomain(proxyDomain || _host, finalSlug);
+
+if (!data || !data.docs || data.docs.length === 0) {
+  console.error(
+    `No page data found for domain: ${proxyDomain || _host}, slug: ${finalSlug}`
+  );
+  return new Response(null, { status: 404, statusText: "Page Not Found" });
+}
+
+if (data.docs.length > 1) {
+  console.warn(
+    `Multiple pages found for slug: ${finalSlug}, using the first one.`
+  );
+}
+
+const page = data.docs[0];
+if (!page) {
+  console.error(`No page found for slug: ${finalSlug}`);
+  return new Response(null, {
+    status: 404,
+    statusText: "Page Not Found",
+  });
+}
+
+// console.log("Page Data:", page);
+
+if (page?.tenant) {
+  Astro.locals.tenant = page.tenant;
+  Astro.locals.theme = page.tenant.theme;
+
+  const dynamicCollections = await page.layout.filter(
+    (e: any) => e.blockType === "collection"
+  );
+
+  if (dynamicCollections.length > 0) {
+    dynamicCollectionData = await fetchDynamicCollection(
+      "pages",
+      page?.id,
+      page?.tenant?.id
+    );
+  } else {
+    dynamicCollectionData = [];
+  }
+}
+---
+
+<PageLayout {...page} records={dynamicCollectionData} />

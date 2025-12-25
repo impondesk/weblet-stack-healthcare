@@ -1,0 +1,338 @@
+/**
+ * Theme CSS Variables
+ * 
+ * This file defines CSS variables based on the theme configuration.
+ * These variables can be used throughout the application for consistent theming.
+ * 
+ * Variables are organized by:
+ * - Colors (brand, semantic, surface, text, border)
+ * - Typography (fonts, sizes, weights, line-heights)
+ * - Spacing (containers, sections, components)
+ * - Effects (shadows, borders, animations)
+ */
+
+:root {
+  /* ============================================
+     BRAND COLORS - Used by Tailwind (tenant-overridable)
+     ============================================ */
+  
+  /* Primary Brand Colors - Default values (can be overridden by tenant) */
+  --color-primary-50: 239, 246, 255;    /* #eff6ff */
+  --color-primary-100: 219, 234, 254;   /* #dbeafe */
+  --color-primary-200: 191, 219, 254;   /* #bfdbfe */
+  --color-primary-300: 147, 197, 253;   /* #93c5fd */
+  --color-primary-400: 96, 165, 250;    /* #60a5fa */
+  --color-primary-500: 59, 130, 246;    /* #3b82f6 */
+  --color-primary-600: 37, 99, 235;     /* #2563eb */
+  --color-primary-700: 29, 78, 216;     /* #1d4ed8 */
+  --color-primary-800: 30, 64, 175;     /* #1e40af */
+  --color-primary-900: 30, 58, 138;     /* #1e3a8a */
+  
+  /* Secondary Brand Colors - Default values (can be overridden by tenant) */
+  --color-secondary-50: 248, 250, 252;  /* #f8fafc */
+  --color-secondary-100: 241, 245, 249; /* #f1f5f9 */
+  --color-secondary-200: 226, 232, 240; /* #e2e8f0 */
+  --color-secondary-300: 203, 213, 225; /* #cbd5e1 */
+  --color-secondary-400: 148, 163, 184; /* #94a3b8 */
+  --color-secondary-500: 100, 116, 139; /* #64748b */
+  --color-secondary-600: 71, 85, 105;   /* #475569 */
+  --color-secondary-700: 51, 65, 85;    /* #334155 */
+  --color-secondary-800: 30, 41, 59;    /* #1e293b */
+  --color-secondary-900: 15, 23, 42;    /* #0f172a */
+  
+  /* Accent Colors - Default values (can be overridden by tenant) */
+  --color-accent-50: 253, 244, 255;     /* #fdf4ff */
+  --color-accent-100: 250, 232, 255;    /* #fae8ff */
+  --color-accent-500: 217, 70, 239;     /* #d946ef */
+  --color-accent-600: 192, 38, 211;     /* #c026d3 */
+  --color-accent-900: 112, 26, 117;     /* #701a75 */
+  
+  /* ============================================
+     LEGACY BRAND COLORS (for backward compatibility)
+     ============================================ */
+  
+  /* Primary Brand Colors */
+  --color-brand-primary-50: #eff6ff;
+  --color-brand-primary-100: #dbeafe;
+  --color-brand-primary-200: #bfdbfe;
+  --color-brand-primary-300: #93c5fd;
+  --color-brand-primary-400: #60a5fa;
+  --color-brand-primary-500: #3b82f6;
+  --color-brand-primary-600: #2563eb;
+  --color-brand-primary-700: #1d4ed8;
+  --color-brand-primary-800: #1e40af;
+  --color-brand-primary-900: #1e3a8a;
+  
+  /* Secondary Brand Colors */
+  --color-brand-secondary-50: #f8fafc;
+  --color-brand-secondary-100: #f1f5f9;
+  --color-brand-secondary-200: #e2e8f0;
+  --color-brand-secondary-300: #cbd5e1;
+  --color-brand-secondary-400: #94a3b8;
+  --color-brand-secondary-500: #64748b;
+  --color-brand-secondary-600: #475569;
+  --color-brand-secondary-700: #334155;
+  --color-brand-secondary-800: #1e293b;
+  --color-brand-secondary-900: #0f172a;
+  
+  /* Accent Colors */
+  --color-brand-accent-50: #fdf4ff;
+  --color-brand-accent-100: #fae8ff;
+  --color-brand-accent-500: #d946ef;
+  --color-brand-accent-600: #c026d3;
+  --color-brand-accent-900: #701a75;
+  
+  /* ============================================
+     SEMANTIC COLORS
+     ============================================ */
+  
+  /* Success */
+  --color-success-light: #10b981;
+  --color-success: #059669;
+  --color-success-dark: #047857;
+  
+  /* Warning */
+  --color-warning-light: #f59e0b;
+  --color-warning: #d97706;
+  --color-warning-dark: #b45309;
+  
+  /* Error */
+  --color-error-light: #ef4444;
+  --color-error: #dc2626;
+  --color-error-dark: #b91c1c;
+  
+  /* Info */
+  --color-info-light: #3b82f6;
+  --color-info: #2563eb;
+  --color-info-dark: #1d4ed8;
+  
+  /* ============================================
+     SURFACE COLORS (Light Mode)
+     ============================================ */
+  
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #f9fafb;
+  --color-surface-tertiary: #f3f4f6;
+  --color-surface-elevated: #ffffff;
+  
+  /* ============================================
+     TEXT COLORS (Light Mode)
+     ============================================ */
+  
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748b;
+  --color-text-inverse: #ffffff;
+  
+  /* ============================================
+     BORDER COLORS (Light Mode)
+     ============================================ */
+  
+  --color-border-primary: #e2e8f0;
+  --color-border-secondary: #cbd5e1;
+  --color-border-focus: #3b82f6;
+  
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+  
+  /* Font Families */
+  --font-display: ui-sans-serif, system-ui, sans-serif;
+  --font-body: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+  
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  --leading-loose: 2;
+  
+  /* ============================================
+     SPACING
+     ============================================ */
+  
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  
+  /* Section Padding */
+  --section-padding-y-sm: 3rem;   /* 48px */
+  --section-padding-y-md: 4rem;   /* 64px */
+  --section-padding-y-lg: 6rem;   /* 96px */
+  --section-padding-y-xl: 8rem;   /* 128px */
+  
+  --section-padding-x-sm: 1rem;   /* 16px */
+  --section-padding-x-md: 1.5rem; /* 24px */
+  --section-padding-x-lg: 2rem;   /* 32px */
+  
+  /* Component Gaps */
+  --gap-sm: 0.5rem;  /* 8px */
+  --gap-md: 1rem;    /* 16px */
+  --gap-lg: 1.5rem;  /* 24px */
+  --gap-xl: 2rem;    /* 32px */
+  
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  
+  --radius-none: 0;
+  --radius-sm: 0.125rem;   /* 2px */
+  --radius-default: 0.25rem; /* 4px */
+  --radius-md: 0.375rem;   /* 6px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+  
+  /* ============================================
+     SHADOWS
+     ============================================ */
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-default: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --shadow-none: none;
+  
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  
+  /* Animation Timing Functions */
+  --timing-ease: ease;
+  --timing-ease-in: ease-in;
+  --timing-ease-out: ease-out;
+  --timing-ease-in-out: ease-in-out;
+  --timing-linear: linear;
+  
+  /* ============================================
+     COMPONENT SPECIFIC VARIABLES
+     ============================================ */
+  
+  /* Hero Component */
+  --hero-min-height: 500px;
+  --hero-padding-y: 3rem;
+  --hero-overlay-gradient: linear-gradient(to bottom, rgb(0 0 0 / 0.5), rgb(0 0 0 / 0.6), rgb(0 0 0 / 0.7));
+  --hero-overlay-blur: 4px;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+
+.dark {
+  /* Surface Colors (Dark Mode) */
+  --color-surface-primary: #0f172a;
+  --color-surface-secondary: #1e293b;
+  --color-surface-tertiary: #334155;
+  --color-surface-elevated: #1e293b;
+  
+  /* Text Colors (Dark Mode) */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #0f172a;
+  
+  /* Border Colors (Dark Mode) */
+  --color-border-primary: #334155;
+  --color-border-secondary: #475569;
+  --color-border-focus: #60a5fa;
+  
+  /* Adjust shadows for dark mode */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-default: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+
+/* ============================================
+   UTILITY CLASSES USING CSS VARIABLES
+   ============================================ */
+
+.theme-bg-primary {
+  background-color: var(--color-surface-primary);
+}
+
+.theme-bg-secondary {
+  background-color: var(--color-surface-secondary);
+}
+
+.theme-text-primary {
+  color: var(--color-text-primary);
+}
+
+.theme-text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.theme-border {
+  border-color: var(--color-border-primary);
+}
+
+.theme-transition {
+  transition: background-color var(--duration-normal) var(--timing-ease-in-out),
+              color var(--duration-normal) var(--timing-ease-in-out),
+              border-color var(--duration-normal) var(--timing-ease-in-out);
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+
+@media (max-width: 640px) {
+  :root {
+    --text-5xl: 2.5rem;  /* Smaller on mobile */
+    --text-6xl: 3rem;
+    --text-7xl: 3.5rem;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  :root {
+    --color-text-primary: #000000;
+    --color-text-secondary: #333333;
+    --color-surface-primary: #ffffff;
+    --shadow-default: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+}

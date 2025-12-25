@@ -1,0 +1,19 @@
+---
+import SectionTitle from "../../section-title.astro";
+import ProductCardItem from "./product-card-item.astro";
+
+const { records } = Astro.props;
+---
+
+<section class="relative w-full max-w-7xl mx-auto px-6 lg:pb-24">
+  <SectionTitle {...Astro.props} />
+
+  <div class="py-12">
+    <ol
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+      role="list"
+    >
+      {records?.map((post) => <ProductCardItem {...post} />)}
+    </ol>
+  </div>
+</section>

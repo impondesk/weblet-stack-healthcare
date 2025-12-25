@@ -1,0 +1,37 @@
+:root {
+  /* Twitter Sky Blue — Primary */
+  --color-primary-50: oklch(0.98 0.02 215);
+  --color-primary-100: oklch(0.94 0.045 214);
+  --color-primary-200: oklch(0.88 0.085 213);
+  --color-primary-300: oklch(0.8 0.125 212);
+  --color-primary-400: oklch(0.72 0.165 211);
+  --color-primary-500: oklch(0.64 0.19 210); /* Twitter Blue core */
+  --color-primary-600: oklch(0.55 0.18 209);
+  --color-primary-700: oklch(0.46 0.165 208);
+  --color-primary-800: oklch(0.38 0.145 207);
+  --color-primary-900: oklch(0.3 0.125 206);
+
+  /* Cool Neutral — Secondary (Twitter UI gray) */
+  --color-secondary-50: oklch(0.99 0.004 230);
+  --color-secondary-100: oklch(0.96 0.006 230);
+  --color-secondary-200: oklch(0.92 0.008 230);
+  --color-secondary-300: oklch(0.86 0.01 230);
+  --color-secondary-400: oklch(0.76 0.012 230);
+  --color-secondary-500: oklch(0.66 0.014 230);
+  --color-secondary-600: oklch(0.56 0.016 230);
+  --color-secondary-700: oklch(0.46 0.018 230);
+  --color-secondary-800: oklch(0.36 0.02 230);
+  --color-secondary-900: oklch(0.26 0.022 230);
+
+  /* Accent — Fresh Mint / Success Green */
+  --color-accent-50: oklch(0.98 0.018 150);
+  --color-accent-100: oklch(0.94 0.04 148);
+  --color-accent-200: oklch(0.88 0.075 146);
+  --color-accent-300: oklch(0.8 0.11 144);
+  --color-accent-400: oklch(0.72 0.135 142);
+  --color-accent-500: oklch(0.64 0.155 140); /* Follow / Success */
+  --color-accent-600: oklch(0.55 0.145 138);
+  --color-accent-700: oklch(0.46 0.13 136);
+  --color-accent-800: oklch(0.38 0.115 134);
+  --color-accent-900: oklch(0.3 0.1 132);
+}
