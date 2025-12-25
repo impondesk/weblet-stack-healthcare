@@ -1,157 +1,60 @@
 ---
-import LinksBlock from "../../../components/links-block.astro";
-
-const { subTitle, title, excerpt, links, bgMood, heroImage, featuredBanner } = Astro.props;
-
-// Build the full image URL
-const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename 
-  ? `https://${heroImage.prefix}/${heroImage.filename}` 
-  : null);
-
-// Variant styles for links
-const variantClasses = {
-  primary: "bg-primary-500 hover:bg-primary-600 text-white shadow-sm focus-visible:outline-primary-500",
-  secondary: "bg-secondary-500 hover:bg-secondary-600 text-white shadow-sm focus-visible:outline-secondary-500",
-  accent: "bg-accent-500 hover:bg-accent-600 text-gray-900 shadow-sm focus-visible:outline-accent-500",
-  outline: "border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus-visible:outline-primary-500",
-  ghost: "text-primary-500 hover:bg-primary-50 hover:text-primary-600",
-  link: "text-primary-500 hover:text-primary-600 underline-offset-4 hover:no-underline no-underline",
-};
-
-const sizeClasses = {
-  sm: "px-3 py-1.5 text-xs",
-  md: "px-5 py-3 text-sm",
-  lg: "px-6 py-4 text-base",
-};
+const { heroImage, featuredBanner, featuredImage, subTitle, title, excerpt } =
+  Astro.props;
 ---
 
-<section class="relative py-12 min-h-[500px] flex items-center">
-  {imageUrl && (
-    <>
-      <!-- Background Image -->
-      <div 
-        class="absolute inset-0 bg-cover bg-center z-0"
-        style={`background-image: url('${imageUrl}'); background-position: ${heroImage?.focalX || 50}% ${heroImage?.focalY || 50}%;`}
-      ></div>
-      
-      <!-- Elegant Overlay with gradient - increased opacity for better text readability -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/70 z-0"></div>
-      
-      <!-- Optional blur backdrop for better text readability -->
-      <div class="absolute inset-0 backdrop-blur-[4px] z-0"></div>
-    </>
-  )}
-  
-  <!-- Content Container - positioned above background -->
-  <div class={`relative z-10 w-full ${imageUrl ? 'max-w-7xl mx-auto px-4 py-8' : ''}`}>
-  <p class={`mt-2 text-base uppercase font-semibold text-center ${imageUrl ? 'text-white drop-shadow-lg' : ''}`}>
-    {subTitle}
-  </p>
-  <p class={`mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl ${imageUrl ? 'text-white drop-shadow-2xl' : ''}`}>
-    {title}
-  </p>
-  <p class={`max-w-5xl mt-4 text-center mx-auto text-base ${imageUrl ? 'text-gray-100 drop-shadow-lg' : 'text-black'}`}>
-    {excerpt}
-  </p>
+<section class="pt-10 overflow-hidden md:pt-0 sm:pt-16 2xl:pt-16">
+  <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+    <div class="grid items-center grid-cols-1 md:grid-cols-2">
+      <div>
+        {
+          subTitle && (
+            <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
+              {subTitle}
+            </p>
+          )
+        }
 
-  <LinksBlock {...{ links, bgMood, clazz:"items-center justify-center" }}  />
+        {
+          title && (
+            <p class="mt-4 text-4xl font-semibold tracking-tight text-pretty  sm:text-5xl">
+              {title}
+            </p>
+          )
+        }
 
-  <!-- {
-    links && links.length > 0 && (
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
-        {links.map((link, index) => {
-          // Skip empty links
-          if (!link || Object.keys(link).length === 0) return null;
+        {excerpt && <p class="max-w-7xl py-2  mx-auto ">{excerpt}</p>}
 
-          const isPrimary = index === 0;
-          const variant = link.variant || (isPrimary ? "primary" : "ghost");
-          const size = link.size || "md";
-
-          // Determine the URL based on link type
-          let href = "#";
-          let isExternal = false;
-
-          if (link.type === "internal" && link.internalLink?.value?.slug) {
-            // Internal link - use slug
-            href = `/${link.internalLink.value.slug}`;
-          } else if (link.type === "external" && link.externalLink) {
-            // External link
-            href = link.externalLink;
-            isExternal = true;
-          } else if (link.url) {
-            // Fallback to direct URL property
-            href = link.url;
-            isExternal = link.url.startsWith("http");
-          }
-
-          const linkProps = isExternal
-            ? { target: "_blank", rel: "noopener noreferrer" }
-            : {};
-
-          // Build class string
-          const baseClasses = "inline-flex items-center justify-center rounded-lg font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
-          const buttonClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`;
-
-          return (
-            <a
-              href={href}
-              class={buttonClasses}
-              {...linkProps}
-            >
-              {link?.label || link?.text || "Learn more"}
-              {variant === "ghost" || variant === "link" ? (
-                <span class="ml-1" aria-hidden="true">
-                  →
-                </span>
-              ) : null}
-            </a>
-          );
-        })}
+        <!-- <p class="mt-4 text-xl text-gray-600 md:mt-8">
+          <span class="relative inline-block">
+            <span
+              class="absolute inline-block w-full bottom-0.5 h-2 bg-yellow-300"
+            ></span>
+            <span class="relative"> Have a question? </span>
+          </span>
+          <br class="block sm:hidden" />Ask me on <a
+            href="#"
+            title=""
+            class="transition-all duration-200 text-sky-500 hover:text-sky-600 hover:underline"
+            >Twitter</a
+          >
+        </p> -->
       </div>
-    )
-  } -->
 
+      <div class="relative">
+        <!-- <img
+          class="absolute inset-x-0 bottom-0 -mb-48 -translate-x-1/2 left-1/2"
+          src="https://cdn.rareblocks.xyz/collection/celebration/images/team/1/blob-shape.svg"
+          alt=""
+        /> -->
 
-  {
-      featuredBanner && featuredBanner?.url ? (
         <img
-          src={featuredBanner.url}
-          alt={featuredBanner.alt || "banner"}
-          class="relative -right-4 order-1 mt-20 lg:absolute lg:right-0 lg:-z-10 lg:order-2 lg:w-1/2"
-          data-aos="fade-left"
-          data-aos-duration="1000"
-          data-aos-delay="100"
+          class="relative w-full xl:max-w-lg xl:mx-auto 2xl:origin-bottom 2xl:scale-110"
+          src={!featuredImage.url ||
+            "https://cdn.rareblocks.xyz/collection/celebration/images/team/1/business-woman.png"}
+          alt={featuredImage.alt || "featured image"}
         />
-      ) : (
-        heroImage &&
-        heroImage.url && (
-          <img
-            src={heroImage.url}
-            alt={heroImage?.alt || "hero"}
-            class="relative -right-4 order-1 mt-20 lg:absolute lg:right-0 lg:-z-10 lg:order-2 lg:w-1/2"
-            data-aos="fade-left"
-            data-aos-duration="1000"
-            data-aos-delay="100"
-          />
-        )
-      )
-    }
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- {JSON.stringify(video)} -->
-
-<!-- <section>
-  {
-    video && video?.link && (
-      <div class="mx-auto max-w-5xl">
-        <center>
-          <video class="h-full w-full l rounded-lg" controls autoplay muted>
-            <source src={video?.link} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </center>
-      </div>
-    )
-  }
-</section> -->
