@@ -1,9 +1,11 @@
 ---
 import HeroDefault from "./hero-default.astro";
+import HeroFeatured from "./hero-featured.astro";
 import HeroFloat from "./hero-float.astro";
 import HeroGallery from "./hero-gallery.astro";
 import HeroLeft from "./hero-left.astro";
 import HeroOffset from "./hero-offset.astro";
+import HeroRight from "./hero-right.astro";
 import HeroTile from "./hero-tile.astro";
 
 const { variant } = Astro.props;
@@ -15,10 +17,10 @@ const collectionMap = {
   carousel: HeroDefault,
   accordion: HeroDefault,
   minimal: HeroDefault,
-  featured: HeroDefault,
+  featured: HeroFeatured,
   features: HeroDefault,
-  left: HeroLeft,
-  right: HeroDefault,
+  left: HeroLeft, // Content is on the left, image on the right
+  right: HeroRight, // Content is on the right, image on the left
   center: HeroDefault,
   badge: HeroDefault,
   grouped: HeroOffset,
