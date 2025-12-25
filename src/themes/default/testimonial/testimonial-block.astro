@@ -1,27 +1,27 @@
 ---
+import TestimonialCarousel from "./testimonial-carousel.astro";
 import TestimonialCentered from "./testimonial-centered.astro";
 import TestimonialDefault from "./testimonial-default.astro";
+import TestimonialFeatured from "./testimonial-featured.astro";
 import TestimonialGrid from "./testimonial-grid.astro";
 import TestimonialHighlight from "./testimonial-highlight.astro";
+import TestimonialSlider from "./testimonial-slider.astro";
 
 const { variant } = Astro.props;
 
 const testimonialMap = {
   default: TestimonialDefault,
-  grid: TestimonialDefault,
-  // Add more variants here as needed
-  // carousel: TestimonialCarousel,
-  // slider: TestimonialSlider,
-  // featured: TestimonialFeatured,
 
-  // FIXME
+  slider: TestimonialSlider,
+  featured: TestimonialFeatured,
   centered: TestimonialCentered,
   highlight: TestimonialHighlight,
-  // grid: TestimonialGrid,
+  grid: TestimonialGrid,
+
+  carousel: TestimonialCarousel,
 };
 
-const TestimonialComponent =
-  testimonialMap[variant] || testimonialMap["default"];
+const TestimonialComponent = testimonialMap[variant] || TestimonialDefault;
 ---
 
 <TestimonialComponent {...Astro.props} />

@@ -1,11 +1,14 @@
 ---
+import LinksBlock from "../../../components/links-block.astro";
 import SectionTitle from "../section-title.astro";
+import TestimonialDefaultItem from "./testimonial-default-item.astro";
 
-const { title, testimonials, bgMood, links } = Astro.props;
+const { testimonials, bgMood, links } = Astro.props;
 
 const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
 ---
 
+<!-- {JSON.stringify(testimonials)} -->
 <section class={`py-16 sm:py-24 ${bgClass}`}>
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <SectionTitle {...Astro.props} />
@@ -13,101 +16,25 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
     {
       testimonials && testimonials.length > 0 && (
         <div class="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((testimonial) => {
-            const author = testimonial?.author || testimonial?.title || "";
-            const role = testimonial?.role || "";
-            const organization =
-              testimonial?.organization ||
-              testimonial?.excerpt?.split(", ")[0] ||
-              "";
-            const comment = testimonial?.comment || "";
-            const website = testimonial?.website || "";
-
-            return (
-              <article
-                class={`relative rounded-2xl p-6 shadow-sm ring-1 transition-shadow hover:shadow-lg ${
-                  bgMood === "dark"
-                    ? "bg-gray-800 ring-gray-700"
-                    : "bg-gray-50 ring-gray-200"
-                }`}
-              >
-                {/* Quote Icon */}
-                <div class="mb-4">
-                  <svg
-                    class={`h-8 w-8 ${
-                      bgMood === "dark" ? "text-gray-600" : "text-gray-300"
-                    }`}
-                    fill="currentColor"
-                    viewBox="0 0 32 32"
-                    aria-hidden="true"
-                  >
-                    <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                  </svg>
-                </div>
-
-                {/* Comment */}
-                {comment && (
-                  <blockquote
-                    class={`text-base leading-relaxed ${
-                      bgMood === "dark" ? "text-gray-300" : "text-gray-700"
-                    }`}
-                  >
-                    {comment}
-                  </blockquote>
-                )}
-
-                {/* Author Info */}
-                <div class="mt-6 border-t border-gray-200 pt-4">
-                  {author && (
-                    <p
-                      class={`font-semibold ${
-                        bgMood === "dark" ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {author}
-                    </p>
-                  )}
-                  {(role || organization) && (
-                    <p
-                      class={`mt-1 text-sm ${
-                        bgMood === "dark" ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      {role || ""}
-                      {role && organization && " · "}
-                      {organization || ""}
-                    </p>
-                  )}
-
-                  {website && (
-                    <p
-                      class={`mt-1 text-sm ${
-                        bgMood === "dark" ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      <a
-                        href={website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class={` text-xs font-normal no-underline ${
-                          bgMood === "dark"
-                            ? "text-secondary-400 hover:text-secondary-500"
-                            : "text-primary-600 hover:text-primary-700"
-                        }`}
-                      >
-                        {website}
-                      </a>
-                    </p>
-                  )}
-                </div>
-              </article>
-            );
-          })}
+          {testimonials.map((testimonial) => (
+            <div>
+              {/* Debug: Show comment directly */}
+              {/* <div style={{ color: "red", fontSize: "0.9em" }}>
+                {testimonial.comment}
+              </div> */}
+              <TestimonialDefaultItem {...testimonial} />
+            </div>
+          ))}
         </div>
       )
     }
 
-    {
+    <LinksBlock
+      links={links}
+      clazz="items-left justify-left text-left mt-12 sm:mt-16"
+    />
+
+    <!-- {
       links && links.length > 0 && (
         <div class="mt-12 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
           {links.map((link, index) => {
@@ -160,6 +87,6 @@ const bgClass = bgMood === "dark" ? "bg-gray-900 text-white" : "bg-transparent";
           })}
         </div>
       )
-    }
+    } -->
   </div>
 </section>

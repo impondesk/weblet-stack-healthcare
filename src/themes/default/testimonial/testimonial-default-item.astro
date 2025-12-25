@@ -1,0 +1,92 @@
+---
+import BlockquoteIcon from "../../../assets/blockquote-icon.astro";
+
+const { author, bgMood, comment, role, organization, website } = Astro.props;
+
+// FIXME: Fallbacks
+// const author = testimonial?.author || testimonial?.title || "";
+// const role = testimonial?.role || "";
+// const organization =
+//   testimonial?.organization ||
+//   testimonial?.excerpt?.split(", ")[0] ||
+//   "";
+// const comment = testimonial?.comment || "";
+// const website = testimonial?.website || "";
+---
+
+<article
+  class={`relative rounded-2xl p-6 shadow-sm ring-1 transition-shadow hover:shadow-lg ${
+    bgMood === "dark" ? "bg-gray-800 ring-gray-700" : "bg-gray-50 ring-gray-200"
+  }`}
+>
+  {/* Quote Icon */}
+  <div class="mb-4">
+    <BlockquoteIcon
+      class={`h-8 w-8 ${bgMood === "dark" ? "text-gray-600" : "text-gray-300"}`}
+    />
+  </div>
+
+  {/* Comment */}
+  {
+    comment && (
+      <blockquote
+        class={`text-base leading-relaxed line-clamp-5 ${
+          bgMood === "dark" ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
+        {comment}
+      </blockquote>
+    )
+  }
+
+  {/* Author Info */}
+  <div class="mt-6 border-t border-gray-200 pt-4">
+    {
+      author && (
+        <p
+          class={`font-semibold ${
+            bgMood === "dark" ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {author}
+        </p>
+      )
+    }
+    {
+      (role || organization) && (
+        <p
+          class={`mt-1 text-sm ${
+            bgMood === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          {role || ""}
+          {role && organization && " · "}
+          {organization || ""}
+        </p>
+      )
+    }
+
+    {
+      website && (
+        <p
+          class={`mt-1 text-sm ${
+            bgMood === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          <a
+            href={website}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={` text-xs font-normal no-underline ${
+              bgMood === "dark"
+                ? "text-secondary-400 hover:text-secondary-500"
+                : "text-primary-600 hover:text-primary-700"
+            }`}
+          >
+            {website}
+          </a>
+        </p>
+      )
+    }
+  </div>
+</article>
