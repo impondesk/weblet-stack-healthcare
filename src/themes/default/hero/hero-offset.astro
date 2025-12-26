@@ -5,6 +5,8 @@ const {
   subTitle,
   title,
   excerpt,
+  summary,
+  description,
   heroImage,
   bgMood,
   links,
@@ -39,9 +41,27 @@ const {
         >
           {excerpt}
         </p>
+
+        {
+          summary && (
+            <p class="text-base font-medium text-pretty text-dark-500 dark:text-dark-400">
+              {summary}
+            </p>
+          )
+        }
+
+        {
+          description && (
+            <p class="text-base font-medium text-pretty text-dark-500 dark:text-dark-400">
+              {description}
+            </p>
+          )
+        }
+
         <ul class="mt-4 space-y-2 pt-4">
           {
             lists &&
+              lists.length > 0 &&
               lists.map((item) => (
                 <li
                   class="flex items-start gap-x-2 text-sm text-dark-600 dark:text-dark-300"
