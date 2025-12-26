@@ -1,0 +1,9 @@
+/* Grayscale all images inside .grayscale-decorator */
+img {
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+img:hover {
+  filter: grayscale(0%);
+}
