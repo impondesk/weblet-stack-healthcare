@@ -39,7 +39,7 @@ export async function getPageByDomain(_domain: string, slug: string) {
 
   const url = `${
     import.meta.env.PUBLIC_API_URL
-  }/pages?where[tenant.domains.domain][equals]=${_domain}&where[_status][equals]=published&where[slug][equals]=${slug}&depth=3`;
+  }/pages?where[tenant.domains.domain][equals]=${_domain}&where[_status][equals]=published&where[slug][equals]=${slug}&depth=5`;
   const response = await apiFetch(url, {});
 
   // console.log(response);
