@@ -1,5 +1,5 @@
 ---
-const { title, excerpt, subTitle, records } = Astro.props;
+const { title, excerpt, subTitle, records, summary, description } = Astro.props;
 ---
 
 <div class="py-24 sm:py-32">
@@ -18,9 +18,27 @@ const { title, excerpt, subTitle, records } = Astro.props;
       >
         {title}
       </h2>
-      <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-400">
+      <p
+        class="text-base font-medium text-pretty text-dark-500 dark:text-dark-400 mt-4"
+      >
         {excerpt}
       </p>
+
+      {
+        summary && (
+          <p class="text-base font-medium text-pretty text-dark-500 dark:text-dark-400 mt-2">
+            {summary}
+          </p>
+        )
+      }
+
+      {
+        description && (
+          <p class="text-sm font-medium text-pretty text-dark-500 dark:text-dark-400 mt-2">
+            {description}
+          </p>
+        )
+      }
     </div>
     <ul
       role="list"
