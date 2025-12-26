@@ -1,8 +1,8 @@
 ---
 import LinksBlock from "../../../components/links-block.astro";
 
-const { title, subTitle, excerpt, bgMood, links } = Astro.props;
-const { features } = Astro.props;
+const { title, subTitle, excerpt, bgMood, links, gridColumns } = Astro.props;
+const { features, summary, description } = Astro.props;
 
 // Map bgMood to theme-aware background classes
 const bgMoodClass =
@@ -32,11 +32,19 @@ const bgMoodClass =
       <p class="text-base leading-normal mt-4 font-medium dark:text-black">
         {excerpt}
       </p>
+      <p class="text-sm leading-normal mt-4 font-medium dark:text-black">
+        {summary}
+      </p>
+      <p class="text-sm leading-normal mt-4 font-medium dark:text-black">
+        {description}
+      </p>
     </div>
+
+    <!-- {gridColumns} -->
 
     <!-- Features Section -->
     <div
-      class="gap-x-2 gap-y-14 mt-12 lg:gap-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      class={`gap-x-2 gap-y-14 mt-12 lg:gap-12 grid ${gridColumns ? gridColumns : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}
     >
       {
         features &&
@@ -44,6 +52,23 @@ const bgMoodClass =
           features.map((feature) => (
             <div>
               <div>
+                {/* Feature Icon - Small */}
+                {feature.icon && (
+                  <div class="mb-4">
+                    <img
+                      src={
+                        feature.icon.url ||
+                        `https://${feature.icon.prefix}/${feature.icon.filename}`
+                      }
+                      alt={feature.icon.alt || feature.title}
+                      class="w-auto h-auto object-contain max-h-36"
+                      width={feature.icon.width}
+                      height={feature.icon.height}
+                    />
+                  </div>
+                )}
+
+                {/* Feature Image */}
                 {feature.image && (
                   <div class="mb-4">
                     <img
@@ -58,6 +83,7 @@ const bgMoodClass =
                     />
                   </div>
                 )}
+
                 <h3 class="text-base leading-normal sm:text-lg md:text-xl  font-semibold text-base-900 dark:text-black">
                   {feature.title}
 

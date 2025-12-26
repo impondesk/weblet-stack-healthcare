@@ -3,6 +3,7 @@ import FeaturesDefault from "./features-default.astro";
 import FeaturesGrid from "./features-grid.astro";
 import FeaturesLeft from "./features-left.astro";
 import FeaturesList from "./features-list.astro";
+import FeaturesMinimal from "./features-minimal.astro";
 import FeaturesRight from "./features-right.astro";
 
 const { variant } = Astro.props;
@@ -14,7 +15,8 @@ const collectionMap = {
   list: FeaturesList,
   right: FeaturesRight, // Right Contents
   left: FeaturesLeft, // Left Contents
-  minimal: FeaturesDefault,
+  minimal: FeaturesMinimal,
+  flat: FeaturesMinimal,
 };
 
 const getComponent = (variant) => {

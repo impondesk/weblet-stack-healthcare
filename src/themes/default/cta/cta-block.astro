@@ -1,6 +1,7 @@
 ---
 import CtaDefault from "./cta-default.astro";
 import CtaImageTile from "./cta-image-tile.astro";
+import CtaOffset from "./cta-offset.astro";
 import CtaPrimary from "./cta-primary.astro";
 import CtaSplit from "./cta-split.astro";
 
@@ -11,6 +12,7 @@ const collectionMap = {
   primary: CtaPrimary,
   split: CtaSplit,
   "image-tile": CtaImageTile,
+  offset: CtaOffset,
 };
 
 const getComponent = (variant) => {
