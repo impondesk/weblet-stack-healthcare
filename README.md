@@ -65,3 +65,7 @@ https://menova.weblethq.com/cafe-menu
 
 
 Menova Dx helps businesses design, manage, and deliver modern digital menu experiences across every customer touchpoint. A next-generation menu management platform built on Weblet. It helps restaurants, hotels, cafés, bars, retailers, and service brands create dynamic menus with real-time updates, powerful customization, and frictionless publishing, Reinventing Digital Menus for Every Business
+
+
+
+https://getillustrations.com/illustration-pack/banana-character-doodle-illustrations-pack

@@ -44,6 +44,23 @@ const bgMoodClass =
           features.map((feature) => (
             <div>
               <div>
+                {/* Feature Icon - Small */}
+                {feature.icon && (
+                  <div class="mb-4">
+                    <img
+                      src={
+                        feature.icon.url ||
+                        `https://${feature.icon.prefix}/${feature.icon.filename}`
+                      }
+                      alt={feature.icon.alt || feature.title}
+                      class="w-auto h-auto object-contain max-h-36"
+                      width={feature.icon.width}
+                      height={feature.icon.height}
+                    />
+                  </div>
+                )}
+
+                {/* Feature Image */}
                 {feature.image && (
                   <div class="mb-4">
                     <img
@@ -58,6 +75,7 @@ const bgMoodClass =
                     />
                   </div>
                 )}
+
                 <h3 class="text-base leading-normal sm:text-lg md:text-xl  font-semibold text-base-900 dark:text-black">
                   {feature.title}
 
