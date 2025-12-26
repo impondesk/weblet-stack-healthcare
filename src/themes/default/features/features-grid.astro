@@ -2,7 +2,7 @@
 import LinksBlock from "../../../components/links-block.astro";
 
 const { title, subTitle, excerpt, bgMood, links } = Astro.props;
-const { features } = Astro.props;
+const { features, summary, description } = Astro.props;
 
 // Map bgMood to theme-aware background classes
 const bgMoodClass =
@@ -31,6 +31,12 @@ const bgMoodClass =
       </h2>
       <p class="text-base leading-normal mt-4 font-medium dark:text-black">
         {excerpt}
+      </p>
+      <p class="text-base leading-normal mt-4 font-medium dark:text-black">
+        {summary}
+      </p>
+      <p class="text-base leading-normal mt-4 font-medium dark:text-black">
+        {description}
       </p>
     </div>
 
