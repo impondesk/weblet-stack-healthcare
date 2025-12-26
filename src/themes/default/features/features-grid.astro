@@ -1,7 +1,7 @@
 ---
 import LinksBlock from "../../../components/links-block.astro";
 
-const { title, subTitle, excerpt, bgMood, links } = Astro.props;
+const { title, subTitle, excerpt, bgMood, links, gridColumns } = Astro.props;
 const { features, summary, description } = Astro.props;
 
 // Map bgMood to theme-aware background classes
@@ -32,17 +32,19 @@ const bgMoodClass =
       <p class="text-base leading-normal mt-4 font-medium dark:text-black">
         {excerpt}
       </p>
-      <p class="text-base leading-normal mt-4 font-medium dark:text-black">
+      <p class="text-sm leading-normal mt-4 font-medium dark:text-black">
         {summary}
       </p>
-      <p class="text-base leading-normal mt-4 font-medium dark:text-black">
+      <p class="text-sm leading-normal mt-4 font-medium dark:text-black">
         {description}
       </p>
     </div>
 
+    {gridColumns}
+
     <!-- Features Section -->
     <div
-      class="gap-x-2 gap-y-14 mt-12 lg:gap-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      class={`gap-x-2 gap-y-14 mt-12 lg:gap-12 grid ${gridColumns ? gridColumns : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}
     >
       {
         features &&
