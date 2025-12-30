@@ -11,6 +11,7 @@ import "../styles/global.css";
 import "../styles/prose.css";
 import "../styles/theme-runtime.css";
 import "aos/dist/aos.css";
+import ImpondeskFooter from "../custom/impondesk-footer.astro";
 
 // Props and constants
 const { tenant } = Astro.props;
@@ -251,6 +252,8 @@ for (const kit of kits) {
       <slot />
 
       <!-- <SocialShare {...Astro.props} /> -->
+
+      <!-- <ImpondeskFooter {...Astro.props} /> -->
 
       {tenant && tenant.footerHTML && <div set:html={tenant?.footerHTML} />}
 
