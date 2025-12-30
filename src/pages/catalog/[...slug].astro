@@ -15,7 +15,12 @@ const data = await getCatalogByDomain(host, slug);
 
 let instanceData = await data?.docs[0];
 if (!instanceData) {
-  throw new Error(`Catalog not found for slug: ${slug}`);
+  throw new Error(`Catalog not found for post with slug: ${slug}`);
+
+  // Redirect to 404 page with custom message as query param
+  // return Astro.redirect(
+  //   `/404?msg=Catalog%20not%20found%20for%20slug:%20${encodeURIComponent(slug)}`
+  // );
 }
 
 const { content = undefined } = instanceData;
