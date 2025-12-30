@@ -1,33 +1,93 @@
 ---
-import Layout from "../../layouts/layout.astro";
-import { DefaultThemeBlocks } from "../../themes/default/default-theme-block.astro";
+import readingTime from "reading-time";
+import { defaultTheme } from "../../consts";
+import { fetchDynamicCollection } from "../../api/collection";
+import CatalogFallback from "./catalog-fallback.astro";
+import CatalogLayout from "../../layouts/catalog-layout.astro";
+import { getCatalogByDomain } from "../../api/catalogs";
 
-const { layout, records } = Astro.props;
+let { collectionType, slug } = Astro.params;
+
+// Use optional chaining and fallback to empty string if host is undefined
+// @ts-ignore: Assume host is present in locals at runtime
+const host = (Astro.locals as { host?: string })?.host || "";
+const data = await getCatalogByDomain(host, slug);
+
+let instanceData = await data?.docs[0];
+if (!instanceData) {
+  throw new Error(`Catalog not found for slug: ${slug}`);
+}
+
+const { content = undefined } = instanceData;
+
+// if (!content) {
+//   throw new Error(`Content not found for post with slug: ${slug}`);
+// }
+
+const minutesRead = readingTime(JSON.stringify(content || ""));
+console.log(minutesRead);
+
+const tag = instanceData;
+
+if (tag?.tenant) {
+  (Astro.locals as { tenant?: any; theme?: any }).tenant = tag.tenant;
+  (Astro.locals as { tenant?: any; theme?: any }).theme = tag.tenant.theme;
+}
+
+// Tenant Dynamic Collections
+
+let dynamicCollectionData = [];
+
+// If layout is blank or not defined, show default text
+let fallbagImpl = false;
+if (!tag.layout || (Array.isArray(tag.layout) && tag.layout.length === 0)) {
+  fallbagImpl = true;
+}
+
+const dynamicCollections = Array.isArray(tag.layout)
+  ? tag.layout.filter((e: any) => e.blockType === "collection")
+  : [];
+// console.log(dynamicCollections);
+
+if (dynamicCollections.length > 0) {
+  dynamicCollectionData = await fetchDynamicCollection(
+    "catalogs",
+    tag?.id,
+    tag?.tenant?.id
+  );
+} else {
+  dynamicCollectionData = [];
+}
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  slug,
+  className: "catalog-page",
+  title: data.docs[0].title || "catalog",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+  minutesRead: minutesRead,
+  records: dynamicCollectionData,
+};
+
+console.log(instance);
+
+// const author = authors && authors[0];
+// const product = products && products[0];
 ---
 
-<Layout {...Astro.props}>
-  <div class="container max-w-7xl mx-auto px-4 py-8">
-    <slot />
-
-    <div>
-      {
-        layout?.map((block: { blockType: any; id: string }, index: number) => {
-          const BlockComponent = DefaultThemeBlocks[block.blockType];
-          if (!BlockComponent) return null;
-          return (
-            <BlockComponent
-              key={index}
-              {...block}
-              records={
-                records && records?.data?.length > 0
-                  ? records?.data.find((item: any) => item.id === block.id)
-                      ?.data?.docs
-                  : []
-              }
-            />
-          );
-        })
-      }
-    </div>
-  </div>
-</Layout>
+{
+  fallbagImpl ? (
+    <CatalogFallback {...instance} />
+  ) : (
+    <CatalogLayout {...instance} />
+  )
+}
