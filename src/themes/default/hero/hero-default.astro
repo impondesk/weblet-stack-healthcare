@@ -1,19 +1,26 @@
 ---
 import LinksBlock from "../../../components/links-block.astro";
 
-const { subTitle, title, excerpt, links, bgMood, heroImage, featuredBanner } = Astro.props;
+const { subTitle, title, excerpt, links, bgMood, heroImage, featuredBanner } =
+  Astro.props;
 
 // Build the full image URL
-const imageUrl = heroImage?.url || (heroImage?.prefix && heroImage?.filename 
-  ? `https://${heroImage.prefix}/${heroImage.filename}` 
-  : null);
+const imageUrl =
+  heroImage?.url ||
+  (heroImage?.prefix && heroImage?.filename
+    ? `https://${heroImage.prefix}/${heroImage.filename}`
+    : null);
 
 // Variant styles for links
 const variantClasses = {
-  primary: "bg-primary-500 hover:bg-primary-600 text-white shadow-sm focus-visible:outline-primary-500",
-  secondary: "bg-secondary-500 hover:bg-secondary-600 text-white shadow-sm focus-visible:outline-secondary-500",
-  accent: "bg-accent-500 hover:bg-accent-600 text-gray-900 shadow-sm focus-visible:outline-accent-500",
-  outline: "border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus-visible:outline-primary-500",
+  primary:
+    "bg-primary-500 hover:bg-primary-600 text-white shadow-sm focus-visible:outline-primary-500",
+  secondary:
+    "bg-secondary-500 hover:bg-secondary-600 text-white shadow-sm focus-visible:outline-secondary-500",
+  accent:
+    "bg-accent-500 hover:bg-accent-600 text-gray-900 shadow-sm focus-visible:outline-accent-500",
+  outline:
+    "border-2 border-primary-500 text-primary-500 hover:bg-primary-50 focus-visible:outline-primary-500",
   ghost: "text-primary-500 hover:bg-primary-50 hover:text-primary-600",
   link: "text-primary-500 hover:text-primary-600 underline-offset-4 hover:no-underline no-underline",
 };
@@ -25,38 +32,48 @@ const sizeClasses = {
 };
 ---
 
-<section class="relative py-12 min-h-[500px] flex items-center">
-  {imageUrl && (
-    <>
-      <!-- Background Image -->
-      <div 
-        class="absolute inset-0 bg-cover bg-center z-0"
-        style={`background-image: url('${imageUrl}'); background-position: ${heroImage?.focalX || 50}% ${heroImage?.focalY || 50}%;`}
-      ></div>
-      
-      <!-- Elegant Overlay with gradient - increased opacity for better text readability -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/70 z-0"></div>
-      
-      <!-- Optional blur backdrop for better text readability -->
-      <div class="absolute inset-0 backdrop-blur-[4px] z-0"></div>
-    </>
-  )}
-  
+<section class="relative py-12 min-h-[500px]-x flex items-center">
+  {
+    imageUrl && (
+      <>
+        {/* <!-- Background Image --> */}
+        <div
+          class="absolute inset-0 bg-cover bg-center z-0"
+          style={`background-image: url('${imageUrl}'); background-position: ${heroImage?.focalX || 50}% ${heroImage?.focalY || 50}%;`}
+        />
+
+        {/* <!-- Elegant Overlay with gradient - increased opacity for better text readability --> */}
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/70 z-0" />
+
+        {/* <!-- Optional blur backdrop for better text readability --> */}
+        <div class="absolute inset-0 backdrop-blur-[4px] z-0" />
+      </>
+    )
+  }
+
   <!-- Content Container - positioned above background -->
-  <div class={`relative z-10 w-full ${imageUrl ? 'max-w-7xl mx-auto px-4 py-8' : ''}`}>
-  <p class={`mt-2 text-base uppercase font-semibold text-center ${imageUrl ? 'text-white drop-shadow-lg' : ''}`}>
-    {subTitle}
-  </p>
-  <p class={`mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl ${imageUrl ? 'text-white drop-shadow-2xl' : ''}`}>
-    {title}
-  </p>
-  <p class={`max-w-5xl mt-4 text-center mx-auto text-base ${imageUrl ? 'text-gray-100 drop-shadow-lg' : 'text-black'}`}>
-    {excerpt}
-  </p>
+  <div
+    class={`relative z-10 w-full ${imageUrl ? "max-w-7xl mx-auto px-4 py-8" : ""}`}
+  >
+    <p
+      class={`mt-2 text-base uppercase font-semibold text-center ${imageUrl ? "text-white drop-shadow-lg" : ""}`}
+    >
+      {subTitle}
+    </p>
+    <p
+      class={`mt-4 text-balance text-center font-semibold text-xl/8 sm:text-5xl ${imageUrl ? "text-white drop-shadow-2xl" : ""}`}
+    >
+      {title}
+    </p>
+    <p
+      class={`max-w-5xl mt-4 text-center mx-auto text-base ${imageUrl ? "text-gray-100 drop-shadow-lg" : ""}`}
+    >
+      {excerpt}
+    </p>
 
-  <LinksBlock {...{ links, bgMood, clazz:"items-center justify-center" }}  />
+    <LinksBlock {...{ links, bgMood, clazz: "items-center justify-center" }} />
 
-  <!-- {
+    <!-- {
     links && links.length > 0 && (
       <div class="mt-10 flex flex-wrap items-center justify-center gap-4 lg:gap-x-6">
         {links.map((link, index) => {
