@@ -1,0 +1,18 @@
+---
+import { getRestrictedCatalog } from "../../../api/catalogs";
+import CatalogLayout from "../../../layouts/catalog-layout.astro";
+import Layout from "../../../layouts/layout.astro";
+
+const { accessLink } = Astro.params;
+
+const { title } = Astro.props;
+
+const _host = Astro.locals.host;
+const data = await getRestrictedCatalog(_host, accessLink);
+
+let catalogData = await data?.docs[0];
+---
+
+<CatalogLayout>
+  {JSON.stringify(data)}
+</CatalogLayout>
