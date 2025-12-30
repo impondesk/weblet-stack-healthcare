@@ -15,15 +15,15 @@ const data = await getCatalogByDomain(host, slug);
 
 let instanceData = await data?.docs[0];
 if (!instanceData) {
-  throw new Error(`Catalog not found for post with slug: ${slug}`);
-
+  // FIXME
+  // throw new Error(`Catalog not found for post with slug: ${slug}`);
   // Redirect to 404 page with custom message as query param
   // return Astro.redirect(
   //   `/404?msg=Catalog%20not%20found%20for%20slug:%20${encodeURIComponent(slug)}`
   // );
 }
 
-const { content = undefined } = instanceData;
+const { content = undefined } = instanceData || {};
 
 // if (!content) {
 //   throw new Error(`Content not found for post with slug: ${slug}`);
@@ -46,13 +46,13 @@ let dynamicCollectionData = [];
 // If layout is blank or not defined, show default text
 let fallbagImpl = false;
 if (
-  !catalog.layout ||
-  (Array.isArray(catalog.layout) && catalog.layout.length === 0)
+  !catalog?.layout ||
+  (Array.isArray(catalog?.layout) && catalog?.layout.length === 0)
 ) {
   fallbagImpl = true;
 }
 
-const dynamicCollections = Array.isArray(catalog.layout)
+const dynamicCollections = Array.isArray(catalog?.layout)
   ? catalog.layout.filter((e: any) => e.blockType === "collection")
   : [];
 // console.log(dynamicCollections);
@@ -72,17 +72,17 @@ const instance = {
   collectionType,
   slug,
   className: "catalog-page",
-  title: data.docs[0].title || "catalog",
-  excerpt: data.docs[0].excerpt || "",
-  authors: data.docs[0].authors || [],
-  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
-  tags: data.docs[0].tags || [],
-  category: data.docs[0].category || "",
-  featured: data.docs[0].featured || false,
-  theme: data.docs[0].tenant.theme || defaultTheme,
-  video: data.docs[0].video || null,
-  audioLink: data.docs[0].audioLink || null,
-  minutesRead: minutesRead,
+  title: data?.docs[0]?.title || "catalog",
+  excerpt: data?.docs[0]?.excerpt || "",
+  authors: data?.docs[0]?.authors || [],
+  updatedAt: data?.docs[0]?.updatedAt || new Date().toISOString(),
+  tags: data?.docs[0]?.tags || [],
+  category: data?.docs[0]?.category || "",
+  featured: data?.docs[0]?.featured || false,
+  theme: data?.docs[0]?.tenant?.theme || defaultTheme,
+  video: data?.docs[0]?.video || null,
+  audioLink: data?.docs[0]?.audioLink || null,
+  // minutesRead: minutesRead,
   records: dynamicCollectionData,
 };
 

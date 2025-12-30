@@ -1,4 +1,5 @@
 ---
+import CatalogDefault from "./catalog/catalog-default.astro";
 import CollectionDefault from "./default/collection-default.astro";
 import GroupDefault from "./group/group-default.astro";
 import GuideGrid from "./guide/guide-grid.astro";
@@ -23,6 +24,10 @@ const { variant, collectionType } = Astro.props;
 const collectionMap = {
   tenants: {
     default: TenantsDefault,
+  },
+
+  catalogs: {
+    default: CatalogDefault,
   },
 
   stores: {
