@@ -1,0 +1,104 @@
+---
+const { title, subTitle, records, featuredImage } = Astro.props;
+---
+
+<section class="py-12 sm:py-16 lg:py-20">
+  <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+    <!-- <div class="max-w-md mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
+        Read Latest Articles
+      </h2>
+      <p class="mt-5 text-sm font-normal leading-6 text-gray-500">
+        Create custom landing pages with Rareblocks that converts more visitors
+        than any website.
+      </p>
+    </div> -->
+
+    <div
+      class="grid max-w-2xl grid-cols-1 gap-4 mx-auto mt-12 sm:gap-6 xl:max-w-none xl:grid-cols-2 sm:mt-12 lg:gap-8 lg:mt-20"
+    >
+      {
+        records &&
+          records.length > 0 &&
+          records.map((record) => (
+            <div class="overflow-hidden transition-all duration-200 transform bg-white border border-gray-100 shadow group rounded-xl hover:shadow-lg hover:-translate-y-1">
+              <div class="flex flex-col sm:flex-row">
+                {record?.featuredImage && (
+                  <div class="w-full sm:w-1/3">
+                    <img
+                      src={
+                        record?.featuredImage?.url || record?.featuredImage?.ref
+                      }
+                      alt={record?.featuredImage?.alt || record?.title}
+                      class="object-cover w-full h-48 sm:h-full"
+                    />
+                  </div>
+                )}
+
+                <div class="flex flex-col px-4 py-5 sm:p-6">
+                  <div class="flex-1">
+                    <p class="text-xl font-bold text-gray-900">
+                      <a href="#" title="" class="">
+                        {record?.title}
+                      </a>
+                    </p>
+                    <p class="mt-4 text-sm font-normal leading-6 text-gray-500">
+                      {record?.excerpt}
+                    </p>
+                  </div>
+
+                  <div class="pt-6 mt-auto border-t border-gray-100">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-2">
+                        {/* <p class="text-sm font-medium text-gray-900">
+                          <a href="#" title="" class="">
+                            {" "}
+                            Growth{" "}
+                          </a>
+                        </p>
+                        <span class="text-sm font-medium text-gray-900">
+                          {" "}
+                          •{" "}
+                        </span> */}
+                        {record?.salePrice ? (
+                          <>
+                            <span class="text-sm font-medium text-gray-400 line-through mr-2">
+                              {record?.price}
+                            </span>
+                            <span class="text-sm font-bold text-primary-600">
+                              {record?.salePrice}
+                            </span>
+                          </>
+                        ) : (
+                          <span class="text-sm font-medium text-gray-900">
+                            {record?.price}
+                          </span>
+                        )}
+                      </div>
+
+                      <a href="#" title="" class="" role="button">
+                        <svg
+                          class="w-5 h-5 text-gray-300 transition-all duration-200 group-hover:text-gray-900"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <line x1="17" y1="7" x2="7" y2="17" />
+                          <polyline points="8 7 17 7 17 16" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+      }
+    </div>
+  </div>
+</section>
