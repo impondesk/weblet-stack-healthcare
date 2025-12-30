@@ -193,7 +193,18 @@ for (const kit of kits) {
       )
     }
 
-    <Header title={title || "Weblet Platforms"} />
+    <!-- Tenant Banner HTML Block -->
+    {tenant && tenant.bannerHTML && <div set:html={tenant?.bannerHTML} />}
+
+    <!-- Tenant Header HTML Block -->
+    {tenant && tenant.headerHTML && <div set:html={tenant?.headerHTML} />}
+
+    <!-- Fallback Header -->
+    {
+      !(tenant && tenant.headerHTML) && (
+        <Header title={title || "Weblet Platforms"} />
+      )
+    }
 
     <!-- Main Content -->
     <main id="main-content" class="mx-auto w-full py-10-none min-h-full">
