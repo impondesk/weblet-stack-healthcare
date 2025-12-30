@@ -1,161 +1,41 @@
 ---
-import AuthorProfileLink from "../blocks/author-profile-link.astro";
-import CategoryLink from "../blocks/category-link.astro";
-import FeaturedBadge from "../blocks/featured-badge.astro";
-import Group from "../blocks/group.astro";
 import LayoutBlocks from "../blocks/layout-blocks.astro";
-import PublishTimestamp from "../blocks/publish-timestamp.astro";
-import ReadTime from "../blocks/read-time.astro";
-import TagsBlock from "../blocks/tags-block.astro";
-import TableOfContentsComponent from "../components/TableOfContentsComponent";
 import ContentRender from "../themes/content-render.astro";
-import SectionTitle from "../themes/default/section-title.astro";
+import PostHeaderDefault from "../themes/default/collection/post/post-header-default.astro";
 import Layout from "./layout.astro";
 
-const { title, variant, group, content, featured, tags, featuredBanner } =
-  Astro.props;
-
-let className = variant === "center" ? " text-center lg:text-center " : "";
-const { sectionTitle = true } = Astro.props;
+const { variant, content } = Astro.props;
 ---
 
 <Layout {...Astro.props}>
   <article>
-    <section>
-      <div class="max-w-full mx-auto">
-        <div class="max-w-7xl mx-auto">
-          <div class="prose prose-styles">
-            <!-- <ContentBlock {...Astro.props} sectionTitle={true} variant="center" /> -->
+    <div class="container max-w-full mx-auto">
+      <PostHeaderDefault {...Astro.props} />
 
-            {/* Group */}
-            <Group group={group} />
-
-            <!-- Post Title -->
-            {
-              sectionTitle && (
-                <section class="content-wrapper max-w-7xl mx-auto text-center">
-                  <div class={` max-w-5xl mx-auto ${className}`}>
-                    <SectionTitle {...Astro.props} clazz="pt-0" />
+      <!-- Deprecated: Use LayoutBlocks instead -->
+      {/* Post Content */}
+      {
+        content && (
+          <section class="relative">
+            <div class="relative">
+              <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+                <div class="lg:col-span-3-x lg:col-span-4">
+                  <div class="prose-styles">
+                    <div class="content-wrapper max-w-7xl">
+                      <ContentRender {...Astro.props} className={""} />
+                    </div>
                   </div>
-                </section>
-              )
-            }
-
-            {/* Tags */}
-            <TagsBlock tags={tags} />
-
-            {/* Post Meta Information */}
-            <section class="text-center text-sm py-4">
-              <ul
-                class="flex text-center justify-center items-center gap-2 px-2"
-              >
-                <li class="after:content-['•'] last:after:content-none">
-                  <AuthorProfileLink {...Astro.props} clazz="text-muted" />
-                </li>
-
-                <li class="after:content-['•'] last:after:content-none">
-                  <CategoryLink {...Astro.props} clazz="text-muted" />
-                </li>
-
-                <li class="after:content-['•'] last:after:content-none">
-                  <PublishTimestamp {...Astro.props} clazz="text-muted" />
-                </li>
-
-                <li
-                  class="after:content-['•']
-                  last:after:content-none"
-                >
-                  <ReadTime {...Astro.props} clazz="text-muted" />
-                </li>
-
-                {
-                  featured && (
-                    <li class="after:content-['•'] last:after:content-none">
-                      <FeaturedBadge {...Astro.props} clazz="text-muted" />
-                    </li>
-                  )
-                }
-              </ul>
-            </section>
-          </div>
-        </div>
-        <section class="w-full mx-auto">
-          {
-            featuredBanner && (
-              <div class="mt-4">
-                {/* <img
-                  src={featuredBanner?.url || featuredBanner?.ref}
-                  alt={featuredBanner?.alt || title}
-                  class="mx-auto rounded-lg-x shadow-md w-full object-cover h-32 md:h-64 lg:h-80"
-                /> */}
-                {/* <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-transparent to-transparent pointer-events-none" /> */}
+                </div>
               </div>
-            )
-          }
-        </section>
+            </div>
+          </section>
+        )
+      }
 
-        <div class="max-w-7xl mx-auto">
-          <div class="prose prose-styles">
-            {/* Post Content */}
+      {/* Layout Blocks */}
+      <LayoutBlocks {...Astro.props} />
 
-            {
-              content && (
-                <section class="relative">
-                  <div class="relative">
-                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-                      {/* <div class="lg:col-span-1 lg:mt-6">
-                  <div class="top-10 hidden lg:block sticky">
-                    <div class="py-3 bg-gray-100-x">
-                      <h3 class="uppercase pb-1 p-2-x font-semibold">
-                        On This Page
-                      </h3>
-                      <div class="">
-                        <div id="table-of-contents" class="mt-3-x p-2-x">
-                          <!-- Your table of contents content here -->
-                        </div>
-                        <TableOfContentsComponent
-                          content={content}
-                          client:only="react"
-                        />
-                      </div>
-                    </div>
-
-                    <!-- <div class="py-3">
-                      <h3 class="uppercase pb-1 font-semibold">
-                        Share This Page
-                      </h3>
-                      <div>
-                        <SocialShare url={"https://google.com"} text="Google" />
-                      </div>
-                    </div> -->
-                  </div>
-                </div> */}
-                      <div class="lg:col-span-3-x lg:col-span-4">
-                        <div class="prose-styles">
-                          <div class="content-wrapper max-w-7xl">
-                            <ContentRender {...Astro.props} className={""} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              )
-            }
-
-            <!-- {
-            content && (
-              <section class="py-10">
-                <ContentRender {...Astro.props} className={""} />
-              </section>
-            )
-          } -->
-
-            {/* Layout Blocks */}
-            <LayoutBlocks {...Astro.props} />
-          </div>
-        </div>
-      </div>
-    </section>
+      <!-- <slot />  FIXME -->
+    </div>
   </article>
 </Layout>

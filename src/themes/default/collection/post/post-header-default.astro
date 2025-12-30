@@ -1,0 +1,94 @@
+---
+import AuthorProfileLink from "../../../../blocks/author-profile-link.astro";
+import CategoryLink from "../../../../blocks/category-link.astro";
+import FeaturedBadge from "../../../../blocks/featured-badge.astro";
+import Group from "../../../../blocks/group.astro";
+import PublishTimestamp from "../../../../blocks/publish-timestamp.astro";
+import ReadTime from "../../../../blocks/read-time.astro";
+import TagsBlock from "../../../../blocks/tags-block.astro";
+
+const {
+  title,
+  subTitle,
+  className,
+  clazz,
+  excerpt,
+  group,
+  tags,
+  featured,
+  featuredBanner,
+} = Astro.props;
+---
+
+<div class="mb-8">
+  <Group group={group} />
+  <section
+    class={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2 content-wrapper text-center ${className} ${clazz || ""}`}
+  >
+    {
+      subTitle && (
+        <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
+          {subTitle}
+        </p>
+      )
+    }
+
+    {
+      title && (
+        <p class="mt-4 text-4xl font-semibold tracking-tight text-pretty  sm:text-5xl">
+          {title}
+        </p>
+      )
+    }
+
+    {excerpt && <p class="max-w-7xl py-2  mx-auto ">{excerpt}</p>}
+
+    {/* Tags */}
+    <TagsBlock tags={tags} />
+  </section>
+
+  {/* Post Meta Information */}
+  <section class="text-center text-sm py-4">
+    <ul class="flex text-center justify-center items-center gap-2 px-2">
+      <li class="after:content-['•'] last:after:content-none">
+        <AuthorProfileLink {...Astro.props} clazz="text-muted" />
+      </li>
+
+      <li class="after:content-['•'] last:after:content-none">
+        <CategoryLink {...Astro.props} clazz="text-muted" />
+      </li>
+
+      <li class="after:content-['•'] last:after:content-none">
+        <PublishTimestamp {...Astro.props} clazz="text-muted" />
+      </li>
+
+      <li class="after:content-['•']
+                  last:after:content-none">
+        <ReadTime {...Astro.props} clazz="text-muted" />
+      </li>
+
+      {
+        featured && (
+          <li class="after:content-['•'] last:after:content-none">
+            <FeaturedBadge {...Astro.props} clazz="text-muted" />
+          </li>
+        )
+      }
+    </ul>
+  </section>
+
+  <section class="w-full mx-auto">
+    {
+      featuredBanner && (
+        <div class="mt-4">
+          {/* <img
+                  src={featuredBanner?.url || featuredBanner?.ref}
+                  alt={featuredBanner?.alt || title}
+                  class="mx-auto rounded-lg-x shadow-md w-full object-cover h-32 md:h-64 lg:h-80"
+                /> */}
+          {/* <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-transparent to-transparent pointer-events-none" /> */}
+        </div>
+      )
+    }
+  </section>
+</div>
