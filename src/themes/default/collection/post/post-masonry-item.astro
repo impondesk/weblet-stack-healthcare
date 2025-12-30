@@ -29,10 +29,18 @@ const url = `/${collectionName}/${slug}`;
       featuredImage && featuredImage.url && (
         <div class="relative overflow-hidden">
           <img
+            id={`masonry-img-${slug}`}
             src={featuredImage?.url}
             alt={featuredImage.ref || title}
-            class="object-cover w-full transition-transform duration-300 group-hover:scale-105"
+            class="object-cover w-full transition-transform duration-300 group-hover:scale-105 pixelate"
             loading="lazy"
+            onLoad={`
+              if(window.gsap){
+                gsap.to('#masonry-img-${slug}', { filter: 'none', duration: 1.2, ease: 'power2.out' });
+              } else {
+                this.style.filter = 'none';
+              }
+            `}
           />
         </div>
       )
