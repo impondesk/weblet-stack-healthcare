@@ -1,9 +1,9 @@
 ---
-
+const { class: Class } = Astro.props;
 ---
 
 <svg
-  class="mx-auto text-gray-900 md:mx-0"
+  class={`mx-auto text-gray-900 md:mx-0 ${Class}`}
   width="20"
   height="20"
   viewBox="0 0 20 20"
