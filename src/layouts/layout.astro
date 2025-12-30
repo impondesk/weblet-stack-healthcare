@@ -233,7 +233,10 @@ for (const kit of kits) {
 
       <!-- <SocialShare {...Astro.props} /> -->
 
-      <Footer {...Astro.props} />
+      {tenant && tenant.footerHTML && <div set:html={tenant?.footerHTML} />}
+
+      <!-- Fallback Footer -->
+      {!(tenant && tenant.footerHTML) && <Footer {...Astro.props} />}
     </main>
   </body>
 </html>
