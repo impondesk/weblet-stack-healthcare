@@ -12,6 +12,7 @@ import "../styles/prose.css";
 import "../styles/theme-runtime.css";
 import "aos/dist/aos.css";
 import ImpondeskFooter from "../custom/impondesk-footer.astro";
+import MenovadxHeader from "../custom/menovadx-header.astro";
 
 // Props and constants
 const { tenant } = Astro.props;
@@ -216,15 +217,15 @@ for (const kit of kits) {
     <!-- Tenant Banner HTML Block -->
     {tenant && tenant.bannerHTML && <div set:html={tenant?.bannerHTML} />}
 
-    <!-- Tenant Header HTML Block -->
+    <!-- Tenant Header HTML Block & Fallback Strategy -->
     {tenant && tenant.headerHTML && <div set:html={tenant?.headerHTML} />}
-
-    <!-- Fallback Header -->
     {
       !(tenant && tenant.headerHTML) && (
         <Header title={title || "Weblet Platforms"} />
       )
     }
+
+    <!-- <MenovadxHeader {...Astro.props} /> -->
 
     <!-- Main Content -->
     <main id="main-content" class="mx-auto w-full py-10-none min-h-full">
