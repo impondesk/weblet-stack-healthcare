@@ -14,7 +14,8 @@ import "aos/dist/aos.css";
 
 // Props and constants
 const { tenant } = Astro.props;
-const { title } = tenant || Astro.props;
+const { title, excerpt, url, featuredImage, description } =
+  tenant || Astro.props;
 const contentTitle = Astro.props.title || "Default Theme";
 const tenantId = Astro.locals?.tenant?.id;
 const presetCssURL =
@@ -95,8 +96,26 @@ for (const kit of kits) {
     <meta name="generator" content={Astro.generator} />
 
     <title>
-      {contentTitle + " - " + Astro.locals?.tenant?.name || "Default Theme"}
+      {contentTitle + " - " + Astro.locals?.tenant?.name || "Weblet Platforms"}
     </title>
+    <!-- FIXME -->
+    <meta name="description" content={description || excerpt} />
+    <meta name="excerpt" content={excerpt} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={featuredImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={featuredImage} />
+
     <link rel="icon" href="/favicon.ico" />
 
     <!-- Inject palette CSS inline for proper theme loading -->
