@@ -12,7 +12,8 @@ import ContentRender from "../themes/content-render.astro";
 import SectionTitle from "../themes/default/section-title.astro";
 import Layout from "./layout.astro";
 
-const { variant, group, content, featured, tags } = Astro.props;
+const { title, variant, group, content, featured, tags, featuredBanner } =
+  Astro.props;
 
 let className = variant === "center" ? " text-center lg:text-center " : "";
 const { sectionTitle = true } = Astro.props;
@@ -21,68 +22,88 @@ const { sectionTitle = true } = Astro.props;
 <Layout {...Astro.props}>
   <article>
     <section>
-      <div class="max-w-7xl mx-auto">
-        <div class="prose prose-styles">
-          <!-- <ContentBlock {...Astro.props} sectionTitle={true} variant="center" /> -->
+      <div class="max-w-full mx-auto">
+        <div class="max-w-7xl mx-auto">
+          <div class="prose prose-styles">
+            <!-- <ContentBlock {...Astro.props} sectionTitle={true} variant="center" /> -->
 
-          {/* Group */}
-          <Group group={group} />
+            {/* Group */}
+            <Group group={group} />
 
-          <!-- Post Title -->
+            <!-- Post Title -->
+            {
+              sectionTitle && (
+                <section class="content-wrapper max-w-7xl mx-auto text-center">
+                  <div class={` max-w-5xl mx-auto ${className}`}>
+                    <SectionTitle {...Astro.props} clazz="pt-0" />
+                  </div>
+                </section>
+              )
+            }
+
+            {/* Tags */}
+            <TagsBlock tags={tags} />
+
+            {/* Post Meta Information */}
+            <section class="text-center text-sm py-4">
+              <ul
+                class="flex text-center justify-center items-center gap-2 px-2"
+              >
+                <li class="after:content-['•'] last:after:content-none">
+                  <AuthorProfileLink {...Astro.props} clazz="text-muted" />
+                </li>
+
+                <li class="after:content-['•'] last:after:content-none">
+                  <CategoryLink {...Astro.props} clazz="text-muted" />
+                </li>
+
+                <li class="after:content-['•'] last:after:content-none">
+                  <PublishTimestamp {...Astro.props} clazz="text-muted" />
+                </li>
+
+                <li
+                  class="after:content-['•']
+                  last:after:content-none"
+                >
+                  <ReadTime {...Astro.props} clazz="text-muted" />
+                </li>
+
+                {
+                  featured && (
+                    <li class="after:content-['•'] last:after:content-none">
+                      <FeaturedBadge {...Astro.props} clazz="text-muted" />
+                    </li>
+                  )
+                }
+              </ul>
+            </section>
+          </div>
+        </div>
+        <section class="w-full mx-auto">
           {
-            sectionTitle && (
-              <section class="content-wrapper max-w-7xl mx-auto text-center">
-                <div class={` max-w-5xl mx-auto ${className}`}>
-                  <SectionTitle {...Astro.props} clazz="pt-0" />
-                </div>
-              </section>
+            featuredBanner && (
+              <div class="mt-4">
+                {/* <img
+                  src={featuredBanner?.url || featuredBanner?.ref}
+                  alt={featuredBanner?.alt || title}
+                  class="mx-auto rounded-lg-x shadow-md w-full object-cover h-32 md:h-64 lg:h-80"
+                /> */}
+                {/* <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-transparent to-transparent pointer-events-none" /> */}
+              </div>
             )
           }
+        </section>
 
-          {/* Tags */}
-          <TagsBlock tags={tags} />
+        <div class="max-w-7xl mx-auto">
+          <div class="prose prose-styles">
+            {/* Post Content */}
 
-          {/* Post Meta Information */}
-          <section class="text-center text-sm py-4">
-            <ul class="flex text-center justify-center items-center gap-2 px-2">
-              <li class="after:content-['•'] last:after:content-none">
-                <AuthorProfileLink {...Astro.props} clazz="text-muted" />
-              </li>
-
-              <li class="after:content-['•'] last:after:content-none">
-                <CategoryLink {...Astro.props} clazz="text-muted" />
-              </li>
-
-              <li class="after:content-['•'] last:after:content-none">
-                <PublishTimestamp {...Astro.props} clazz="text-muted" />
-              </li>
-
-              <li
-                class="after:content-['•']
-                  last:after:content-none"
-              >
-                <ReadTime {...Astro.props} clazz="text-muted" />
-              </li>
-
-              {
-                featured && (
-                  <li class="after:content-['•'] last:after:content-none">
-                    <FeaturedBadge {...Astro.props} clazz="text-muted" />
-                  </li>
-                )
-              }
-            </ul>
-          </section>
-
-          <!-- FIXME -->
-          {/* Post Content */}
-
-          {
-            content && (
-              <section class="relative">
-                <div class="relative">
-                  <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-                    {/* <div class="lg:col-span-1 lg:mt-6">
+            {
+              content && (
+                <section class="relative">
+                  <div class="relative">
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+                      {/* <div class="lg:col-span-1 lg:mt-6">
                   <div class="top-10 hidden lg:block sticky">
                     <div class="py-3 bg-gray-100-x">
                       <h3 class="uppercase pb-1 p-2-x font-semibold">
@@ -109,20 +130,20 @@ const { sectionTitle = true } = Astro.props;
                     </div> -->
                   </div>
                 </div> */}
-                    <div class="lg:col-span-3-x lg:col-span-4">
-                      <div class="prose-styles">
-                        <div class="content-wrapper max-w-7xl">
-                          <ContentRender {...Astro.props} className={""} />
+                      <div class="lg:col-span-3-x lg:col-span-4">
+                        <div class="prose-styles">
+                          <div class="content-wrapper max-w-7xl">
+                            <ContentRender {...Astro.props} className={""} />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            )
-          }
+                </section>
+              )
+            }
 
-          <!-- {
+            <!-- {
             content && (
               <section class="py-10">
                 <ContentRender {...Astro.props} className={""} />
@@ -130,8 +151,9 @@ const { sectionTitle = true } = Astro.props;
             )
           } -->
 
-          {/* Layout Blocks */}
-          <LayoutBlocks {...Astro.props} />
+            {/* Layout Blocks */}
+            <LayoutBlocks {...Astro.props} />
+          </div>
         </div>
       </div>
     </section>
