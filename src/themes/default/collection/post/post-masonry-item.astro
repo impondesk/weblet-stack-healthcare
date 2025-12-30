@@ -23,7 +23,10 @@ const url = `/${collectionName}/${slug}`;
 <li
   class="group break-inside-avoid-column mb-4 no-underline font-semibold hover:text-primary-600 block px-3 rounded-md text-base lg:text-sm xl:text-base py-4"
 >
-  <div class="relative overflow-hidden rounded-lg">
+  <div
+    class="relative overflow-hidden rounded-lg z-10 group-hover:z-10"
+    style="z-index:10;"
+  >
     {/* Image */}
     {
       featuredImage && featuredImage.url && (
