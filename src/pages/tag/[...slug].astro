@@ -4,6 +4,7 @@ import { defaultTheme } from "../../consts";
 import TagLayout from "../../layouts/tag-layout.astro";
 import { getTagByDomain } from "../../api/tags";
 import { fetchDynamicCollection } from "../../api/collection";
+import TagFallback from "./tag-fallback.astro";
 
 let { collectionType, slug } = Astro.params;
 
@@ -37,9 +38,15 @@ if (tag?.tenant) {
 
 let dynamicCollectionData = [];
 
-const dynamicCollections = await tag.layout.filter(
-  (e: any) => e.blockType === "collection"
-);
+// If layout is blank or not defined, show default text
+let fallbagImpl = false;
+if (!tag.layout || (Array.isArray(tag.layout) && tag.layout.length === 0)) {
+  fallbagImpl = true;
+}
+
+const dynamicCollections = Array.isArray(tag.layout)
+  ? tag.layout.filter((e: any) => e.blockType === "collection")
+  : [];
 // console.log(dynamicCollections);
 
 if (dynamicCollections.length > 0) {
@@ -77,4 +84,4 @@ console.log(instance);
 // const product = products && products[0];
 ---
 
-<TagLayout {...instance} />
+{fallbagImpl ? <TagFallback {...instance} /> : <TagLayout {...instance} />}
