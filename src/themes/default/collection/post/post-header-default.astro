@@ -54,7 +54,11 @@ const {
     <ul class="flex text-center justify-center items-center gap-2 px-2">
       {
         [
-          author && <AuthorProfileLink {...Astro.props} clazz="text-muted" />,
+          author && author?.profiles?.slug ? (
+            <AuthorProfileLink {...Astro.props} clazz="text-muted" />
+          ) : author && author?.name ? (
+            <span class="font-semibold text-muted">{author.name}</span>
+          ) : null,
           category && <CategoryLink {...Astro.props} clazz="text-muted" />,
           <PublishTimestamp {...Astro.props} clazz="text-muted" />,
           <ReadTime {...Astro.props} clazz="text-muted" />,
