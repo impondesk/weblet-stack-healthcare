@@ -1,7 +1,16 @@
 ---
-const { title, slug, blockType, contentType, excerpt, labels, authors } =
-  Astro.props;
-// console.log("Collection Default Item Props:", Astro.props);
+const {
+  title,
+  slug,
+  blockType,
+  contentType,
+  excerpt,
+  labels,
+  authors,
+  visibility,
+} = Astro.props;
+
+console.log("Catalog Default Item Props:", Astro.props);
 
 const collectionName = labels?.singular.replace(/\s+/g, "").toLowerCase();
 const url = `/${collectionName}/${slug}`;
@@ -14,6 +23,14 @@ const url = `/${collectionName}/${slug}`;
   aria-label={title || url}
   class="group break-inside-avoid mb-4 no-underline font-semibold hover:text-primary-600 block px-3 rounded-md text-base lg:text-md xl:text-base py-4"
 >
+  {
+    visibility && visibility === "restricted" && (
+      <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
+        {visibility}
+      </p>
+    )
+  }
+
   {title}
   <span class="block text-base line-clamp-3-x pt-1 text-gray-500">
     {excerpt}
