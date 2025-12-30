@@ -51,7 +51,7 @@ const dynamicCollections = Array.isArray(tag.layout)
 
 if (dynamicCollections.length > 0) {
   dynamicCollectionData = await fetchDynamicCollection(
-    "posts",
+    "tags",
     tag?.id,
     tag?.tenant?.id
   );
