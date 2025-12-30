@@ -1,18 +1,95 @@
 ---
 import { getRestrictedCatalog } from "../../../api/catalogs";
+import { fetchDynamicCollection } from "../../../api/collection";
+import { defaultTheme } from "../../../consts";
 import CatalogLayout from "../../../layouts/catalog-layout.astro";
 import Layout from "../../../layouts/layout.astro";
+import CatalogFallback from "../catalog-fallback.astro";
 
-const { accessLink } = Astro.params;
+const { accessLink, collectionType } = Astro.params;
 
 const { title } = Astro.props;
 
 const _host = Astro.locals.host;
 const data = await getRestrictedCatalog(_host, accessLink);
 
+let instanceData = await data?.docs[0];
+if (!instanceData) {
+  throw new Error(`Catalog not found for post with accessLink: ${accessLink}`);
+
+  // Redirect to 404 page with custom message as query param
+  // return Astro.redirect(
+  //   `/404?msg=Catalog%20not%20found%20for%20slug:%20${encodeURIComponent(slug)}`
+  // );
+}
+
+// const { content = undefined } = instanceData;
+
 let catalogData = await data?.docs[0];
+
+// const minutesRead = readingTime(JSON.stringify(content || ""));
+// console.log(minutesRead);
+
+const catalog = instanceData;
+
+if (catalog?.tenant) {
+  (Astro.locals as { tenant?: any; theme?: any }).tenant = catalog.tenant;
+  (Astro.locals as { tenant?: any; theme?: any }).theme = catalog.tenant.theme;
+}
+
+// Tenant Dynamic Collections
+
+let dynamicCollectionData = [];
+
+// If layout is blank or not defined, show default text
+let fallbagImpl = false;
+if (
+  !catalog.layout ||
+  (Array.isArray(catalog.layout) && catalog.layout.length === 0)
+) {
+  fallbagImpl = true;
+}
+
+const dynamicCollections = Array.isArray(catalog.layout)
+  ? catalog.layout.filter((e: any) => e.blockType === "collection")
+  : [];
+// console.log(dynamicCollections);
+
+if (dynamicCollections.length > 0) {
+  dynamicCollectionData = await fetchDynamicCollection(
+    "catalogs",
+    catalog?.id,
+    catalog?.tenant?.id
+  );
+} else {
+  dynamicCollectionData = [];
+}
+
+const instance = {
+  ...data.docs[0],
+  collectionType,
+  className: "catalog-page",
+  title: data.docs[0].title || "catalog",
+  excerpt: data.docs[0].excerpt || "",
+  authors: data.docs[0].authors || [],
+  updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
+  tags: data.docs[0].tags || [],
+  category: data.docs[0].category || "",
+  featured: data.docs[0].featured || false,
+  theme: data.docs[0].tenant.theme || defaultTheme,
+  video: data.docs[0].video || null,
+  audioLink: data.docs[0].audioLink || null,
+  // minutesRead: minutesRead,
+  records: dynamicCollectionData,
+};
+
+console.log(instance);
 ---
 
-<CatalogLayout>
-  {JSON.stringify(data)}
-</CatalogLayout>
+{
+  fallbagImpl ? (
+    <CatalogFallback {...instance} />
+  ) : (
+    <CatalogLayout {...instance} />
+  )
+}
