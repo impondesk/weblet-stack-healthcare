@@ -1,4 +1,6 @@
 ---
+import LockIcon from "../../../../assets/lock-icon.astro";
+
 const {
   title,
   slug,
@@ -23,16 +25,26 @@ const url = `/${collectionName}/${slug}`;
   aria-label={title || url}
   class="group break-inside-avoid mb-4 no-underline font-semibold hover:text-primary-600 block px-3 rounded-md text-base lg:text-md xl:text-base py-4"
 >
-  {
+  <span class="block flex items-center gap-2">
+    {title}
+    {
+      visibility && visibility === "restricted" && (
+        <span class="uppercase text-xs font-bold text-accent-600 flex items-center">
+          <LockIcon />
+        </span>
+      )
+    }
+  </span>
+
+  <span class="block text-base line-clamp-3-x pt-1 text-gray-500">
+    {excerpt}
+  </span>
+
+  <!-- {
     visibility && visibility === "restricted" && (
       <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
         {visibility}
       </p>
     )
-  }
-
-  {title}
-  <span class="block text-base line-clamp-3-x pt-1 text-gray-500">
-    {excerpt}
-  </span>
+  } -->
 </a>
