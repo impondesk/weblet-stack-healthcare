@@ -21,7 +21,7 @@ export async function getCatalogsByDomain(_domain) {
 export async function getRestrictedCatalog(_domain, accessLink) {
   const url = `${
     import.meta.env.PUBLIC_API_URL
-  }/catalogs?where[tenant.domains.domain][equals]=${_domain}&where[_status][equals]=published&where[accessLink][equals]=${accessLink}&depth=2`;
+  }/catalogs?where[tenant.domains.domain][equals]=${_domain}&where[_status][equals]=published&[accessLink][equals]=${accessLink}&depth=2`;
   const response = await apiFetch(url, {});
   return response;
 }
