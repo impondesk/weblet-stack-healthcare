@@ -13,17 +13,9 @@
     "jsxImportSource": "react"
   },
   "paths": {
-    "@/*": [
-      "src/*"
-    ],
-    "@components/*": [
-      "src/components/*"
-    ],
-    "@layouts/*": [
-      "src/layouts/*"
-    ],
-    "@node_modules/*": [
-      "node_modules/*"
-    ]
-  }
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@node_modules/*": ["node_modules/*"]
+    },
 }
