@@ -17,6 +17,8 @@ const {
   tags,
   featured,
   featuredBanner,
+  author,
+  category,
 } = Astro.props;
 ---
 
@@ -50,29 +52,21 @@ const {
   {/* Post Meta Information */}
   <section class="text-center text-sm py-4">
     <ul class="flex text-center justify-center items-center gap-2 px-2">
-      <li class="after:content-['•'] last:after:content-none">
-        <AuthorProfileLink {...Astro.props} clazz="text-muted" />
-      </li>
-
-      <li class="after:content-['•'] last:after:content-none">
-        <CategoryLink {...Astro.props} clazz="text-muted" />
-      </li>
-
-      <li class="after:content-['•'] last:after:content-none">
-        <PublishTimestamp {...Astro.props} clazz="text-muted" />
-      </li>
-
-      <li class="after:content-['•']
-                  last:after:content-none">
-        <ReadTime {...Astro.props} clazz="text-muted" />
-      </li>
-
       {
-        featured && (
-          <li class="after:content-['•'] last:after:content-none">
-            <FeaturedBadge {...Astro.props} clazz="text-muted" />
-          </li>
-        )
+        [
+          author && <AuthorProfileLink {...Astro.props} clazz="text-muted" />,
+          category && <CategoryLink {...Astro.props} clazz="text-muted" />,
+          <PublishTimestamp {...Astro.props} clazz="text-muted" />,
+          <ReadTime {...Astro.props} clazz="text-muted" />,
+          featured && <FeaturedBadge {...Astro.props} clazz="text-muted" />,
+        ]
+          .filter(Boolean)
+          .map((item, idx, arr) => (
+            <>
+              {item}
+              {idx < arr.length - 1 && <span class="px-0">•</span>}
+            </>
+          ))
       }
     </ul>
   </section>

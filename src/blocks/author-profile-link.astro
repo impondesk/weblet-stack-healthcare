@@ -6,7 +6,7 @@ const { author, url, clazz } = Astro.props;
   author && author?.profiles && (
     <a
       href={`/profile/${author?.profiles?.slug}`}
-      class={`font-medium text-sm pr-2 ${clazz}`}
+      class={`font-medium text-sm pr-0 ${clazz}`}
     >
       {author?.profiles?.name}
     </a>
