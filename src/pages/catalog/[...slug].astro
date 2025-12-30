@@ -32,11 +32,11 @@ const { content = undefined } = instanceData;
 const minutesRead = readingTime(JSON.stringify(content || ""));
 console.log(minutesRead);
 
-const tag = instanceData;
+const catalog = instanceData;
 
-if (tag?.tenant) {
-  (Astro.locals as { tenant?: any; theme?: any }).tenant = tag.tenant;
-  (Astro.locals as { tenant?: any; theme?: any }).theme = tag.tenant.theme;
+if (catalog?.tenant) {
+  (Astro.locals as { tenant?: any; theme?: any }).tenant = catalog.tenant;
+  (Astro.locals as { tenant?: any; theme?: any }).theme = catalog.tenant.theme;
 }
 
 // Tenant Dynamic Collections
@@ -45,20 +45,23 @@ let dynamicCollectionData = [];
 
 // If layout is blank or not defined, show default text
 let fallbagImpl = false;
-if (!tag.layout || (Array.isArray(tag.layout) && tag.layout.length === 0)) {
+if (
+  !catalog.layout ||
+  (Array.isArray(catalog.layout) && catalog.layout.length === 0)
+) {
   fallbagImpl = true;
 }
 
-const dynamicCollections = Array.isArray(tag.layout)
-  ? tag.layout.filter((e: any) => e.blockType === "collection")
+const dynamicCollections = Array.isArray(catalog.layout)
+  ? catalog.layout.filter((e: any) => e.blockType === "collection")
   : [];
 // console.log(dynamicCollections);
 
 if (dynamicCollections.length > 0) {
   dynamicCollectionData = await fetchDynamicCollection(
     "catalogs",
-    tag?.id,
-    tag?.tenant?.id
+    catalog?.id,
+    catalog?.tenant?.id
   );
 } else {
   dynamicCollectionData = [];
