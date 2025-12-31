@@ -1,0 +1,67 @@
+---
+const { subTitle, title, excerpt, summary, description, features } =
+  Astro.props;
+---
+
+<section class="py-12 sm:py-16 lg:py-20">
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto text-center">
+      {
+        subTitle && (
+          <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
+            {subTitle}
+          </p>
+        )
+      }
+
+      {
+        title && (
+          <p class="mt-4 text-4xl font-semibold tracking-tight text-pretty  sm:text-5xl">
+            {title}
+          </p>
+        )
+      }
+
+      {excerpt && <p class="max-w-7xl py-2 pt-2  mx-auto ">{excerpt}</p>}
+
+      {
+        summary && (
+          <p class="max-w-7xl py-2  mx-auto text-gray-600">{summary}</p>
+        )
+      }
+
+      {
+        description && (
+          <p class="max-w-7xl py-2  mx-auto text-gray-600">{description}</p>
+        )
+      }
+    </div>
+
+    <div
+      class="grid grid-cols-1 mt-10 text-center md:mt-20 md:max-w-full sm:max-w-sm sm:mx-auto gap-y-10 md:grid-cols-3 md:gap-x-6 lg:gap-x-16 md:text-left"
+    >
+      {
+        features &&
+          features.length > 0 &&
+          features.map((feature) => (
+            <div>
+              <h3 class="text-base leading-normal sm:text-lg md:text-xl  font-semibold text-base-900 dark:text-black">
+                {feature?.title}
+              </h3>
+              <p class="mt-1 text-base leading-normal mt-2  font-medium text-base-500 dark:text-black ">
+                {feature?.summary}
+              </p>
+
+              <img
+                class="object-cover w-full mx-auto mt-10 rounded-xl md:mx-0"
+                src={feature?.image?.url || feature?.image?.ref}
+                alt={feature?.image?.alt || feature?.title}
+                loading="lazy"
+              />
+              <p class="text-sm text-gray-700 mt-7">{feature?.description}</p>
+            </div>
+          ))
+      }
+    </div>
+  </div>
+</section>
