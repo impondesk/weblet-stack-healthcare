@@ -1,31 +1,37 @@
 ---
 import readingTime from "reading-time";
 import { defaultTheme } from "../../consts";
-import TagLayout from "../../layouts/tag-layout.astro";
-import { getTagByDomain } from "../../api/tags";
 import { fetchDynamicCollection } from "../../api/collection";
-import TagFallback from "./tag-fallback.astro";
+import { getCategoryByDomain } from "../../api/category";
+import CategoryLayout from "../../layouts/category-layout.astro";
+import CategoryFallback from "./category-fallback.astro";
 
 let { collectionType, slug } = Astro.params;
 
 // Use optional chaining and fallback to empty string if host is undefined
 // @ts-ignore: Assume host is present in locals at runtime
 const host = (Astro.locals as { host?: string })?.host || "";
-const data = await getTagByDomain(host, slug);
+
+/* The line `console.log("getCategoryByDomain response:", response);` is logging the response
+received from the API call made in the `getCategoryByDomain` function. This is a helpful debugging
+statement that outputs the response data to the console, allowing developers to inspect the data
+returned by the API and verify that the function is working as expected. */
+const data = await getCategoryByDomain(host, slug);
 
 let instanceData = await data?.docs[0];
 if (!instanceData) {
-  throw new Error(`Profile not found for slug: ${slug}`);
+  throw new Error(`Category not found for slug: ${slug}`);
 }
 
 const { content = undefined } = instanceData;
 
 // if (!content) {
-//   throw new Error(`Content not found for post with slug: ${slug}`);
+//   throw new Error(`Content not found for category with slug: ${slug}`);
 // }
 
-const minutesRead = readingTime(JSON.stringify(content || ""));
-console.log(minutesRead);
+// const minutesRead = 0;
+// const minutesRead = readingTime(JSON.stringify(content || ""));
+// console.log(minutesRead);
 
 const tag = instanceData;
 
@@ -51,7 +57,7 @@ const dynamicCollections = Array.isArray(tag.layout)
 
 if (dynamicCollections.length > 0) {
   dynamicCollectionData = await fetchDynamicCollection(
-    "tags",
+    "categories",
     tag?.id,
     tag?.tenant?.id
   );
@@ -63,18 +69,18 @@ const instance = {
   ...data.docs[0],
   collectionType,
   slug,
-  className: "tag-page",
-  title: data.docs[0].title || "tag",
+  className: "category-page",
+  title: data.docs[0].title || "category",
   excerpt: data.docs[0].excerpt || "",
   authors: data.docs[0].authors || [],
   updatedAt: data.docs[0].updatedAt || new Date().toISOString(),
-  tags: data.docs[0].tags || [],
-  category: data.docs[0].category || "",
+  categories: data.docs[0].categories || [],
+  category: data.docs[0].category || "", //FIXME check if needed
   featured: data.docs[0].featured || false,
   theme: data.docs[0].tenant.theme || defaultTheme,
   video: data.docs[0].video || null,
   audioLink: data.docs[0].audioLink || null,
-  minutesRead: minutesRead,
+  // minutesRead: minutesRead,
   records: dynamicCollectionData,
 };
 
@@ -84,4 +90,10 @@ console.log(instance);
 // const product = products && products[0];
 ---
 
-{fallbagImpl ? <TagFallback {...instance} /> : <TagLayout {...instance} />}
+{
+  fallbagImpl ? (
+    <CategoryFallback {...instance} />
+  ) : (
+    <CategoryLayout {...instance} />
+  )
+}

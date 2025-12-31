@@ -1,0 +1,41 @@
+---
+const { src, alt, class: imgClass = "", ...rest } = Astro.props;
+const loaded = false;
+---
+
+<div class="relative w-full h-full">
+  <div
+    id="skeleton"
+    class="absolute inset-0 w-full h-full bg-gray-200 animate-pulse-x rounded-lg"
+  >
+  </div>
+  <img
+    src={src}
+    alt={alt}
+    class={`object-cover w-full h-full transition-opacity duration-700 ${imgClass} opacity-0`}
+    loading="lazy"
+    onLoad="this.classList.add('opacity-100'); document.getElementById('skeleton').style.display='none';"
+    {...rest}
+  />
+</div>
+<style>
+  .opacity-0 {
+    opacity: 0;
+  }
+  .opacity-100 {
+    opacity: 1;
+    transition: opacity 0.7s;
+  }
+  .animate-pulse {
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+</style>

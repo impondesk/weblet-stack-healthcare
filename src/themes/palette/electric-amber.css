@@ -1,0 +1,109 @@
+body {
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg stroke='%23CCC' stroke-width='0' %3E%3Crect fill='%23F5F5F5' x='-60' y='-60' width='110' height='240'/%3E%3C/g%3E%3C/svg%3E");
+  backdrop-filter: blur(2px);
+}
+.dark body {
+  background-color: #000000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg stroke='%23131313' stroke-width='0' %3E%3Crect fill='%23191919' x='-60' y='-60' width='110' height='240'/%3E%3C/g%3E%3C/svg%3E");
+  backdrop-filter: blur(2px);
+}
+
+:root {
+  /* ============================================
+     ELECTRIC AMBER — Primary (Light Theme)
+     Energy, safety, electrician identity
+     ============================================ */
+
+  --color-primary-50: oklch(0.98 0.03 90);
+  --color-primary-100: oklch(0.95 0.06 88);
+  --color-primary-200: oklch(0.91 0.1 86);
+  --color-primary-300: oklch(0.86 0.14 84);
+  --color-primary-400: oklch(0.8 0.17 82);
+  --color-primary-500: oklch(0.75 0.19 80); /* Electric Amber */
+  --color-primary-600: oklch(0.68 0.18 78);
+  --color-primary-700: oklch(0.6 0.16 76);
+  --color-primary-800: oklch(0.52 0.14 74);
+  --color-primary-900: oklch(0.44 0.12 72);
+
+  /* ============================================
+     NEUTRAL — Warm Industrial Gray
+     Panels, backgrounds, text balance
+     ============================================ */
+
+  --color-secondary-50: oklch(0.98 0.005 95);
+  --color-secondary-100: oklch(0.95 0.008 95);
+  --color-secondary-200: oklch(0.91 0.01 95);
+  --color-secondary-300: oklch(0.85 0.012 95);
+  --color-secondary-400: oklch(0.75 0.014 95);
+  --color-secondary-500: oklch(0.65 0.016 95);
+  --color-secondary-600: oklch(0.55 0.018 95);
+  --color-secondary-700: oklch(0.45 0.02 95);
+  --color-secondary-800: oklch(0.35 0.022 95);
+  --color-secondary-900: oklch(0.25 0.024 95);
+
+  /* ============================================
+     ACCENT — Safety Orange / Warning Highlight
+     ============================================ */
+
+  --color-accent-50: oklch(0.98 0.03 55);
+  --color-accent-100: oklch(0.94 0.07 54);
+  --color-accent-200: oklch(0.88 0.11 53);
+  --color-accent-300: oklch(0.8 0.15 52);
+  --color-accent-400: oklch(0.72 0.18 51);
+  --color-accent-500: oklch(0.65 0.2 50); /* Warning / CTA */
+  --color-accent-600: oklch(0.57 0.19 49);
+  --color-accent-700: oklch(0.49 0.17 48);
+  --color-accent-800: oklch(0.41 0.15 47);
+  --color-accent-900: oklch(0.33 0.13 46);
+}
+
+/* //[data-theme="dark"] */
+.dark :root {
+  /* ============================================
+     ELECTRIC AMBER — Primary (Dark Theme)
+     Used for CTAs, icons, highlights
+     ============================================ */
+
+  --color-primary-50: oklch(0.92 0.08 86);
+  --color-primary-100: oklch(0.88 0.11 84);
+  --color-primary-200: oklch(0.83 0.14 82);
+  --color-primary-300: oklch(0.78 0.17 80);
+  --color-primary-400: oklch(0.73 0.19 78);
+  --color-primary-500: oklch(0.68 0.2 76); /* Electric Amber */
+  --color-primary-600: oklch(0.6 0.18 74);
+  --color-primary-700: oklch(0.52 0.16 72);
+  --color-primary-800: oklch(0.44 0.14 70);
+  --color-primary-900: oklch(0.36 0.12 68);
+
+  /* ============================================
+     NEUTRAL — Industrial Charcoal
+     Main dark surfaces & typography
+     ============================================ */
+
+  --color-secondary-50: oklch(0.18 0.01 260);
+  --color-secondary-100: oklch(0.2 0.012 260);
+  --color-secondary-200: oklch(0.24 0.014 260);
+  --color-secondary-300: oklch(0.3 0.016 260);
+  --color-secondary-400: oklch(0.38 0.018 260);
+  --color-secondary-500: oklch(0.46 0.02 260);
+  --color-secondary-600: oklch(0.55 0.022 260);
+  --color-secondary-700: oklch(0.65 0.024 260);
+  --color-secondary-800: oklch(0.75 0.026 260);
+  --color-secondary-900: oklch(0.85 0.028 260);
+
+  /* ============================================
+     ACCENT — Electric Blue (Contrast & Status)
+     ============================================ */
+
+  --color-accent-50: oklch(0.92 0.04 230);
+  --color-accent-100: oklch(0.88 0.07 228);
+  --color-accent-200: oklch(0.83 0.1 226);
+  --color-accent-300: oklch(0.77 0.13 224);
+  --color-accent-400: oklch(0.7 0.15 222);
+  --color-accent-500: oklch(0.63 0.17 220); /* Status / Focus */
+  --color-accent-600: oklch(0.55 0.16 218);
+  --color-accent-700: oklch(0.47 0.14 216);
+  --color-accent-800: oklch(0.39 0.12 214);
+  --color-accent-900: oklch(0.31 0.1 212);
+}

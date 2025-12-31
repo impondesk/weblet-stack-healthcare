@@ -1,0 +1,18 @@
+---
+import Layout from "../../layouts/layout.astro";
+import TagLayout from "../../layouts/tag-layout.astro";
+import HeroDefault from "../../themes/default/hero/hero-default.astro";
+import HeroOffset from "../../themes/default/hero/hero-offset.astro";
+
+const { title, subTitle, excerpt } = Astro.props;
+---
+
+<main>
+  <TagLayout {...Astro.props}>
+    <HeroOffset
+      title={title || "Tag Not Found"}
+      subTitle={subTitle || ""}
+      excerpt={excerpt || ""}
+    />
+  </TagLayout>
+</main>

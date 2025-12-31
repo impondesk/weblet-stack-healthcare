@@ -29,6 +29,7 @@ const { links = [] } = Astro.props;
           className="link-button p-2 hover:rotate-6 sm:p-1 h-full w-8"
           title={social.linkTitle}
           target={"_blank"}
+          variant="link"
         >
           <Fragment
             set:html={socialIcons[social.name]}

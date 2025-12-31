@@ -6,6 +6,13 @@ export const prerender = true;
 const tenant = {
   name: "404 - Page Not Found",
 };
+
+// Get custom message from query param if present
+let customMsg = "";
+try {
+  const url = new URL(Astro.request.url);
+  customMsg = url.searchParams.get("msg") || "";
+} catch {}
 ---
 
 <Layout tenant={tenant} title="404 - Page Not Found">
@@ -15,13 +22,17 @@ const tenant = {
       <h1 class="text-9xl font-bold text-primary-500 mb-4">404</h1>
 
       <!-- Error Message -->
+
       <h2 class="text-3xl font-semibold text-gray-900 mb-4">
         Oops! This page doesn't exist.
       </h2>
 
       <p class="text-xl text-gray-600 mb-8">
-        We couldn't find the content you're looking for, it may have been moved
-        or deleted.
+        {
+          customMsg
+            ? customMsg
+            : "We couldn't find the content you're looking for, it may have been moved or deleted."
+        }
       </p>
 
       <!-- Action Buttons -->

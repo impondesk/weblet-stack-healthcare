@@ -1,13 +1,24 @@
 ---
-const { title, subTitle, excerpt, heroImage, logo, variant, clazz } =
-  Astro.props;
+const {
+  title,
+  subTitle,
+  excerpt,
+  heroImage,
+  logo,
+  variant,
+  clazz,
+  summary,
+  description,
+} = Astro.props;
 
 let className = variant === "center" ? " text-center lg:text-center " : "";
 ---
 
 {
-  title && (
-    <section class={`max-w-7xl mx-auto py-0  ${className} ${clazz || ""}`}>
+  (
+    <section
+      class={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 ${className} ${clazz || ""}`}
+    >
       {subTitle && (
         <p class="mt-2 uppercase text-sm leading-normal font-bold  text-accent-600">
           {subTitle}
@@ -21,6 +32,14 @@ let className = variant === "center" ? " text-center lg:text-center " : "";
       )}
 
       {excerpt && <p class="max-w-7xl py-2  mx-auto ">{excerpt}</p>}
+
+      {summary && (
+        <p class="max-w-7xl py-2  mx-auto text-gray-600">{summary}</p>
+      )}
+
+      {description && (
+        <p class="max-w-7xl py-2  mx-auto text-gray-600">{description}</p>
+      )}
     </section>
   )
 }

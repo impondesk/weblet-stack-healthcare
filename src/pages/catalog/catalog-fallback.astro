@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/layout.astro";
+import HeroDefault from "../../themes/default/hero/hero-default.astro";
+import HeroOffset from "../../themes/default/hero/hero-offset.astro";
+
+const { title, subTitle, excerpt, ...rest } = Astro.props;
+---
+
+<Layout>
+  <HeroDefault title={title} subtitle={subTitle} excerpt={excerpt} />
+</Layout>

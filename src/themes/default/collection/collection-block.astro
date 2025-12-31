@@ -1,4 +1,5 @@
 ---
+import CatalogDefault from "./catalog/catalog-default.astro";
 import CollectionDefault from "./default/collection-default.astro";
 import GroupDefault from "./group/group-default.astro";
 import GuideGrid from "./guide/guide-grid.astro";
@@ -11,6 +12,7 @@ import ProductAccorion from "./product/product-accorion.astro";
 import ProductCard from "./product/product-card.astro";
 import ProductDefault from "./product/product-default.astro";
 import ProductGrouped from "./product/product-grouped.astro";
+import ProductList from "./product/product-list.astro";
 import RoadmapsGrid from "./roadmaps/roadmaps-grid.astro";
 import StoresAccordion from "./store/stores-accordion.astro";
 import StoresDefault from "./store/stores-default.astro";
@@ -23,6 +25,10 @@ const { variant, collectionType } = Astro.props;
 const collectionMap = {
   tenants: {
     default: TenantsDefault,
+  },
+
+  catalogs: {
+    default: CatalogDefault,
   },
 
   stores: {
@@ -52,6 +58,7 @@ const collectionMap = {
     categorized: ProductDefault,
     accordion: ProductAccorion,
     card: ProductCard,
+    list: ProductList,
 
     // list: ProductsList,
     // grid: ProductsGrid,

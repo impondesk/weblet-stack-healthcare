@@ -11,10 +11,13 @@ import "../styles/global.css";
 import "../styles/prose.css";
 import "../styles/theme-runtime.css";
 import "aos/dist/aos.css";
+import ImpondeskFooter from "../custom/impondesk-footer.astro";
+import MenovadxHeader from "../custom/menovadx-header.astro";
 
 // Props and constants
 const { tenant } = Astro.props;
-const { title } = tenant || Astro.props;
+const { title, excerpt, url, featuredImage, description } =
+  tenant || Astro.props;
 const contentTitle = Astro.props.title || "Default Theme";
 const tenantId = Astro.locals?.tenant?.id;
 const presetCssURL =
@@ -95,8 +98,26 @@ for (const kit of kits) {
     <meta name="generator" content={Astro.generator} />
 
     <title>
-      {contentTitle + " - " + Astro.locals?.tenant?.name || "Default Theme"}
+      {contentTitle + " - " + Astro.locals?.tenant?.name || "Weblet Platforms"}
     </title>
+    <!-- FIXME -->
+    <meta name="description" content={description || excerpt} />
+    <meta name="excerpt" content={excerpt} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={featuredImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={featuredImage} />
+
     <link rel="icon" href="/favicon.ico" />
 
     <!-- Inject palette CSS inline for proper theme loading -->
@@ -193,7 +214,18 @@ for (const kit of kits) {
       )
     }
 
-    <Header title={title || "Weblet Platforms"} />
+    <!-- Tenant Banner HTML Block -->
+    {tenant && tenant.bannerHTML && <div set:html={tenant?.bannerHTML} />}
+
+    <!-- Tenant Header HTML Block & Fallback Strategy -->
+    {tenant && tenant.headerHTML && <div set:html={tenant?.headerHTML} />}
+    {
+      !(tenant && tenant.headerHTML) && (
+        <Header title={title || "Weblet Platforms"} />
+      )
+    }
+
+    <!-- <MenovadxHeader {...Astro.props} /> -->
 
     <!-- Main Content -->
     <main id="main-content" class="mx-auto w-full py-10-none min-h-full">
@@ -222,7 +254,11 @@ for (const kit of kits) {
 
       <!-- <SocialShare {...Astro.props} /> -->
 
-      <Footer {...Astro.props} />
+      <!-- <ImpondeskFooter {...Astro.props} /> -->
+
+      <!-- Tenant Footer and Fallback Strategy -->
+      {tenant && tenant.footerHTML && <div set:html={tenant?.footerHTML} />}
+      {!(tenant && tenant.footerHTML) && <Footer {...Astro.props} />}
     </main>
   </body>
 </html>

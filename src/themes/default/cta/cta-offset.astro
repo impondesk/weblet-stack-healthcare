@@ -6,6 +6,7 @@ const {
   title,
   excerpt,
   heroImage,
+  featuredImage,
   bgMood,
   links,
   lists,
@@ -43,10 +44,8 @@ const {
           {
             lists &&
               lists.map((item) => (
-                <li
-                  class="flex items-start gap-x-2 text-sm text-dark-600 dark:text-dark-300"
-                  key={item.id}
-                >
+                <li class="flex items-start gap-x-2 text-sm text-dark-600 dark:text-dark-300">
+                  {/* key={item.id} */}
                   <span class="inline-block text-primary-600 mt-0.5">✔</span>
                   {item.label}
                 </li>
@@ -63,9 +62,9 @@ const {
         </div>
       </div>
       {
-        heroImage && heroImage.url && (
+        featuredImage && featuredImage.url && (
           <img
-            src={heroImage.url}
+            src={featuredImage.url}
             alt=""
             class="mt-10 aspect-6/5 w-full max-w-lg rounded-2xl object-cover outline-1 -outline-offset-1 outline-black/5 sm:mt-16 lg:mt-0 lg:max-w-none xl:row-span-2 xl:row-end-2 xl:mt-36 dark:outline-white/10"
           />

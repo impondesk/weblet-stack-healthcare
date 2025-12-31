@@ -5,8 +5,11 @@ const { author, url, clazz } = Astro.props;
 {
   author && author?.profiles && (
     <a
+      rel=" nofollow"
       href={`/profile/${author?.profiles?.slug}`}
-      class={`font-medium text-sm pr-2 ${clazz}`}
+      class={`font-medium text-sm pr-0 ${clazz}`}
+      data-no-prefetch
+      transition:name={`${url}-author`}
     >
       {author?.profiles?.name}
     </a>

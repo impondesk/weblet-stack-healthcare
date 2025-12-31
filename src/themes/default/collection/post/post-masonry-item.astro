@@ -23,16 +23,27 @@ const url = `/${collectionName}/${slug}`;
 <li
   class="group break-inside-avoid-column mb-4 no-underline font-semibold hover:text-primary-600 block px-3 rounded-md text-base lg:text-sm xl:text-base py-4"
 >
-  <div class="relative overflow-hidden rounded-lg bg-white">
+  <div
+    class="relative overflow-hidden rounded-lg z-10 group-hover:z-10"
+    style="z-index:10;"
+  >
     {/* Image */}
     {
       featuredImage && featuredImage.url && (
         <div class="relative overflow-hidden">
           <img
+            id={`masonry-img-${slug}`}
             src={featuredImage?.url}
             alt={featuredImage.ref || title}
-            class="object-cover w-full transition-transform duration-300 group-hover:scale-105"
+            class="object-cover w-full transition-transform duration-300 group-hover:scale-105 pixelate"
             loading="lazy"
+            onLoad={`
+              if(window.gsap){
+                gsap.to('#masonry-img-${slug}', { filter: 'none', duration: 1.2, ease: 'power2.out' });
+              } else {
+                this.style.filter = 'none';
+              }
+            `}
           />
         </div>
       )
@@ -40,11 +51,22 @@ const url = `/${collectionName}/${slug}`;
 
     {/* Content */}
 
-    <div class="p-4">
+    <div class="py-4">
+      {
+        !series && category && category?.title && (
+          <a
+            href={`/category/${category.slug}`}
+            class="font-semibold text-xs pr-2 px-2-x py-1 my-1  no-underline bg-primary-100-x text-primary-800 rounded"
+          >
+            {category?.title}
+          </a>
+        )
+      }
+
       {/* Title */}
       <a href={url} aria-label={title} class="no-underline">
         <h3
-          class="text-md font-semibold mb-2 line-clamp-2 text-primary-500 dark:text-primary-400 group-hover:text-primary-600 transition-colors"
+          class="text-md font-semibold mb-2 line-clamp-3 text-primary-500 dark:text-primary-400 group-hover:text-primary-600 transition-colors"
         >
           {title}
         </h3>
@@ -68,24 +90,16 @@ const url = `/${collectionName}/${slug}`;
         )
       }
 
-      {
-        !series && category && category?.title && (
-          <a
-            href={`/category/${category.slug}`}
-            class="font-semibold text-xs pr-2 px-2 py-1 my-1  no-underline bg-secondary-100 text-secondary-800 rounded"
-          >
-            {category?.title}
-          </a>
-        )
-      }
-
       {/* Tags */}
-      <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex flex-wrap gap-2 mb-3 pt-1">
         {
           tags?.map((tag) => (
-            <span class="px-2 py-1 my-1 text-xs font-semibold bg-primary-100 text-primary-800 rounded">
+            <a
+              href={`/tag/${tag.slug}`}
+              class="font-semibold text-xs pr-2 px-2 py-1 my-1  no-underline bg-secondary-100 text-secondary-800 rounded"
+            >
               {tag?.title}
-            </span>
+            </a>
           ))
         }
       </div>
